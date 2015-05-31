@@ -1,0 +1,99 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>
+      <a href="#" data-sort-by="A">标题A</a>
+    </th>
+    <th>
+      <a href="#" data-sort-by="B">标题B</a>
+    </th>
+    <th>
+      <a href="#" data-sort-by="C">标题C</a>
+    </th>
+    <th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+
+    var $table = $("#table");
+
+    var request = function(pageObject, sortObject) {
+
+      var queryObject = {
+        pageObject: pageObject,
+        sortObject: sortObject
+      }
+
+      $.getJSON("../ajax.json", queryObject, function(result) {
+
+        $table.find('tbody tr').remove();
+        $.each(result.data, function(index, row){
+          var $tr = $('<tr></tr>');
+          $tr.append('<td><input type="checkbox" name="row.id" value="' + row[0] + '" /></td>')
+            .append('<td>' + row[1] + '</td>')
+            .append('<td>' + row[2] + '</td>')
+            .append('<td>' + row[3] + '</td>')
+            .append('<td>' + row[4] + '</td>')
+          ;
+          $table.find('tbody').append($tr);
+        });
+
+        // 更新行选择器，否则全选和点击行选中就失效了
+        $table.semiAutoTable('updateRowButton', {});
+        // 更新排序
+        $table.semiAutoTable('updateSortBy', sortObject);
+        // 更新分页widget
+        $table.semiAutoTable('updatePaginator', result.page);
+
+      });
+    }
+
+    $table.semiAutoTable({
+      sortOption: {
+        'A': 'asc',
+        'B': 'desc'
+      },
+      menus: [
+        {
+          title: '菜单1',
+          callback: function() {
+            var rowIds = $table.semiAutoTable('getSelectedRows');
+            // do something with rowIds
+            // $form.submit();
+          }
+        },
+        {
+          title: '菜单2',
+          callback: function() {
+            alert('菜单2');
+          }
+        },
+      ],
+      pageOption: {
+        currentPage: 1,
+        totalPages: 11,
+        totalRows: 202
+      }
+    }).on('pageChange', function(event, pageObject) {
+      request(pageObject, $table.semiAutoTable('getSortObject'));
+    }).on('sortChange', function(event, sortObject) {
+      var oldSortObject = $table.semiAutoTable('getSortObject');
+      var newSortObject = $.extend({}, oldSortObject, sortObject);
+      request($table.semiAutoTable('getPageObject'), newSortObject);
+    });
+  });
+</script>

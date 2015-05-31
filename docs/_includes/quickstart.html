@@ -1,0 +1,66 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th><span data-sort-by="A">标题A</span></th>
+    <th><span data-sort-by="B">标题B</span></th>
+    <th><span data-sort-by="C">标题C</span></th>
+    <th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="1"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    var $table = $("#table");
+    $table.semiAutoTable({
+      sortOption: {
+        'A': 'asc',
+        'B': 'desc'
+      },
+      menus: [
+        {
+          title: '菜单1',
+          tooltip: 'tooltip',
+          callback: function() {
+            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+          }
+        },
+        {
+          title: '菜单2',
+          callback: function() {
+            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+          }
+        },
+      ],
+      pageOption: {
+        currentPage: 11,
+        totalPages: 20,
+        totalRows: 202
+      }
+    }).on('pageChange', function(event, pageObject) {
+
+      console.log(JSON.stringify(pageObject));
+      $(this).semiAutoTable('updatePaginator', pageObject);
+
+    }).on('sortChange', function(event, sortObject) {
+
+      console.log(JSON.stringify(sortObject));
+
+      var $this = $(this);
+      var oldSortObject = $this.semiAutoTable('getSortObject');
+      $this.semiAutoTable('updateSortBy', $.extend(oldSortObject, sortObject));
+
+    });
+  });
+</script>

@@ -1,0 +1,55 @@
+---
+layout: default
+title: Bootstrap Semi-Auto Table - Events
+---
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+      <h2>Events</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+
+      <table class="table table-striped">
+
+        <thead>
+        <tr>
+          <th>Event Type</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+          <td>pageChange</td>
+          <td>
+            翻页的时候触发。
+
+            {% highlight javascript %}
+            {% include events/pageChange.html %}
+            {% endhighlight %}
+          </td>
+        </tr>
+        <tr>
+          <td>sortChange</td>
+          <td>
+            排序发生变化的时候触发。传入的 <code>sortObject</code>仅仅包含了排序发生变化的部分，而不是所有。
+
+            {% highlight javascript %}
+            {% include events/sortChange.html %}
+            {% endhighlight %}
+          </td>
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+

@@ -1,0 +1,37 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th><a href="#" data-sort-by="A">标题A</a></th>
+    <th><a href="#" data-sort-by="B">标题B</a></th>
+    <th><a href="#" data-sort-by="C">标题C</a></th>
+    <th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    $("#table").semiAutoTable({
+      rowOption: false,
+      pageOption: false,
+      sortOption: {
+        'A': 'asc',
+        'B': 'desc'
+      }
+    }).on('sortChange', function(event, sortObject) {
+
+      console.log(JSON.stringify(sortObject));
+      $(this).semiAutoTable('updateSortBy', sortObject);
+
+    });
+
+  });
+</script>

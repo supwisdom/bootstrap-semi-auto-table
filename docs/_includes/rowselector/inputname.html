@@ -1,0 +1,28 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th><th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="item.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="item.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    $("#table").semiAutoTable({
+      rowOption: {
+        inputName: 'item.id'
+      },
+      pageOption: false
+    })
+  });
+</script>

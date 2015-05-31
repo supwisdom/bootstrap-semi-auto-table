@@ -1,0 +1,93 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <input type="checkbox" name="row.id" value="1"/>
+    </td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  $(function () {
+    var $table = $("#table");
+
+    var showSelectedRows = function () {
+      console.log('当前选中的行: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+    }
+
+    $table.semiAutoTable({
+      pageOption: false,
+      menus: [
+        {
+          title: '分离式下拉菜单',
+          callback: showSelectedRows,
+          dropdowns: [
+            {
+              title: '普通子菜单',
+              callback: showSelectedRows
+            },
+            'divider',
+            {
+              title: '有图标的子菜单',
+              icon: 'fa fa-pagelines',
+              callback: showSelectedRows
+            },
+          ]
+        },
+        {
+          title: '图标分离式下拉菜单',
+          callback: showSelectedRows,
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: '普通子菜单',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: '样式分离式下拉菜单',
+          callback: showSelectedRows,
+          btnClass: 'btn-info',
+          dropdowns: [
+            {
+              title: '普通子菜单',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'tooltip分离式下拉菜单',
+          callback: showSelectedRows,
+          tooltip: 'tooltip',
+          dropdowns: [
+            {
+              title: '普通子菜单',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: '综合分离式下拉菜单',
+          callback: showSelectedRows,
+          btnClass: 'btn-success',
+          tooltip: 'tooltip',
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: '普通子菜单',
+              callback: showSelectedRows
+            }
+          ]
+        },
+      ]
+    })
+  });
+</script>

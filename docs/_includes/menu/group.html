@@ -1,0 +1,53 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <input type="checkbox" name="row.id" value="1"/>
+    </td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  $(function () {
+    var $table = $("#table");
+
+    var showSelectedRows = function () {
+      console.log('当前选中的行: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+    }
+
+    $table.semiAutoTable({
+      pageOption: false,
+      menus: [
+        {
+          title: '简单按钮',
+          icon: 'fa fa-calendar',
+          callback: showSelectedRows
+        },
+        [
+          {
+            title: '简单按钮',
+            icon: 'fa fa-calendar',
+            callback: showSelectedRows
+          },
+          {
+            title: '下拉菜单',
+            dropdowns: [
+              {
+                title: '子菜单1',
+                icon: 'fa fa-pagelines',
+                callback: showSelectedRows
+              }
+            ]
+          }
+        ]
+      ]
+    })
+  });
+</script>

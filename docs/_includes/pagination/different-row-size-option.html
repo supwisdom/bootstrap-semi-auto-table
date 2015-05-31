@@ -1,0 +1,33 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function () {
+
+    $("#table").semiAutoTable({
+      rowOption: false,
+      pageOption: {
+        currentPage: 3,
+        rowsPerPage: 50,
+        totalPages: 40,
+        totalRows: 1995,
+        rowsPerPageOptions: '50,55,60'
+      }
+    }).on('pageChange', function(event, pageObject) {
+
+      console.log(JSON.stringify(pageObject));
+      $(this).semiAutoTable('updatePaginator', pageObject);
+
+    });
+  });
+</script>

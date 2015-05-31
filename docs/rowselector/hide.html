@@ -1,0 +1,26 @@
+---
+layout: default
+title: Bootstrap Semi-Auto Table - 行选择 - 不显示全选按钮
+---
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>行选择 - 不显示全选按钮 <small>虽然不显示全选按钮，但是点击行的任意地方还是可以选中的</small></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      {% include rowselector/hide.html %}
+      {% highlight html %}
+      {% include rowselector/hide.html %}
+      {% endhighlight %}
+
+    </div>
+
+  </div>
+
+</div>

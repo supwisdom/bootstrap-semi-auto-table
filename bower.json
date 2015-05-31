@@ -1,0 +1,33 @@
+{
+  "name": "bootstrap-semi-auto-table",
+  "version": "0.0.1",
+  "homepage": "https://github.com/chanjarster/bootstrap-semi-auto-table",
+  "authors": [
+    "Daniel Qian <chanjarster@gmail.com>"
+  ],
+  "description": "Bootstrap v3 semi-auto table. Support toolbar, paginaion and sort.",
+  "keywords": [
+    "bootstrap",
+    "table",
+    "toolbar",
+    "pagination",
+    "sortable"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*.iml",
+    "src",
+    "package.json",
+    "docs"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "bootstrap-select": "~1.7.2"
+  }
+}
