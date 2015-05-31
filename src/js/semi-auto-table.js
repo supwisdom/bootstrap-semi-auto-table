@@ -4,11 +4,7 @@
   // http://jqueryvalidation.org/jQuery.validator.format/
   var format = function (source, params) {
     if (arguments.length === 1) {
-      return function () {
-        var args = $.makeArray(arguments);
-        args.unshift(source);
-        return $.validator.format.apply(this, args);
-      };
+      return source;
     }
     if (arguments.length > 2 && params.constructor !== Array) {
       params = $.makeArray(arguments).slice(1);
@@ -135,7 +131,7 @@
 
         this.$selectAll = this.addMenuItem({
 
-          title: $.fn.semiAutoTable.message.select_all,
+          title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
 
           callback: function () {
             self.$rowIdInputList.prop('checked', !allChecked);
@@ -144,7 +140,7 @@
 
           dropdowns: [
             {
-              title: $.fn.semiAutoTable.message.select_inverse,
+              title: $.fn.semiAutoTable.locales[this.options.locale].select_inverse,
               callback: function () {
 
                 $.each(self.$rowIdInputList, function (index, input) {
@@ -521,11 +517,11 @@
         title: function () {
           var $this = $(this);
           if ($this.data('sort') == 'asc') {
-            return $.fn.semiAutoTable.message.sort_asc;
+            return $.fn.semiAutoTable.locales[self.options.locale].sort_asc;
           } else if ($this.data('sort') == 'desc') {
-            return $.fn.semiAutoTable.message.sort_desc;
+            return $.fn.semiAutoTable.locales[self.options.locale].sort_desc;
           } else {
-            return $.fn.semiAutoTable.message.sort_none;
+            return $.fn.semiAutoTable.locales[self.options.locale].sort_none;
           }
         },
         container: 'body'
@@ -680,7 +676,7 @@
     this.$pageInfo = this._addMenuItem(this.$paginator, {
 
       title: rowStart + '-' + rowEnd + ' of ' + totalRows,
-      tooltip: format($.fn.semiAutoTable.message.current_page, currentPage),
+      tooltip: format($.fn.semiAutoTable.locales[this.options.locale].current_page, currentPage),
       callback: function (event) {
 
         self.$pageInfo.hide();
@@ -725,7 +721,7 @@
 
       var $option = $('<option></option>');
       $option.attr('value', num);
-      $option.text(format($.fn.semiAutoTable.message.page_size, num));
+      $option.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
       $option.appendTo($pageSize);
 
       if (num == rowsPerPage) {
@@ -776,7 +772,7 @@
     if (currentPage != 1) {
       pages.push({
         icon: 'fa fa-angle-double-left',
-        tooltip: $.fn.semiAutoTable.message.first_page,
+        tooltip: $.fn.semiAutoTable.locales[this.options.locale].first_page,
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: 1
@@ -785,7 +781,7 @@
       });
       pages.push({
         icon: 'fa fa-angle-left',
-        tooltip: format($.fn.semiAutoTable.message.prev_page, currentPage - 1),
+        tooltip: format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage - 1),
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: self.pageObject.currentPage - 1
@@ -797,7 +793,7 @@
     if (currentPage != totalPages) {
       pages.push({
         icon: 'fa fa-angle-right',
-        tooltip: format($.fn.semiAutoTable.message.prev_page, currentPage + 1),
+        tooltip: format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage + 1),
         callback: function () {
           self.triggerPageChangeEvent({
               currentPage: self.pageObject.currentPage + 1
@@ -807,7 +803,7 @@
       });
       pages.push({
         icon: 'fa fa-angle-double-right',
-        tooltip: $.fn.semiAutoTable.message.last_page,
+        tooltip: $.fn.semiAutoTable.locales[this.options.locale].last_page,
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: totalPages
@@ -1018,7 +1014,7 @@
   $.fn.semiAutoTable.Constructor = SemiAutoTable
   $.fn.semiAutoTable.defaults = {
 
-    debug: false,
+    locale: 'zh-CN',
 
     containerClass: '',
 
@@ -1059,23 +1055,7 @@
 
   }
 
-  $.fn.semiAutoTable.message = {
-
-    select_all: '全选',
-    select_inverse: '反选',
-
-    next_page: '下页第 {0} 页',
-    prev_page: '上页第 {0} 页',
-    first_page: '第一页',
-    last_page: '最后一页',
-    current_page: '当前第 {0} 页',
-    page_size: '每页 {0} 条',
-
-    sort_asc: '升序排列',
-    sort_desc: '降序排列',
-    sort_none: '未排序'
-
-  }
+  $.fn.semiAutoTable.locales = {}
 
   // SemiAutoTable NO CONFLICT
   // =================

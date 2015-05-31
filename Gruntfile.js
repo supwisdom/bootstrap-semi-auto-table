@@ -67,14 +67,18 @@ module.exports = function (grunt) {
       }
     },
 
-    copy: {
+    concat: {
 
       js: {
-        expand: true,
-        cwd: 'src/js',
-        src: '**/*',
-        dest: 'dist/'
-      },
+        src: [
+          'src/js/semi-auto-table.js',
+          'src/js/locale/*.js'
+        ],
+        dest: 'dist/semi-auto-table.js'
+      }
+    },
+
+    copy: {
 
       less: {
         expand: true,
@@ -136,24 +140,29 @@ module.exports = function (grunt) {
           'Attribute "autocomplete" not allowed on element "button" at this point.',
           'Attribute "autocomplete" not allowed on element "input" at this point.',
           'Element "img" is missing required attribute "src".',
-          'Consider using the “h1” element as a top-level heading only (all “h1” elements are treated as top-level headings by many screen readers and other tools).',
-          'Start tag seen without seeing a doctype first. Expected “<!DOCTYPE html>”.',
-          'Non-space characters found without seeing a doctype first. Expected “<!DOCTYPE html>”.',
-          'Element “head” is missing a required instance of child element “title”.',
-          'Stray doctype.',
-          'Stray start tag “html”.',
-          'Cannot recover after last error. Any further errors will be ignored.'
+          'No “p” element in scope but a “p” end tag seen.'
         ]
       },
-      src: 'docs/**/*.html'
+      src: '_gh_pages/**/*.html'
     },
 
     bootlint: {
       options: {
-        stoponerror: false,
-        relaxerror: ['W001', 'W002', 'W003', 'W005', 'E001']
+        stoponerror: true
       },
-      files: ['docs/*.html']
+      files: ['_gh_pages/**/*.html']
+    },
+
+    jekyll: {
+      options: {
+        config: '_config.yml'
+      },
+      docs: {},
+      github: {
+        options: {
+          raw: 'github: true'
+        }
+      }
     },
 
     csslint: {
@@ -209,7 +218,7 @@ module.exports = function (grunt) {
     compress: {
       main: {
         options: {
-          archive: 'semi-auto-table-<%= pkg.version %>-dist.zip',
+          archive: 'bootstrap-semi-auto-table-<%= pkg.version %>-dist.zip',
           mode: 'zip',
           level: 9,
           pretty: true
@@ -217,8 +226,9 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            src: ['dist/**'],
-            dest: 'semi-auto-table-<%= pkg.version %>-dist'
+            cwd: 'dist/',
+            src: ['**'],
+            dest: 'bootstrap-semi-auto-table-<%= pkg.version %>-dist'
           }
         ]
       }
@@ -233,14 +243,15 @@ module.exports = function (grunt) {
 
   grunt.registerTask('less-compile', ['less']);
 
-  grunt.registerTask('dist-js', ['copy:js', 'uglify']);
+  grunt.registerTask('dist-js', ['concat:js', 'uglify']);
   grunt.registerTask('dist-css', ['copy:less', 'less-compile', 'autoprefixer', 'csscomb', 'cssmin']);
-  grunt.registerTask('dist', ['clean', 'dist-js', 'dist-css']);
+  grunt.registerTask('dist', ['clean:dist', 'dist-js', 'dist-css']);
 
   grunt.registerTask('default', ['dist']);
 
-  grunt.registerTask('docs', ['copy:docs', 'htmllint', 'bootlint']);
+  grunt.registerTask('validate-html', ['jekyll:docs', 'htmllint']);
+  grunt.registerTask('docs', ['clean:docs', 'copy:docs', 'jekyll:docs', 'htmllint', 'bootlint']);
 
-  grunt.registerTask('prep-release', ['docs', 'compress']);
+  grunt.registerTask('prep-release', ['dist', 'docs', 'jekyll:github', 'compress']);
 
 };
