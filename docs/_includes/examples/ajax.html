@@ -1,0 +1,93 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>
+      <a href="#" data-sort-by="A">Column A</a>
+    </th>
+    <th>
+      <a href="#" data-sort-by="B">Column B</a>
+    </th>
+    <th>
+      <a href="#" data-sort-by="C">Column C</a>
+    </th>
+    <th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+
+    var $table = $("#table");
+
+    var request = function(pageObject, sortObject) {
+
+      var queryObject = {
+        pageObject: pageObject,
+        sortObject: sortObject
+      }
+
+      $.getJSON("../ajax.json", queryObject, function(result) {
+
+        $table.find('tbody tr').remove();
+        $.each(result.data, function(index, row){
+          var $tr = $('<tr></tr>');
+          $tr.append('<td><input type="checkbox" name="row.id" value="' + row[0] + '" /></td>')
+            .append('<td>' + row[1] + '</td>')
+            .append('<td>' + row[2] + '</td>')
+            .append('<td>' + row[3] + '</td>')
+            .append('<td>' + row[4] + '</td>')
+          ;
+          $table.find('tbody').append($tr);
+        });
+
+        // You should update row button, otherwise select-all button will not work
+        $table.semiAutoTable('updateRowButton', {});
+        // Update sort status
+        $table.semiAutoTable('updateSortBy', sortObject);
+        // Update paginator
+        $table.semiAutoTable('updatePaginator', result.page);
+
+      });
+    }
+
+    $table.semiAutoTable({
+      sortOption: {
+        'A': 'asc',
+        'B': 'desc'
+      },
+      menus: [
+        {
+          title: 'Menu1',
+          callback: function() {}
+        },
+        {
+          title: 'Menu2',
+          callback: function() {}
+        },
+      ],
+      pageOption: {
+        currentPage: 1,
+        totalPages: 11,
+        totalRows: 202
+      }
+    }).on('pageChange', function(event, pageObject) {
+      request(pageObject, $table.semiAutoTable('getSortObject'));
+    }).on('sortChange', function(event, sortObject) {
+      var oldSortObject = $table.semiAutoTable('getSortObject');
+      var newSortObject = $.extend({}, oldSortObject, sortObject);
+      request($table.semiAutoTable('getPageObject'), newSortObject);
+    });
+  });
+</script>

@@ -1,0 +1,31 @@
+.semi-auto-table-toolbar .semi-auto-table-menubar i.title-icon
+{
+    margin-right: 5px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .rows-per-page
+{
+    float: left !important;
+
+    width: 110px !important;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-sm.page-jump
+{
+    font-size: 12px;
+    line-height: 1.5;
+
+    padding: 5px 10px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-sm.page-jump > input
+{
+    width: 35px;
+    height: 20px;
+}
+.semi-auto-table-data
+{
+    margin-top: 10px;
+}
+.semi-auto-table-sorter
+{
+    cursor: pointer;
+}
+/*# sourceMappingURL=semi-auto-table.css.map */

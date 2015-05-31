@@ -1,0 +1,107 @@
+<form class="form-inline">
+
+  <div class="form-group">
+    <label for="currentPage" class="control-label">currentPage</label>
+    <input type="text" name="currentPage" id="currentPage" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label for="rowsPerPage" class="control-label">rowsPerPage</label>
+    <input type="text" name="rowsPerPage" id="rowsPerPage" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label for="sortBy" class="control-label">sortBy</label>
+    <input type="text" name="sortBy" id="sortBy" class="form-control"/>
+  </div>
+
+  <table id="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th>
+        <a href="#" data-sort-by="A">Column A</a>
+      </th>
+      <th>
+        <a href="#" data-sort-by="B">Column B</a>
+      </th>
+      <th>
+        <a href="#" data-sort-by="C">Column C</a>
+      </th>
+      <th>Column D</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="checkbox" name="row.id"/></td>
+      <td>a</td><td>b</td><td>c</td><td>d</td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" name="row.id"/></td>
+      <td>a</td><td>b</td><td>c</td><td>d</td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+
+<script>
+  $(function() {
+
+    var $form = $('form');
+    var $table = $("#table");
+
+    var request = function(pageObject, sortObject) {
+      var $currentPage = $form.find(':text[name=currentPage]');
+      var $rowsPerPage = $form.find(':text[name=rowsPerPage]');
+      var $sortBy = $form.find(':text[name=sortBy]');
+
+      $currentPage.val(pageObject.currentPage);
+      $rowsPerPage.val(pageObject.rowsPerPage);
+
+      var sortBy = [];
+      $.each(sortObject, function(name, sort) {
+        if(sort == 'none') {
+          return;
+        }
+        sortBy.push(name + ' ' + sort);
+      });
+      $sortBy.val(sortBy.join(','));
+
+      setTimeout(function() {
+        $form.submit();
+      }, 2000);
+    }
+
+    $table.semiAutoTable({
+      sortOption: {
+        'A': 'asc',
+        'B': 'desc'
+      },
+      menus: [
+        {
+          title: 'Menu1',
+          callback: function() {
+            var rowIds = $table.semiAutoTable('getSelectedRows');
+            // do something with rowIds
+            // $form.submit();
+          }
+        },
+        {
+          title: 'Menu2',
+          callback: function() {
+            alert('Menu2');
+          }
+        },
+      ],
+      pageOption: {
+        currentPage: 1,
+        totalPages: 20,
+        totalRows: 202
+      }
+    }).on('pageChange', function(event, pageObject) {
+      request(pageObject, $table.semiAutoTable('getSortObject'));
+    }).on('sortChange', function(event, sortObject) {
+      request($table.semiAutoTable('getPageObject'), sortObject);
+    });
+  });
+</script>

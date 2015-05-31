@@ -1,0 +1,88 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <input type="checkbox" name="row.id" value="1"/>
+    </td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  $(function () {
+    var $table = $("#table");
+
+    var showSelectedRows = function () {
+      alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+    }
+
+    $table.semiAutoTable({
+      pageOption: false,
+      menus: [
+        {
+          title: 'Simple',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            },
+            'divider',
+            {
+              title: 'Icon sub-menu',
+              icon: 'fa fa-pagelines',
+              callback: showSelectedRows
+            },
+          ]
+        },
+        {
+          title: 'With icon',
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'Styled',
+          btnClass: 'btn-info',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'With tooltip',
+          tooltip: 'tooltip',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'Full feature',
+          btnClass: 'btn-success',
+          tooltip: 'tooltip',
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+      ]
+    });
+  });
+</script>

@@ -1,0 +1,26 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id"/></td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    $("#table").semiAutoTable({
+      rowOption: false,
+      pageOption: false
+    })
+  });
+</script>

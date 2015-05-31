@@ -1,0 +1,90 @@
+---
+layout: default
+title: Bootstrap Semi-Auto Table
+---
+
+
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>Introduction</h1>
+
+      <p>
+        Bootstrap Semi-Auto Table is a jQuery plugin that provide an HTML element (typically a <code>table</code>)
+        with toolbar, pagination and sort function.
+      </p>
+
+      <p>
+        Unlike other great jQuery plugins (<a href="http://bootstrap-table.wenzhixin.net.cn/">Bootstrap Table</a>, <a
+          href="https://github.com/creative-area/jquery.datagrid">jquery.datagrid</a>, etc.),
+        Bootstrap Semi-Auto Table doesn't do data loading, searching or filtering.
+      </p>
+
+      <p>
+        If you want data refresh, you should do it yourself by invoking the methods provided by Bootstra Semi-Auto Table
+        to re-render the ui (partially or fully),
+        that's why it's <b>semi-auto</b>.
+      </p>
+
+      <p>
+        The advantage of Bootstrap Semi-Auto Table is:
+      <ol>
+        <li>There are no extremely powerful but also horrible configuration.</li>
+        <li>It's easy to build toolbar.</li>
+        <li>You can have more control on data refresh and rendering.
+          You can use pure ajax, partial page load or old-school form post.
+        </li>
+
+      </ol>
+
+      </p>
+
+      <h2>Dependencies</h2>
+
+      <p>
+        Bootstrap Semi-Auto Table depends on the following:
+      </p>
+
+{% highlight bash %}
+"jquery": ">= 1.9.1",
+"bootstrap": "~3.3.4",
+"fontawesome": "~4.3.0",
+"bootstrap-select": "~1.7.2"
+{% endhighlight %}
+      <h1>Download</h1>
+
+      <p>Source, dist, and docs.</p>
+
+      <p>
+        <a href="https://github.com/chanjarster/bootstrap-semi-auto-table/archive/master.zip"
+           class="btn btn-lg btn-default" role="button">Download source</a>
+      </p>
+
+      <h2>Install with Bower</h2>
+
+      {% highlight shell %}
+      $ bower install bootstrap-semi-auto-table
+      {% endhighlight %}
+
+      <h1>Quick Start</h1>
+
+      {% include quickstart.html %}
+      {% highlight html %}
+      {% include quickstart.html %}
+      {% endhighlight %}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

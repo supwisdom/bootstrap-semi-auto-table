@@ -1,0 +1,61 @@
+<table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <input type="checkbox" name="row.id" value="1"/>
+    </td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  $(function () {
+
+    var $table = $("#table");
+
+    var showSelectedRows = function () {
+      alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+    }
+
+    $table.semiAutoTable({
+      pageOption: false,
+      menus: [
+        {
+          title: 'Simple',
+          callback: showSelectedRows
+        },
+        {
+          title: 'With Icon',
+          icon: 'fa fa-calendar',
+          callback: showSelectedRows
+        },
+        {
+          title: 'Styled',
+          btnClass: 'btn-success',
+          callback: showSelectedRows
+        },
+        {
+          title: 'With tooltip',
+          tooltip: 'Tip Tip',
+          callback: showSelectedRows
+        },
+        {
+          title: 'All feature',
+          icon: 'fa fa-calendar',
+          btnClass: 'btn-danger',
+          tooltip: 'Tip Tip',
+          callback: showSelectedRows
+        }
+      ]
+    })
+
+
+
+  });
+</script>

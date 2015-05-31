@@ -1,0 +1,29 @@
+---
+layout: default
+title: Row Selector - Hide select-all button
+---
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Row Selector - 不显示全选按钮 <small></small></h2>
+      <p>
+        Select-all button is hidden but you can still check the checkbox by clicking the row.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      {% include rowselector/hide.html %}
+      {% highlight html %}
+      {% include rowselector/hide.html %}
+      {% endhighlight %}
+
+    </div>
+
+  </div>
+
+</div>

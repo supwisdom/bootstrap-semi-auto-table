@@ -1,0 +1,196 @@
+<div class="container">
+
+  <div id="table">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <br/>
+        <ul class="list-unstyled list-inline">
+          <li>Sort by:</li>
+          <li>
+            <a href="#" data-sort-by="price">Price</a>
+          </li>
+          <li>
+            <a href="#" data-sort-by="title">Title</a>
+          </li>
+          <li>
+            <a href="#" data-sort-by="rank">Rank</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-lg-4 book">
+        <h2>
+          Thinking in C++
+        </h2>
+
+        <p class="buy">
+          <input type="checkbox" name="book.id" value="1" id="book-1"/>
+          <label for="book-1">Put in purchase cart</label>
+        </p>
+
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+          condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+          Donec sed odio dui. </p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+      <div class="col-lg-4 book">
+        <h2>
+          Thinking in Java
+        </h2>
+
+        <p class="buy">
+          <input type="checkbox" name="book.id" value="2" id="book-2"/>
+          <label for="book-2">Put in purchase cart</label>
+        </p>
+
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+          condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+          Donec sed odio dui. </p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+      <div class="col-lg-4 book">
+        <h2>
+          Javascript Definitive Guide
+        </h2>
+
+        <p class="buy">
+          <input type="checkbox" name="book.id" value="3" id="book-3"/>
+          <label for="book-3">Put in purchase cart</label>
+        </p>
+
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
+          felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+          massa.</p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-lg-4 book">
+        <h2>
+          Patterns of Enterprise Application Architecture
+        </h2>
+
+        <p class="buy">
+          <input type="checkbox" name="book.id" value="4" id="book-4"/>
+          <label for="book-4">Put in purchase cart</label>
+        </p>
+
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+          condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+          Donec sed odio dui. </p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+      <div class="col-lg-4 book">
+        <h2>
+          Domain Driven Design
+        </h2>
+
+        <p class="buy">
+          <input type="checkbox" name="book.id" value="5" id="book-5"/>
+          <label for="book-5">Put in purchase cart</label>
+        </p>
+
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+          condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+          Donec sed odio dui. </p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+      <div class="col-lg-4 book">
+        <h2>
+          Design Pattern
+        </h2>
+
+        <p>
+          <input type="checkbox" name="book.id" value="6" id="book-6"/>
+          <label for="book-6">Put in purchase cart</label>
+        </p>
+
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
+          felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+          massa.</p>
+
+        <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  $(function () {
+    var $table = $("#table");
+    $table.semiAutoTable({
+
+      tableClass: '',
+      tableWrapperClass: '',
+
+      rowOption: {
+        rowSelector: '.buy',
+        inputName: 'book.id',
+        type: 'checkbox'
+      },
+
+      sortOption: {
+        'price': 'asc',
+        'title': 'desc'
+      },
+      menus: [
+        {
+          title: 'Menu1',
+          tooltip: 'tooltip',
+          callback: function () {
+            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+          }
+        },
+        {
+          title: 'Menu2',
+          callback: function () {
+            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+          }
+        },
+      ],
+      pageOption: {
+        currentPage: 11,
+        totalPages: 20,
+        totalRows: 202
+      }
+    }).on('pageChange', function (event, pageObject) {
+
+      console.log(JSON.stringify(pageObject));
+      $(this).semiAutoTable('updatePaginator', pageObject);
+
+    }).on('sortChange', function (event, sortObject) {
+
+      console.log(JSON.stringify(sortObject));
+
+      var $this = $(this);
+      var oldSortObject = $this.semiAutoTable('getSortObject');
+      $this.semiAutoTable('updateSortBy', $.extend(oldSortObject, sortObject));
+
+    });
+  });
+</script>
