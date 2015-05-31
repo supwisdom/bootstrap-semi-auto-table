@@ -28,7 +28,9 @@
     "src",
     "package.json",
     "docs",
-    "_config.yml"
+    "_config.yml",
+    "Gruntfile.js",
+    "grunt"
   ],
   "dependencies": {
     "jquery": ">= 1.9.1",
