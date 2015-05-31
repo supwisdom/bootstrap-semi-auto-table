@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Menu - Simple</title>
+
+  <link href="/assets/css/pygments-manni.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- bootstrap-select -->
+  <link rel="stylesheet" href="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.css">
+  <script src="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.js"></script>
+
+  <!-- bootstrap-semi-auto-table -->
+  <link rel="stylesheet" href="/dist/css/semi-auto-table.css">
+  <script src="/dist/semi-auto-table.js"></script>
+  <script>
+    $.fn.semiAutoTable.defaults.locale = 'en-US';
+  </script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">Bootstrap Semi-Auto Table</a>
+    </div>
+
+    <div>
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Row Selector<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/rowselector/inputname">Specify input name</a>
+            </li>
+            <li>
+              <a href="/rowselector/radio">Radio</a>
+            </li>
+            <li>
+              <a href="/rowselector/hide">Hide Select all button</a>
+            </li>
+            <li>
+              <a href="/rowselector/disable">Disable</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Menu <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/menu/button">Button</a>
+            </li>
+            <li>
+              <a href="/menu/dropdown">Button dropdowns</a>
+            </li>
+            <li>
+              <a href="/menu/split-dropdown">Split button dropdowns</a>
+            </li>
+            <li>
+              <a href="/menu/group">Button groups</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Pagination <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/pagination/default">Default</a></li>
+            <li><a href="/pagination/different-row-size-option">Specify rows per page</a></li>
+            <li><a href="/pagination/disable">Disable</a></li>
+          </ul>
+        </li>
+
+        <li><a href="/sort/default">Sort</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Examples <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/examples/form">Form post</a>
+            </li>
+            <li>
+              <a href="/examples/ajax">Ajax</a>
+            </li>
+            <li>
+              <a href="/examples/not-table">Non-table</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Documentation <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/options">Options</a>
+            </li>
+            <li>
+              <a href="/methods">Methods</a>
+            </li>
+            <li>
+              <a href="/events">Events</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Menu - Simple <small>有<code>dropdowns</code>, <code>callback</code>的菜单</small></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <table id="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <input type="checkbox" name="row.id" value="1"/>
+    </td>
+    <td>a</td><td>b</td><td>c</td><td>d</td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  $(function () {
+    var $table = $("#table");
+
+    var showSelectedRows = function () {
+      console.log('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+    }
+
+    $table.semiAutoTable({
+      pageOption: false,
+      menus: [
+        {
+          title: 'Simple',
+          callback: showSelectedRows,
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            },
+            'divider',
+            {
+              title: 'Icon sub-menu',
+              icon: 'fa fa-pagelines',
+              callback: showSelectedRows
+            },
+          ]
+        },
+        {
+          title: 'With icon',
+          callback: showSelectedRows,
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'Styled',
+          callback: showSelectedRows,
+          btnClass: 'btn-info',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'With tooltip',
+          callback: showSelectedRows,
+          tooltip: 'tooltip',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+        {
+          title: 'Full featured',
+          callback: showSelectedRows,
+          btnClass: 'btn-success',
+          tooltip: 'tooltip',
+          icon: 'fa fa-calendar',
+          dropdowns: [
+            {
+              title: 'Simple sub-menu',
+              callback: showSelectedRows
+            }
+          ]
+        },
+      ]
+    })
+  });
+</script>
+
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Column A<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column B<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column C<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column D<span class="nt">&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">$table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">showSelectedRows</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Selected rows: '</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">({</span>
+      <span class="na">pageOption</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="na">menus</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple'</span><span class="p">,</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span><span class="p">,</span>
+          <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple sub-menu'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">},</span>
+            <span class="s1">'divider'</span><span class="p">,</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Icon sub-menu'</span><span class="p">,</span>
+              <span class="na">icon</span><span class="p">:</span> <span class="s1">'fa fa-pagelines'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">},</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'With icon'</span><span class="p">,</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span><span class="p">,</span>
+          <span class="na">icon</span><span class="p">:</span> <span class="s1">'fa fa-calendar'</span><span class="p">,</span>
+          <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple sub-menu'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'Styled'</span><span class="p">,</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span><span class="p">,</span>
+          <span class="na">btnClass</span><span class="p">:</span> <span class="s1">'btn-info'</span><span class="p">,</span>
+          <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple sub-menu'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'With tooltip'</span><span class="p">,</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span><span class="p">,</span>
+          <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
+          <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple sub-menu'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'Full featured'</span><span class="p">,</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span><span class="p">,</span>
+          <span class="na">btnClass</span><span class="p">:</span> <span class="s1">'btn-success'</span><span class="p">,</span>
+          <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
+          <span class="na">icon</span><span class="p">:</span> <span class="s1">'fa fa-calendar'</span><span class="p">,</span>
+          <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="na">title</span><span class="p">:</span> <span class="s1">'Simple sub-menu'</span><span class="p">,</span>
+              <span class="na">callback</span><span class="p">:</span> <span class="nx">showSelectedRows</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">},</span>
+      <span class="p">]</span>
+    <span class="p">})</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+</body>
+
+</html>
+

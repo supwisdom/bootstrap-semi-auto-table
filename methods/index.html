@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Methods</title>
+
+  <link href="/assets/css/pygments-manni.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- bootstrap-select -->
+  <link rel="stylesheet" href="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.css">
+  <script src="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.js"></script>
+
+  <!-- bootstrap-semi-auto-table -->
+  <link rel="stylesheet" href="/dist/css/semi-auto-table.css">
+  <script src="/dist/semi-auto-table.js"></script>
+  <script>
+    $.fn.semiAutoTable.defaults.locale = 'en-US';
+  </script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">Bootstrap Semi-Auto Table</a>
+    </div>
+
+    <div>
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Row Selector<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/rowselector/inputname">Specify input name</a>
+            </li>
+            <li>
+              <a href="/rowselector/radio">Radio</a>
+            </li>
+            <li>
+              <a href="/rowselector/hide">Hide Select all button</a>
+            </li>
+            <li>
+              <a href="/rowselector/disable">Disable</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Menu <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/menu/button">Button</a>
+            </li>
+            <li>
+              <a href="/menu/dropdown">Button dropdowns</a>
+            </li>
+            <li>
+              <a href="/menu/split-dropdown">Split button dropdowns</a>
+            </li>
+            <li>
+              <a href="/menu/group">Button groups</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Pagination <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/pagination/default">Default</a></li>
+            <li><a href="/pagination/different-row-size-option">Specify rows per page</a></li>
+            <li><a href="/pagination/disable">Disable</a></li>
+          </ul>
+        </li>
+
+        <li><a href="/sort/default">Sort</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Examples <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/examples/form">Form post</a>
+            </li>
+            <li>
+              <a href="/examples/ajax">Ajax</a>
+            </li>
+            <li>
+              <a href="/examples/not-table">Non-table</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Documentation <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/options">Options</a>
+            </li>
+            <li>
+              <a href="/methods">Methods</a>
+            </li>
+            <li>
+              <a href="/events">Events</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Methods</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h4>
+        <code>$().semiAutoTable(options)</code>
+      </h4>
+      <p>
+        初始化semiAutoTable，options参数见 <a href="../options">这里</a>
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('get')</code>
+      </h4>
+      <p>
+        获得attach在元素上的Bootstrap Semi-Auto Table对象，下面的所有方法都可以先 <code>'get'</code>，然后直接调用，比如: <br/>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">semiAutoTable</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'get'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">semiAutoTable</span><span class="p">.</span><span class="nx">getSelectedRows</span><span class="p">();</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('getSelectedRows')</code>
+      </h4>
+      <p>
+        获得table里每行选中的checkbox或radio的value数组
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">);</span></code></pre></div>
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('updateRowButton', rowOption)</code>
+      </h4>
+      <p>
+        更新全选按钮，以及table的Row Selector行为，rowOption 见<a href="../options#rowOption">这里</a>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'checkbox'</span><span class="p">,</span>
+  <span class="na">showSelectAll</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">inputName</span><span class="p">:</span> <span class="s2">"row.id"</span>
+<span class="p">});</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('updateMenuItems', menus)</code>
+      </h4>
+      <p>
+        更新菜单项，menus 见<a href="../options#menus">这里</a>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateMenuItems'</span><span class="p">,</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu1'</span><span class="p">,</span>
+    <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
+    <span class="na">callback</span><span class="p">:</span> <span class="p">...</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu2'</span><span class="p">,</span>
+    <span class="na">callback</span><span class="p">:</span> <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">]);</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('addMenuItem', menuItemDefinition)</code>
+      </h4>
+      <p>
+        添加菜单，menuItemDefinition 见<a href="../options#MenuItemDefinition">这里</a>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'addMenuItem'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu1'</span><span class="p">,</span>
+  <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
+  <span class="na">callback</span><span class="p">:</span> <span class="p">...</span>
+<span class="p">});</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('updateSortBy', sortOption)</code>
+      </h4>
+      <p>
+        更新排序状态，sortOption 见<a href="../options#sortOption">这里</a>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateSortBy'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="s1">'A'</span><span class="p">:</span> <span class="s1">'asc'</span><span class="p">,</span>
+  <span class="s1">'B'</span><span class="p">:</span> <span class="s1">'desc'</span>
+<span class="p">});</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('getSortObject')</code>
+      </h4>
+      <p>
+        获得当前的排序信息
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sortObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSortObject'</span><span class="p">);</span>
+<span class="cm">/*
+{
+  'A': 'asc',
+  'B': 'desc',
+  'C': 'none',
+  ...
+}
+*/</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('updatePaginator', pageOption)</code>
+      </h4>
+      <p>
+        更新分页状态，pageOption 见<a href="../options#pageOption">这里</a>
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updatePaginator'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">currentPage</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+  <span class="na">totalPages</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="na">totalRows</span><span class="p">:</span> <span class="mi">202</span>
+<span class="p">});</span></code></pre></div>
+
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('getPageObject')</code>
+      </h4>
+      <p>
+        获得当前的分页信息
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pageObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getPageObject'</span><span class="p">);</span>
+<span class="cm">/*
+{
+  currentPage: ...,
+  totalPages: ...,
+  totalRows: ...,
+  rowsPerPage: ...
+}
+*/</span></code></pre></div>
+      </p>
+
+      <h4>
+        <code>.semiAutoTable('destroy')</code>
+      </h4>
+      <p>
+        删除semiAutoTable
+
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'destroy'</span><span class="p">);</span></code></pre></div>
+
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+</body>
+
+</html>
+
