@@ -3,15 +3,15 @@
   <tr>
     <th></th>
     <th>
-      <a href="#" data-sort-by="A">标题A</a>
+      <a href="#" data-sort-by="A">Column A</a>
     </th>
     <th>
-      <a href="#" data-sort-by="B">标题B</a>
+      <a href="#" data-sort-by="B">Column B</a>
     </th>
     <th>
-      <a href="#" data-sort-by="C">标题C</a>
+      <a href="#" data-sort-by="C">Column C</a>
     </th>
-    <th>标题D</th>
+    <th>Column D</th>
   </tr>
   </thead>
   <tbody>
@@ -52,11 +52,11 @@
           $table.find('tbody').append($tr);
         });
 
-        // 更新行选择器，否则全选和点击行选中就失效了
+        // You should update row button, otherwise select-all button will not work
         $table.semiAutoTable('updateRowButton', {});
-        // 更新排序
+        // Update sort status
         $table.semiAutoTable('updateSortBy', sortObject);
-        // 更新分页widget
+        // Update paginator
         $table.semiAutoTable('updatePaginator', result.page);
 
       });
@@ -69,11 +69,11 @@
       },
       menus: [
         {
-          title: '菜单1',
+          title: 'Menu1',
           callback: function() {}
         },
         {
-          title: '菜单2',
+          title: 'Menu2',
           callback: function() {}
         },
       ],

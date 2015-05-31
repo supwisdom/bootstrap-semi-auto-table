@@ -31,7 +31,9 @@
   <!-- bootstrap-semi-auto-table -->
   <link rel="stylesheet" href="/dist/css/semi-auto-table.css">
   <script src="/dist/semi-auto-table.js"></script>
-
+  <script>
+    $.fn.semiAutoTable.defaults.locale = 'en-US';
+  </script>
   <style>
     body {
       padding-top: 70px;
@@ -54,74 +56,79 @@
       <ul class="nav navbar-nav">
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">行选择 <span
-              class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Row Selector<span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/rowselector/inputname">指定inputName</a>
+              <a href="/rowselector/inputname">Specify input name</a>
             </li>
             <li>
-              <a href="/rowselector/radio">radio</a>
+              <a href="/rowselector/radio">Radio</a>
             </li>
             <li>
-              <a href="/rowselector/hide">不显示全选按钮</a>
+              <a href="/rowselector/hide">Hide Select all button</a>
             </li>
             <li>
-              <a href="/rowselector/disable">禁用</a>
+              <a href="/rowselector/disable">Disable</a>
             </li>
           </ul>
         </li>
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">菜单 <span
-              class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Menu <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/menu/button">按钮</a>
+              <a href="/menu/button">Button</a>
             </li>
             <li>
-              <a href="/menu/dropdown">下拉菜单</a>
+              <a href="/menu/dropdown">Button dropdowns</a>
             </li>
             <li>
-              <a href="/menu/split-dropdown">分离式下拉菜单</a>
+              <a href="/menu/split-dropdown">Split button dropdowns</a>
             </li>
             <li>
-              <a href="/menu/group">菜单组</a>
+              <a href="/menu/group">Button groups</a>
             </li>
           </ul>
         </li>
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">分页 <span
-              class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Pagination <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/pagination/default">默认</a></li>
-            <li><a href="/pagination/different-row-size-option">不一样的分页大小选项</a></li>
-            <li><a href="/pagination/disable">禁用</a></li>
+            <li><a href="/pagination/default">Default</a></li>
+            <li><a href="/pagination/different-row-size-option">Specify rows per page</a></li>
+            <li><a href="/pagination/disable">Disable</a></li>
           </ul>
         </li>
 
-        <li><a href="/sortby/default">排序</a></li>
+        <li><a href="/sort/default">Sort</a></li>
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">例子 <span
-              class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Examples <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/examples/form">嵌套在form里</a>
+              <a href="/examples/form">Form post</a>
             </li>
             <li>
-              <a href="/examples/ajax">ajax异步刷新</a>
+              <a href="/examples/ajax">Ajax</a>
             </li>
             <li>
-              <a href="/examples/not-table">非table</a>
+              <a href="/examples/not-table">Non-table</a>
             </li>
           </ul>
         </li>
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">文档 <span
-              class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Documentation <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
             <li>
               <a href="/options">Options</a>

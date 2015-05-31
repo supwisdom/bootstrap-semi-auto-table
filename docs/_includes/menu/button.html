@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <th></th>
-    <th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
   </tr>
   </thead>
   <tbody>
@@ -20,36 +20,36 @@
     var $table = $("#table");
 
     var showSelectedRows = function () {
-      console.log('当前选中的行: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+      alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
     }
 
     $table.semiAutoTable({
       pageOption: false,
       menus: [
         {
-          title: '简单按钮',
+          title: 'Simple',
           callback: showSelectedRows
         },
         {
-          title: '图标按钮',
+          title: 'With Icon',
           icon: 'fa fa-calendar',
           callback: showSelectedRows
         },
         {
-          title: '样式按钮',
+          title: 'Styled',
           btnClass: 'btn-success',
           callback: showSelectedRows
         },
         {
-          title: 'tooltip按钮',
-          tooltip: '按钮tip',
+          title: 'With tooltip',
+          tooltip: 'Tip Tip',
           callback: showSelectedRows
         },
         {
-          title: '综合按钮',
+          title: 'All feature',
           icon: 'fa fa-calendar',
           btnClass: 'btn-danger',
-          tooltip: '按钮tip',
+          tooltip: 'Tip Tip',
           callback: showSelectedRows
         }
       ]

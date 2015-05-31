@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <th></th>
-    <th>标题A</th><th>标题B</th><th>标题C</th><th>标题D</th>
+    <th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
   </tr>
   </thead>
   <tbody>
@@ -19,65 +19,65 @@
     var $table = $("#table");
 
     var showSelectedRows = function () {
-      console.log('当前选中的行: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
+      alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
     }
 
     $table.semiAutoTable({
       pageOption: false,
       menus: [
         {
-          title: '下拉菜单',
+          title: 'Simple',
           dropdowns: [
             {
-              title: '普通子菜单',
+              title: 'Simple sub-menu',
               callback: showSelectedRows
             },
             'divider',
             {
-              title: '有图标的子菜单',
+              title: 'Icon sub-menu',
               icon: 'fa fa-pagelines',
               callback: showSelectedRows
             },
           ]
         },
         {
-          title: '图标下拉菜单',
+          title: 'With icon',
           icon: 'fa fa-calendar',
           dropdowns: [
             {
-              title: '普通子菜单',
+              title: 'Simple sub-menu',
               callback: showSelectedRows
             }
           ]
         },
         {
-          title: '样式下拉菜单',
+          title: 'Styled',
           btnClass: 'btn-info',
           dropdowns: [
             {
-              title: '普通子菜单',
+              title: 'Simple sub-menu',
               callback: showSelectedRows
             }
           ]
         },
         {
-          title: 'tooltip下拉菜单',
+          title: 'With tooltip',
           tooltip: 'tooltip',
           dropdowns: [
             {
-              title: '普通子菜单',
+              title: 'Simple sub-menu',
               callback: showSelectedRows
             }
           ]
         },
         {
-          title: '综合下拉菜单',
+          title: 'Full feature',
           btnClass: 'btn-success',
           tooltip: 'tooltip',
           icon: 'fa fa-calendar',
           dropdowns: [
             {
-              title: '普通子菜单',
+              title: 'Simple sub-menu',
               callback: showSelectedRows
             }
           ]
