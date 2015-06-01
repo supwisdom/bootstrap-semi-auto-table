@@ -7,7 +7,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>{{ page.title }}</title>
 
-  <link href="/assets/css/pygments-manni.css" rel="stylesheet">
+  <link href="{{ page.basePath }}/assets/css/pygments-manni.css" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ site.cdn.bootstrap_css }}">
 
@@ -29,8 +29,8 @@
   <script src="{{ site.cdn.bootstrap_select_js }}"></script>
 
   <!-- bootstrap-semi-auto-table -->
-  <link rel="stylesheet" href="/dist/css/semi-auto-table.css">
-  <script src="/dist/semi-auto-table.js"></script>
+  <link rel="stylesheet" href="{{ page.basePath }}/dist/css/semi-auto-table.css">
+  <script src="{{ page.basePath }}/dist/semi-auto-table.js"></script>
   <script>
     $.fn.semiAutoTable.defaults.locale = 'en-US';
   </script>
@@ -61,16 +61,16 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/rowselector/inputname">Specify input name</a>
+              <a href="{{ page.basePath }}/rowselector/inputname">Specify input name</a>
             </li>
             <li>
-              <a href="/rowselector/radio">Radio</a>
+              <a href="{{ page.basePath }}/rowselector/radio">Radio</a>
             </li>
             <li>
-              <a href="/rowselector/hide">Hide Select all button</a>
+              <a href="{{ page.basePath }}/rowselector/hide">Hide Select all button</a>
             </li>
             <li>
-              <a href="/rowselector/disable">Disable</a>
+              <a href="{{ page.basePath }}/rowselector/disable">Disable</a>
             </li>
           </ul>
         </li>
@@ -81,16 +81,16 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/menu/button">Button</a>
+              <a href="{{ page.basePath }}/menu/button">Button</a>
             </li>
             <li>
-              <a href="/menu/dropdown">Button dropdowns</a>
+              <a href="{{ page.basePath }}/menu/dropdown">Button dropdowns</a>
             </li>
             <li>
-              <a href="/menu/split-dropdown">Split button dropdowns</a>
+              <a href="{{ page.basePath }}/menu/split-dropdown">Split button dropdowns</a>
             </li>
             <li>
-              <a href="/menu/group">Button groups</a>
+              <a href="{{ page.basePath }}/menu/group">Button groups</a>
             </li>
           </ul>
         </li>
@@ -100,13 +100,13 @@
             Pagination <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/pagination/default">Default</a></li>
-            <li><a href="/pagination/different-row-size-option">Specify rows per page</a></li>
-            <li><a href="/pagination/disable">Disable</a></li>
+            <li><a href="{{ page.basePath }}/pagination/default">Default</a></li>
+            <li><a href="{{ page.basePath }}/pagination/specify-row-size-option">Specify rows size option</a></li>
+            <li><a href="{{ page.basePath }}/pagination/disable">Disable</a></li>
           </ul>
         </li>
 
-        <li><a href="/sort/default">Sort</a></li>
+        <li><a href="{{ page.basePath }}/sort/default">Sort</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,13 +114,13 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/examples/form">Form post</a>
+              <a href="{{ page.basePath }}/examples/form">Form post</a>
             </li>
             <li>
-              <a href="/examples/ajax">Ajax</a>
+              <a href="{{ page.basePath }}/examples/ajax">Ajax</a>
             </li>
             <li>
-              <a href="/examples/not-table">Non-table</a>
+              <a href="{{ page.basePath }}/examples/not-table">Non-table</a>
             </li>
           </ul>
         </li>
@@ -131,13 +131,13 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="/options">Options</a>
+              <a href="{{ page.basePath }}/options">Options</a>
             </li>
             <li>
-              <a href="/methods">Methods</a>
+              <a href="{{ page.basePath }}/methods">Methods</a>
             </li>
             <li>
-              <a href="/events">Events</a>
+              <a href="{{ page.basePath }}/events">Events</a>
             </li>
           </ul>
         </li>
