@@ -1,5 +1,6 @@
 ---
 layout: default
+basePath: ..
 title: Events
 ---
 
@@ -27,7 +28,7 @@ title: Events
         <tr>
           <td>pageChange</td>
           <td>
-            翻页的时候触发。
+            Triggered when click top page, prev page, next page, last page and Go button.
 
             {% highlight javascript %}
             {% include events/pageChange.html %}
@@ -37,7 +38,9 @@ title: Events
         <tr>
           <td>sortChange</td>
           <td>
-            排序发生变化的时候触发。传入的 <code>sortObject</code>仅仅包含了排序发生变化的部分，而不是所有。
+            Triggered when click <code>[data-sort-by]</code> element。
+
+            The <code>sortObject</code> passed in just include the clicked <code>[data-sort-by]</code> element, not all.
 
             {% highlight javascript %}
             {% include events/sortChange.html %}

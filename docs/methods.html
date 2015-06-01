@@ -1,5 +1,6 @@
 ---
 layout: default
+basePath: ..
 title: Methods
 ---
 
@@ -19,126 +20,128 @@ title: Methods
         <code>$().semiAutoTable(options)</code>
       </h4>
       <p>
-        初始化semiAutoTable，options参数见 <a href="../options">这里</a>
+        Initialize semiAutoTable. <code>options</code> doc <a href="../options">see here</a>
       </p>
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('get')</code>
       </h4>
       <p>
-        获得attach在元素上的Bootstrap Semi-Auto Table对象，下面的所有方法都可以先 <code>'get'</code>，然后直接调用，比如: <br/>
-
-        {% highlight javascript %}
-        {% include methods/get.html %}
-        {% endhighlight %}
-
+        Get the semiAutoTable object attached on the element. Examples:
       </p>
+      {% highlight javascript %}
+      {% include methods/get.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('getSelectedRows')</code>
       </h4>
       <p>
-        获得table里每行选中的checkbox或radio的value数组
-
-        {% highlight javascript %}
-        {% include methods/getSelectedRows.html %}
-        {% endhighlight %}
+        Get value array of checked <code>checkbox</code> or <code>radio</code>
       </p>
+      {% highlight javascript %}
+      {% include methods/getSelectedRows.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('updateRowButton', rowOption)</code>
       </h4>
       <p>
-        更新全选按钮，以及table的Row Selector行为，rowOption 见<a href="../options#rowOption">这里</a>
-
-        {% highlight javascript %}
-        {% include methods/updateRowButton.html %}
-        {% endhighlight %}
-
+        Update select-all button and row selector. <code>rowOption</code> doc <a href="../options#rowOption">see here</a>
       </p>
+      {% highlight javascript %}
+      {% include methods/updateRowButton.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('updateMenuItems', menus)</code>
       </h4>
       <p>
-        更新菜单项，menus 见<a href="../options#menus">这里</a>
-
-        {% highlight javascript %}
-        {% include methods/updateMenuItems.html %}
-        {% endhighlight %}
-
+        Update menus. <code>menus</code> doc <a href="../options#menus">see here</a>
       </p>
+      {% highlight javascript %}
+      {% include methods/updateMenuItems.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
-        <code>.semiAutoTable('addMenuItem', menuItemDefinition)</code>
+        <code>.semiAutoTable('addMenuItem', buttonDefinition)</code>
       </h4>
       <p>
-        添加菜单，menuItemDefinition 见<a href="../options#MenuItemDefinition">这里</a>
-
-        {% highlight javascript %}
-        {% include methods/addMenuItem.html %}
-        {% endhighlight %}
-
+        Add menu. <code>buttonDefinition</code> doc see <a href="../options#ButtonDefinition">here</a>
       </p>
+      {% highlight javascript %}
+      {% include methods/addMenuItem.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('updateSortBy', sortOption)</code>
       </h4>
       <p>
-        更新排序状态，sortOption 见<a href="../options#sortOption">这里</a>
-
-        {% highlight javascript %}
-        {% include methods/updateSortBy.html %}
-        {% endhighlight %}
-
+        Update sorter. <code>sortOption</code> doc see <a href="../options#sortOption">here</a>
       </p>
+      {% highlight javascript %}
+      {% include methods/updateSortBy.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('getSortObject')</code>
       </h4>
       <p>
-        获得当前的排序信息
-
-        {% highlight javascript %}
-        {% include methods/getSortObject.html %}
-        {% endhighlight %}
-
+        Get sortObject.
       </p>
+      {% highlight javascript %}
+      {% include methods/getSortObject.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('updatePaginator', pageOption)</code>
       </h4>
       <p>
-        更新分页状态，pageOption 见<a href="../options#pageOption">这里</a>
-
-        {% highlight javascript %}
-        {% include methods/updatePaginator.html %}
-        {% endhighlight %}
-
+        Update paginator. <code>pageOption</code> doc see <a href="../options#pageOption">here</a>
       </p>
+      {% highlight javascript %}
+      {% include methods/updatePaginator.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('getPageObject')</code>
       </h4>
       <p>
-        获得当前的分页信息
-
-        {% highlight javascript %}
-        {% include methods/getPageObject.html %}
-        {% endhighlight %}
+        Get current pagination info
       </p>
+      {% highlight javascript %}
+      {% include methods/getPageObject.html %}
+      {% endhighlight %}
+
+      <hr/>
 
       <h4>
         <code>.semiAutoTable('destroy')</code>
       </h4>
       <p>
-        删除semiAutoTable
-
-        {% highlight javascript %}
-        {% include methods/destroy.html %}
-        {% endhighlight %}
-
+        Destroy <code>semiAutoTable</code> element
       </p>
+      {% highlight javascript %}
+      {% include methods/destroy.html %}
+      {% endhighlight %}
 
     </div>
 

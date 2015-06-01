@@ -139,8 +139,7 @@ module.exports = function (grunt) {
         ignore: [
           'Attribute "autocomplete" not allowed on element "button" at this point.',
           'Attribute "autocomplete" not allowed on element "input" at this point.',
-          'Element "img" is missing required attribute "src".',
-          'No “p” element in scope but a “p” end tag seen.'
+          'Element "img" is missing required attribute "src".'
         ]
       },
       src: '_gh_pages/**/*.html'

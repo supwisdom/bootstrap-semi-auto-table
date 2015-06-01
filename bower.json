@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-semi-auto-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/chanjarster/bootstrap-semi-auto-table",
   "authors": [
     "Daniel Qian <chanjarster@gmail.com>"
@@ -28,7 +28,9 @@
     "src",
     "package.json",
     "docs",
-    "_config.yml"
+    "_config.yml",
+    "Gruntfile.js",
+    "grunt"
   ],
   "dependencies": {
     "jquery": ">= 1.9.1",

@@ -11,17 +11,23 @@
   <tbody>
   <tr>
     <td><input type="checkbox" name="row.id" value="1"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="row.id" value="2"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   </tbody>
 </table>
 
 <script>
-  $(function() {
+  $(function () {
     var $table = $("#table");
     $table.semiAutoTable({
       sortOption: {
@@ -32,28 +38,44 @@
         {
           title: 'Menu1',
           tooltip: 'tooltip',
-          callback: function() {
+          callback: function () {
             console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
           }
         },
-        {
-          title: 'Menu2',
-          callback: function() {
-            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+        [
+          {
+            title: 'Menu2',
+            dropdowns: [
+              {
+                title: 'Submenu-2'
+              }
+            ]
+          },
+          {
+            title: 'Menu3',
+            dropdowns: [
+              {
+                title: 'Submenu-3'
+              }
+            ],
+            callback: function () {
+              console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+            }
           }
-        },
+        ]
+
       ],
       pageOption: {
         currentPage: 11,
         totalPages: 20,
         totalRows: 202
       }
-    }).on('pageChange', function(event, pageObject) {
+    }).on('pageChange', function (event, pageObject) {
 
       console.log(JSON.stringify(pageObject));
       $(this).semiAutoTable('updatePaginator', pageObject);
 
-    }).on('sortChange', function(event, sortObject) {
+    }).on('sortChange', function (event, sortObject) {
 
       console.log(JSON.stringify(sortObject));
 
