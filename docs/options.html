@@ -42,14 +42,14 @@ title: Options
         <tr>
           <td>btnGroupSize</td>
           <td>string</td>
-          <td>'btn-group-sm'</td>
-          <td>按钮的大小，<a href="http://getbootstrap.com/components/#btn-groups-sizing">参见这里</a></td>
+          <td><code>'btn-group-sm'</code></td>
+          <td>Button size，<a href="http://getbootstrap.com/components/#btn-groups-sizing">See here</a></td>
         </tr>
         <tr>
-          <td>btnClass</td>
+          <td id="btnClass">btnClass</td>
           <td>string</td>
           <td><code>'btn-default'</code></td>
-          <td>所有按钮的class, <a href="http://getbootstrap.com/css/#buttons-options">参见这里</a></td>
+          <td>Button class, <a href="http://getbootstrap.com/css/#buttons-options">See here</a></td>
         </tr>
 
         <tr>
@@ -102,7 +102,7 @@ title: Options
         </tr>
 
         <tr>
-          <td colspan="4"><h4 id="rowOption">rowOption <small>选择记录行的参数</small></h4></td>
+          <td colspan="4"><h4 id="rowOption">rowOption <small>option for select-all button and row selector</small></h4></td>
         </tr>
         <tr>
           <td></td>
@@ -117,32 +117,32 @@ title: Options
             </code>
           </td>
           <td>
-            如果为 false，就不显示全选按钮，也没有click点击某行的特性 <br/>
+            if <code>false</code>, will hide select-all button and disable row selector
           </td>
         </tr>
         <tr>
           <td>type</td>
           <td>string</td>
           <td><code>'checkbox'</code></td>
-          <td>取值范围：checkbox，radio, none</td>
+          <td>Value range: <code>'checkbox'</code>, <code>'radio'</code>, <code>'none'</code></td>
         </tr>
         <tr>
           <td>showSelectAll</td>
           <td>boolean</td>
           <td><code>true</code></td>
-          <td>控制是否显示全选按钮，如果type=radio或none，不会显示全选按钮</td>
+          <td>Hide or show the select-all button. If  <code>type=='radio'</code>, select-all button will be hidden</td>
         </tr>
         <tr>
           <td>inputName</td>
           <td>string</td>
           <td><code>'row.id'</code></td>
-          <td>table里每行里的checkbox或radio的name，如果type=none，会忽略此值</td>
+          <td>checkbox or radio elements' name in the table row. If <code>type=='none'</code>如果type=none, this value is ignored</td>
         </tr>
         <tr>
           <td>rowSelector</td>
           <td>string</td>
           <td><code>'> tbody > tr'</code></td>
-          <td>数据行 <a href="http://api.jquery.com/category/selectors/">selector</a></td>
+          <td>data row <a href="http://api.jquery.com/category/selectors/">selector</a></td>
         </tr>
 
         <tr>
@@ -157,8 +157,8 @@ title: Options
 
           </td>
           <td>
-            如果为 <code>false</code>，那么就不显示分页widget <br/>
-            否则必须是包含是以下属性的object: <code>currentPage, totalPages, totalRows</code>
+            if <code>false</code>, paginator will be hidden. <br/>
+            <code>option</code> object must include <code>currentPage, totalPages, totalRows</code> attributes
           </td>
         </tr>
         <tr>
@@ -167,36 +167,36 @@ title: Options
           <td>
             <code>'20,50,100,200,500,1000'</code>
           </td>
-          <td>每页多少条的选项</td>
+          <td>options for how many rows per page</td>
         </tr>
         <tr>
           <td>currentPage</td>
           <td>int</td>
           <td></td>
-          <td>当前第几页, 如果没填则不显示分页widget</td>
+          <td>Current page</td>
         </tr>
         <tr>
           <td>rowsPerPage</td>
           <td>int</td>
           <td><code>rowsPerPageOptions[0]</code></td>
-          <td>每页多少条</td>
+          <td>how many rows per page</td>
         </tr>
         <tr>
           <td>totalPages</td>
           <td>int</td>
           <td></td>
-          <td>总页数, 如果没填则不显示分页widget</td>
+          <td>total pages</td>
         </tr>
         <tr>
           <td>totalRows</td>
           <td>int</td>
           <td></td>
-          <td>总行数, 如果没填则不显示分页widget</td>
+          <td>total rows</td>
         </tr>
 
         <tr>
           <td colspan="4">
-            <h4 id="sortOption">sortOption <small>排序状态</small></h4>
+            <h4 id="sortOption">sortOption <small>sort status</small></h4>
           </td>
         </tr>
         <tr>
@@ -204,7 +204,7 @@ title: Options
           <td>object</td>
           <td><code>sortOption: {}</code></td>
           <td>
-            设置排序状态 <br/>
+            example: <br/>
 
             <code>
               sortOption: { <br/>
@@ -216,54 +216,63 @@ title: Options
           </td>
         </tr>
         <tr>
-          <td>表头排序状态</td>
+          <td><code>[data-sort-by]</code> status</td>
           <td>
             <code>
-              'sortByName': 'order'
+              'name': 'order'
             </code>
 
           </td>
           <td></td>
           <td>
-            在table的某个元素上设置<code>data-table-sort-by="A"</code> 就能激活排序功能 <br/><br/>
+            <code>[data-sort-by]</code> element will automatically enable sort function<br/>
+            <br/>
 
-            设置'A'的排序状态
+            example:
+            <br/>
+            <code>&lt;a href="#" data-sort-by="A"&gt; Column A &lt;/a&gt;</code> <br/>
             <code>
               sortOption: {
               'A': 'desc'
               }
             </code>
             <br>
-            那么那个元素上就会出现 <i class="fa fa-caret-down"></i>
+
+            the result will be <a href="#">Column A <i class="fa fa-sort-desc"></i></a>
 
             <br/>
             <br/>
-            取值范围: <br/>
-            <code>'asc'</code>, 图标: <i class="fa fa-caret-up"></i> <br/>
-            <code>'desc'</code>, 图标: <i class="fa fa-caret-down"></i> <br/>
-            不设置，图标： <i class="fa fa-sort"></i>
+
+            Value range: <br/>
+            <code>'asc'</code>, icon: <i class="fa fa-sort-asc"></i> <br/>
+            <code>'desc'</code>, icon: <i class="fa fa-sort-desc"></i> <br/>
+            unset, icon: <i class="fa fa-sort"></i>
           </td>
         </tr>
 
         <tr>
-          <td colspan="4"><h4 id="menus">menus <small>菜单按钮列表</small></h4></td>
+          <td colspan="4"><h4 id="menus">menus <small>button definition list</small></h4></td>
         </tr>
         <tr>
           <td></td>
-          <td>array of <a href="#MenuItemDefinition">MenuItemDefinition</a></td>
+          <td>array of <a href="#ButtonDefinition">ButtonDefinition</a></td>
           <td><code>menus: []</code></td>
           <td>
-            菜单按钮配置列表,<br/><br/>
-            <u><a href="#MenuItemDefinition">MenuItemDefinition</a></u>有4种: <br/>
-            1.按钮, 2.Simple, 3.Simple <br/>
-            4.将以上三种分到一组里(放到一个数组里)
+            there are 4 kinds of <a href="#ButtonDefinition">ButtonDefinition</a>
+
+            <ol>
+              <li><a href="http://getbootstrap.com/css/#buttons">Buttons</a></li>
+              <li><a href="http://getbootstrap.com/components/#btn-dropdowns-single">Single button dropdowns</a></li>
+              <li><a href="http://getbootstrap.com/components/#btn-dropdowns-split">Split button dropdowns</a></li>
+              <li><a href="http://getbootstrap.com/components/#btn-groups">Button groups</a></li>
+            </ol>
 
           </td>
         </tr>
         </tbody>
 
         <tr>
-          <td colspan="4"><h4 id="MenuItemDefinition">MenuItemDefinition - 按钮</h4></td>
+          <td colspan="4"><h4 id="ButtonDefinition">ButtonDefinition - Buttons</h4></td>
         </tr>
 
         <tr>
@@ -271,7 +280,8 @@ title: Options
           <td>object</td>
           <td></td>
           <td>
-            菜单按钮的配置 <br/>
+            example:
+            <br/>
             <code>
               { <br/>
               title: ..., <br/>
@@ -287,45 +297,40 @@ title: Options
           <td>title</td>
           <td>string</td>
           <td></td>
-          <td>非必填，按钮标题</td>
+          <td>not required, button title</td>
         </tr>
         <tr>
           <td>icon</td>
           <td>string</td>
           <td></td>
-          <td>非必填，可以是
-            <a href="http://fortawesome.github.io/Font-Awesome/icons/">Fontawesome</a>,
-            <a href="http://getbootstrap.com/components/#glyphicons">Glyphicons</a>的图标字体，比如 <code>fa fa-calendar</code></td>
+          <td>
+            not required，can be icon of
+            <a href="http://fortawesome.github.io/Font-Awesome/icons/">Fontawesome</a> or
+            <a href="http://getbootstrap.com/components/#glyphicons">Glyphicons</a>，eg. <code>fa fa-calendar</code></td>
         </tr>
         <tr>
           <td>btnClass</td>
           <td>string</td>
           <td></td>
-          <td>非必填，覆盖最上面btnClass的设置</td>
+          <td>not required，override global <a href="#btnClass">btnClass</a> setting</td>
         </tr>
         <tr>
           <td>tooltip</td>
           <td>string</td>
           <td></td>
-          <td>非必填，鼠标悬浮时显示的 <a href="http://getbootstrap.com/javascript/#tooltips">tooltip</a></td>
+          <td>not required, <a href="http://getbootstrap.com/javascript/#tooltips">tooltip</a></td>
         </tr>
         <tr>
           <td>callback</td>
           <td>function</td>
           <td></td>
           <td>
-            非必填，点击按钮后触发的回调函数，比如这样
-            <br/>
-            <code>
-              function () { <br/>
-              var semiAutoTable = this;  // this指向semiAutoTable对象 <br/>
-              }
-            </code>
+            not required, triggered when click
           </td>
         </tr>
 
         <tr>
-          <td colspan="4"><h4>MenuItemDefinition - Simple</h4></td>
+          <td colspan="4"><h4>ButtonDefinition - Single button dropdowns</h4></td>
         </tr>
 
         <tr>
@@ -333,13 +338,14 @@ title: Options
           <td>object</td>
           <td></td>
           <td>
-            Simple的配置 <br/>
+            example:
+            <br/>
             <code>
               { <br/>
-              title: ..., (非必填)<br/>
-              icon: ..., (非必填)<br/>
-              btnClass: ..., (非必填)<br/>
-              tooltip: ..., (非必填)<br/>
+              title: ..., (not required)<br/>
+              icon: ..., (not required)<br/>
+              btnClass: ..., (not required)<br/>
+              tooltip: ..., (not required)<br/>
               dropdowns: ... <br/>
               }
             </code>
@@ -347,44 +353,46 @@ title: Options
         </tr>
         <tr>
           <td>dropdowns</td>
-          <td>array of Simple项</td>
+          <td>array of <a href="#dropdown">dropdowns</a></td>
           <td></td>
-          <td>
-            Simple项的数组，Simple项的定义看下面
-          </td>
+          <td></td>
         </tr>
         <tr>
-          <td>Simple项</td>
+          <td id="dropdown">dropdown</td>
           <td>object | 'divider'</td>
           <td></td>
           <td>
-            菜单项: <br/>
+            example: <br/>
             <code>
               { <br/>
               title: ..., <br/>
-              icon: ..., (非必填)<br/>
+              icon: ..., (not required)<br/>
               callback: ..., <br/>
               }
-            </code> <br/>
-            分隔线: <code>'divider'</code>
+            </code>
+            <br/>
+            or
+            <br/>
+            <code>'divider'</code>
           </td>
         </tr>
 
         <tr>
-          <td colspan="4"><h4>MenuItemDefinition - Simple</h4></td>
+          <td colspan="4"><h4>ButtonDefinition - Split button dropdowns</h4></td>
         </tr>
         <tr>
           <td></td>
           <td>object</td>
           <td></td>
           <td>
-            Simple配置 <br/>
+            example:
+            <br/>
             <code>
               { <br/>
-              title: ..., (非必填)<br/>
-              icon: ..., (非必填)<br/>
-              btnClass: ..., (非必填)<br/>
-              tooltip: ..., (非必填)<br/>
+              title: ..., (not required)<br/>
+              icon: ..., (not required)<br/>
+              btnClass: ..., (not required)<br/>
+              tooltip: ..., (not required)<br/>
               callback: ..., <br/>
               dropdowns: ... <br/>
               }
@@ -392,6 +400,20 @@ title: Options
           </td>
         </tr>
 
+        <tr>
+          <td colspan="4"><h4>ButtonDefinition - Button groups</h4></td>
+
+        </tr>
+        <tr>
+          <td></td>
+          <td>array of <a href="#ButtonDefinition">ButtonDefinition</a></td>
+          <td></td>
+          <td>
+            example:
+            <br/>
+            <code>[ Button, Single button dropdowns, Split button dropdowns, ...]</code>
+          </td>
+        </tr>
       </table>
 
     </div>

@@ -8,6 +8,18 @@
 
     width: 110px !important;
 }
+.semi-auto-table-toolbar .semi-auto-table-paginator .page-jump
+{
+    font-size: 14px;
+    line-height: 1.42857143;
+
+    padding: 7px 10px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .page-jump > input
+{
+    width: 35px;
+    height: 20px;
+}
 .semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-sm.page-jump
 {
     font-size: 12px;
@@ -16,6 +28,30 @@
     padding: 5px 10px;
 }
 .semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-sm.page-jump > input
+{
+    width: 35px;
+    height: 20px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-lg.page-jump
+{
+    font-size: 18px;
+    line-height: 1.3333333;
+
+    padding: 5px 10px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-lg.page-jump > input
+{
+    width: 35px;
+    height: 36px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-xs.page-jump
+{
+    font-size: 12px;
+    line-height: 1.5;
+
+    padding: 1px 10px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .btn-group-xs.page-jump > input
 {
     width: 35px;
     height: 20px;

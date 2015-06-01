@@ -324,9 +324,7 @@
     } else {
 
       // handle btn group nesting http://getbootstrap.com/components/#btn-groups-nested
-      if ($btnGroup.find("> .btn").length > 0) {
-        $btnGroup = this.appendButtonGroup($btnGroup);
-      }
+      $btnGroup = this.appendButtonGroup($btnGroup);
       var $dropdown;
       if (!callback) {
         // 普通下拉菜单

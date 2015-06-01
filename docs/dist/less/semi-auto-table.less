@@ -1,3 +1,5 @@
+@import 'variables.less';
+
 .semi-auto-table-toolbar {
 
   .semi-auto-table-menubar {
@@ -15,11 +17,50 @@
       float: left !important;
     }
 
+    .page-jump {
+
+      padding: 7px 10px;
+      font-size: @font-size-base;
+      line-height: @line-height-base;
+
+      > input {
+        width: 35px;
+        height: 20px;
+      }
+
+    }
+
     .btn-group-sm.page-jump {
 
       padding: 5px 10px;
-      font-size: 12px;
-      line-height: 1.5;
+      font-size: @font-size-small;
+      line-height: @line-height-small;
+
+      > input {
+        width: 35px;
+        height: 20px;
+      }
+
+    }
+
+    .btn-group-lg.page-jump {
+
+      padding: 5px 10px;
+      font-size: @font-size-large;
+      line-height: @line-height-large;
+
+      > input {
+        width: 35px;
+        height: 36px;
+      }
+
+    }
+
+    .btn-group-xs.page-jump {
+
+      padding: 1px 10px;
+      font-size: @font-size-small;
+      line-height: @line-height-small;
 
       > input {
         width: 35px;
