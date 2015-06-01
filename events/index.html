@@ -67,7 +67,7 @@
               <a href="../rowselector/radio">Radio</a>
             </li>
             <li>
-              <a href="../rowselector/hide">Hide Select all button</a>
+              <a href="../rowselector/hide">Hide Select-all button</a>
             </li>
             <li>
               <a href="../rowselector/disable">Disable</a>
@@ -174,7 +174,7 @@
         <tr>
           <td>pageChange</td>
           <td>
-            翻页的时候触发。
+            Triggered when click top page, prev page, next page, last page and Go button.
 
             <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// do something</span>
@@ -184,7 +184,9 @@
         <tr>
           <td>sortChange</td>
           <td>
-            排序发生变化的时候触发。传入的 <code>sortObject</code>仅仅包含了排序发生变化的部分，而不是所有。
+            Triggered when click <code>[data-sort-by]</code> element。
+
+            The <code>sortObject</code> passed in just include the clicked <code>[data-sort-by]</code> element, not all.
 
             <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// do something</span>

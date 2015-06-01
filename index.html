@@ -67,7 +67,7 @@
               <a href="./rowselector/radio">Radio</a>
             </li>
             <li>
-              <a href="./rowselector/hide">Hide Select all button</a>
+              <a href="./rowselector/hide">Hide Select-all button</a>
             </li>
             <li>
               <a href="./rowselector/disable">Disable</a>
@@ -203,14 +203,12 @@
       <p>Source, dist, and docs.</p>
 
       <p>
-        <a href="https://github.com/chanjarster/bootstrap-semi-auto-table/archive/master.zip"
-           class="btn btn-lg btn-default" role="button">Download source</a>
+        <a href="https://github.com/chanjarster/bootstrap-semi-auto-table/archive/master.zip" class="btn btn-lg btn-default" role="button">Download source</a>
       </p>
 
       <h2>Clone or fork via GitHub</h2>
       <p>
-        <a href="https://github.com/chanjarster/bootstrap-semi-auto-table"
-           class="btn btn-lg btn-default" role="button">Via Github</a>
+        <a href="https://github.com/chanjarster/bootstrap-semi-auto-table" class="btn btn-lg btn-default" role="button">Via Github</a>
       </p>
 
       <h2>Install with Bower</h2>
@@ -232,17 +230,23 @@
   <tbody>
   <tr>
     <td><input type="checkbox" name="row.id" value="1"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="row.id" value="2"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   </tbody>
 </table>
 
 <script>
-  $(function() {
+  $(function () {
     var $table = $("#table");
     $table.semiAutoTable({
       sortOption: {
@@ -253,28 +257,44 @@
         {
           title: 'Menu1',
           tooltip: 'tooltip',
-          callback: function() {
+          callback: function () {
             console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
           }
         },
-        {
-          title: 'Menu2',
-          callback: function() {
-            console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+        [
+          {
+            title: 'Menu2',
+            dropdowns: [
+              {
+                title: 'Submenu-2'
+              }
+            ]
+          },
+          {
+            title: 'Menu3',
+            dropdowns: [
+              {
+                title: 'Submenu-3'
+              }
+            ],
+            callback: function () {
+              console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+            }
           }
-        },
+        ]
+
       ],
       pageOption: {
         currentPage: 11,
         totalPages: 20,
         totalRows: 202
       }
-    }).on('pageChange', function(event, pageObject) {
+    }).on('pageChange', function (event, pageObject) {
 
       console.log(JSON.stringify(pageObject));
       $(this).semiAutoTable('updatePaginator', pageObject);
 
-    }).on('sortChange', function(event, sortObject) {
+    }).on('sortChange', function (event, sortObject) {
 
       console.log(JSON.stringify(sortObject));
 
@@ -299,17 +319,23 @@
   <span class="nt">&lt;tbody&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
     <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">/&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
     <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;/tbody&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">$table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">);</span>
     <span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">({</span>
       <span class="na">sortOption</span><span class="p">:</span> <span class="p">{</span>
@@ -320,28 +346,44 @@
         <span class="p">{</span>
           <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu1'</span><span class="p">,</span>
           <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
-          <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">)));</span>
           <span class="p">}</span>
         <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu2'</span><span class="p">,</span>
-          <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">)));</span>
+        <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu2'</span><span class="p">,</span>
+            <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="na">title</span><span class="p">:</span> <span class="s1">'Submenu-2'</span>
+              <span class="p">}</span>
+            <span class="p">]</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu3'</span><span class="p">,</span>
+            <span class="na">dropdowns</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="na">title</span><span class="p">:</span> <span class="s1">'Submenu-3'</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">)));</span>
+            <span class="p">}</span>
           <span class="p">}</span>
-        <span class="p">},</span>
+        <span class="p">]</span>
+
       <span class="p">],</span>
       <span class="na">pageOption</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">currentPage</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
         <span class="na">totalPages</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
         <span class="na">totalRows</span><span class="p">:</span> <span class="mi">202</span>
       <span class="p">}</span>
-    <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
 
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">pageObject</span><span class="p">));</span>
       <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updatePaginator'</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">);</span>
 
-    <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
 
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">sortObject</span><span class="p">));</span>
 
