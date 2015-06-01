@@ -870,7 +870,7 @@
       }
 
       var pageNo = parseInt(val, 10);
-      if (pageNo > totalPages) {
+      if (pageNo > self.getPageObject().totalPages) {
         $input.val(prevVal);
         return;
       }
@@ -883,6 +883,7 @@
     this.$table.off('pageSizeChange');
     this.$table.on('pageSizeChange', function () {
       $pageNo.val(self.pageObject.currentPage);
+      $pageNo.data('prevVal', self.pageObject.currentPage);
       $pageJumper.children('span').text(' / ' + self.pageObject.totalPages);
     });
     $pageJumper.hide();
