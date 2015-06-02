@@ -1087,7 +1087,7 @@
 
   }
 
-}(jQuery)
+}(jQuery);
 
 +function ($) {
 
@@ -1109,4 +1109,4 @@
 
   }
 
-}(jQuery)
+}(jQuery);
