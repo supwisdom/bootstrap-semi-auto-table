@@ -1,0 +1,30 @@
+---
+layout: default
+basePath: ../..
+title: Column Selector - Excludes
+---
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Column Selector - Excludes</h2>
+            <p>
+                数组stickyColumns表示不能变动的列下标，下标从０开始
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include columnselector/stickyColumns.html %}
+            {% highlight html %}
+            {% include columnselector/stickyColumns.html %}
+            {% endhighlight %}
+
+        </div>
+
+    </div>
+
+</div>

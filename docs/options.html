@@ -414,6 +414,50 @@ title: Options
             <code>[ Button, Single button dropdowns, Split button dropdowns, ...]</code>
           </td>
         </tr>
+
+        <!--column option document-->
+        <tr>
+          <td colspan="4"><h4 id="columnOption">columnOption <small>option for column-select button</small></h4></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>object</td>
+          <td>
+            <code>
+              { <br/>
+              showColumnSelect: false, <br/>
+              excludes: [] <br/>
+              } <br/>
+            </code>
+          </td>
+          <td>
+            example:
+            <br/>
+            <code>
+              { <br/>
+              showColumnSelect: true, <br/>
+              excludes: [1,3] <br/>
+              } <br/></code>
+          </td>
+        </tr>
+        <tr>
+          <td>showColumnSelect</td>
+          <td>boolean</td>
+          <td><code>false</code></td>
+          <td>Hide or show the column-select button. If <code>true</code>, show the button what you can choose the column which you want to show </td>
+        </tr>
+        <tr>
+          <td>hideColumns</td>
+          <td>array</td>
+          <td><code>[]</code></td>
+          <td>Init Hide Column. If  <code>hideColumns:[0,1]</code>, hide the first and second columns</td>
+        </tr>
+        <tr>
+          <td>stickyColumns</td>
+          <td>array</td>
+          <td><code>[]</code></td>
+          <td>Sticky Column. If  <code>stickyColumns:[0,1]</code>, the first and second columns can not be shown or hidden</td>
+        </tr>
       </table>
 
     </div>

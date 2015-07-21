@@ -1,0 +1,30 @@
+---
+layout: default
+basePath: ../..
+title: Column Selector - Excludes
+---
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Column Selector - Excludes</h2>
+            <p>
+                数组hideColumns表示初始化隐藏的列下标，下标从０开始
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include columnselector/hideColumns.html %}
+            {% highlight html %}
+            {% include columnselector/hideColumns.html %}
+            {% endhighlight %}
+
+        </div>
+
+    </div>
+
+</div>
