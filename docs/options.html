@@ -347,6 +347,7 @@ title: Options
               btnClass: ..., (not required)<br/>
               tooltip: ..., (not required)<br/>
               dropdowns: ... <br/>
+              keepOpen: ...<br/>
               }
             </code>
           </td>
@@ -376,6 +377,14 @@ title: Options
             <code>'divider'</code>
           </td>
         </tr>
+        <tr>
+          <td>keepOpen</td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>
+            Keep Bootstrap dropdown open after click
+          </td>
+        </tr>
 
         <tr>
           <td colspan="4"><h4>ButtonDefinition - Split button dropdowns</h4></td>
@@ -395,6 +404,7 @@ title: Options
               tooltip: ..., (not required)<br/>
               callback: ..., <br/>
               dropdowns: ... <br/>
+              keepOpen: ...<br/>
               }
             </code>
           </td>
@@ -426,7 +436,8 @@ title: Options
             <code>
               { <br/>
               showColumnSelect: false, <br/>
-              excludes: [] <br/>
+              hideColumns: [], <br/>
+              stickyColumns: [] <br/>
               } <br/>
             </code>
           </td>
@@ -436,7 +447,8 @@ title: Options
             <code>
               { <br/>
               showColumnSelect: true, <br/>
-              excludes: [1,3] <br/>
+              hideColumns: [1,3], <br/>
+              stickyColumns: [1] <br/>
               } <br/></code>
           </td>
         </tr>
