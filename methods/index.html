@@ -77,6 +77,23 @@
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Column Selector<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../columnselector/show-button">Show or Hide Column</a>
+            </li>
+            <li>
+              <a href="../columnselector/hideColumns">Specify Hide Columns</a>
+            </li>
+            <li>
+              <a href="../columnselector/stickyColumns">Specify sticky Columns</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             Menu <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
@@ -312,6 +329,21 @@
       </p>
       <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'destroy'</span><span class="p">);</span></code></pre></div>
 
+      <hr/>
+
+      <h4>
+        <code>.semiAutoTable('updateColumnSelect', columnOption)</code>
+      </h4>
+      <p>
+        Update show/hide column button. <code>columnOption</code> doc <a href="../options#columnOption">see here</a>
+      </p>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateColumnSelect'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">showColumnSelector</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="na">stickyColumns</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">hideColumns</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">});</span></code></pre></div>
+
+      <hr/>
     </div>
 
   </div>

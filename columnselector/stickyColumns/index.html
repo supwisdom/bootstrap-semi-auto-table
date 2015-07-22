@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Sort</title>
+  <title>Column Selector - Excludes</title>
 
   <link href="../../assets/css/pygments-manni.css" rel="stylesheet">
 
@@ -169,97 +169,83 @@
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-sm-12">
-      <h2>Sort</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Column Selector - Excludes</h2>
+            <p>
+                数组stickyColumns表示不能变动的列下标，下标从０开始
+            </p>
+        </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
 
-      <table id="table">
-  <thead>
-  <tr>
-    <th><a href="#" data-sort-by="A">Column A</a></th>
-    <th><a href="#" data-sort-by="B">Column B</a></th>
-    <th><a href="#" data-sort-by="C">Column C</a></th>
-    <th>Column D</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
-  </tr>
-  <tr>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
-  </tr>
-  </tbody>
+            <table id="table">
+    <thead>
+    <tr>
+        <th></th><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><input type="checkbox" name="row.id"/></td>
+        <td>a</td><td>b</td><td>c</td><td>d</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" name="row.id"/></td>
+        <td>a</td><td>b</td><td>c</td><td>d</td>
+    </tr>
+    </tbody>
 </table>
 
 <script>
-  $(function() {
-    $("#table").semiAutoTable({
-      rowOption: false,
-      pageOption: false,
-      sortOption: {
-        'A': 'asc',
-        'B': 'desc'
-      }
-    }).on('sortChange', function(event, sortObject) {
-
-      console.log(JSON.stringify(sortObject));
-      $(this).semiAutoTable('updateSortBy', sortObject);
-
+    $(function() {
+        $("#table").semiAutoTable({
+            columnOption: {
+                showColumnSelect: true,
+                stickyColumns: [1]
+            },
+            pageOption: false
+        })
     });
-
-  });
 </script>
 
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;thead&gt;</span>
-  <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"A"</span><span class="nt">&gt;</span>Column A<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
-    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"B"</span><span class="nt">&gt;</span>Column B<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
-    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"C"</span><span class="nt">&gt;</span>Column C<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
-    <span class="nt">&lt;th&gt;</span>Column D<span class="nt">&lt;/th&gt;</span>
-  <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/thead&gt;</span>
-  <span class="nt">&lt;tbody&gt;</span>
-  <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
-  <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
-  <span class="nt">&lt;/tr&gt;</span>
-  <span class="nt">&lt;/tbody&gt;</span>
+            <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;thead&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;&lt;/th&gt;&lt;th&gt;</span>Column A<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column B<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column C<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column D<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;/thead&gt;</span>
+    <span class="nt">&lt;tbody&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;/tbody&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">({</span>
-      <span class="na">rowOption</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="na">pageOption</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="na">sortOption</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">'A'</span><span class="p">:</span> <span class="s1">'asc'</span><span class="p">,</span>
-        <span class="s1">'B'</span><span class="p">:</span> <span class="s1">'desc'</span>
-      <span class="p">}</span>
-    <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
-
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">sortObject</span><span class="p">));</span>
-      <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateSortBy'</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">);</span>
-
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">({</span>
+            <span class="na">columnOption</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">showColumnSelect</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="na">stickyColumns</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="na">pageOption</span><span class="p">:</span> <span class="kc">false</span>
+        <span class="p">})</span>
     <span class="p">});</span>
-
-  <span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span></code></pre></div>
+
+        </div>
 
     </div>
 
-  </div>
-
 </div>
-
 
 </body>
 
