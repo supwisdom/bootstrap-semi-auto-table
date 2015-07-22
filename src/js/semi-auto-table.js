@@ -32,6 +32,7 @@
     this.initLayout();
     this.initRowButton();
     this.initMenuItems();
+    this.initColumnSelect();
     this.initPaginator();
     this.initSortBy();
 
@@ -219,6 +220,92 @@
   }
 
   /**
+   * 初始化选择展示的列菜单按钮
+   */
+  SemiAutoTable.prototype.initColumnSelect = function () {
+    this.updateColumnSelect(this.options.columnOption);
+  }
+
+  /**
+   * 更新选择展示的列菜单按钮
+   */
+  SemiAutoTable.prototype.updateColumnSelect = function (option) {
+
+    if (this.$selectColumn) {
+      this.$selectColumn.remove();
+      delete this.$selectColumn;
+    }
+
+    this.options.columnOption = $.extend({}, this.options.columnOption, option);
+
+    var self = this;
+    var columnOption = this.options.columnOption;
+    var showColumnSelect = columnOption.showColumnSelect;
+    var stickyColumns = columnOption.stickyColumns;
+    var hideColumns = columnOption.hideColumns;
+
+    var dropdowns = [];
+    var $th = this.$table.find("thead>tr>th");
+    var $tr = this.$table.find("tr");
+    if (showColumnSelect) {
+      $th.each(function (index, th) {
+        var $th_hide = $tr.find('th:eq('+index+')');
+        var $td_hide = $tr.find('td:eq('+index+')');
+        var checked = true;
+        var disabled = false;
+        //初始化隐藏的列
+        if (hideColumns.indexOf(index) != -1) {
+          checked = false;
+          $th_hide.hide();
+          $td_hide.hide();
+        }
+        //不能操作的列
+        if (stickyColumns.indexOf(index) != -1) {
+          disabled = true;
+        }
+        if ($(th).text() && $(th).text().length != 0) {
+          var dropdown_title = '<label class="checkbox-inline">' +
+              '<input type="checkbox" value="' + index;
+          if (checked) {
+            dropdown_title += '" checked="' + checked;
+          }
+          //不能隐藏的列
+          if (disabled) {
+            dropdown_title += '" disabled="' + disabled;
+          }
+          dropdown_title += '"/>' + $(th).text() + '</label>';
+          dropdowns.push({
+            title: dropdown_title,
+            callback: function (event) {
+              var $target = $(event.target);
+              if (!disabled) {
+                var show = $(event.currentTarget).find(':checkbox').prop("checked");
+                if (!$target.is(':checkbox')) {
+                  show = !show;
+                  $(event.currentTarget).find(':checkbox').prop("checked", show);
+                }
+                if (show) {
+                  $th_hide.show();
+                  $td_hide.show();
+                } else {
+                  $th_hide.hide();
+                  $td_hide.hide();
+                }
+              }
+            }
+          });
+        }
+      });
+      this.$selectColumn = this.addMenuItem({
+        icon: 'fa fa-th',
+        dropdowns: dropdowns,
+        keepOpen: true
+      });
+      this.$selectColumn.prependTo(this.$menuBar);
+    }
+  }
+
+  /**
    * 初始化菜单
    * @param menus
    */
@@ -308,6 +395,7 @@
     var icon = buttonDefinition.icon;
     var dropdowns = buttonDefinition.dropdowns;
     var tooltip = buttonDefinition.tooltip;
+    var keepOpen = buttonDefinition.keepOpen;
 
     var buttonOption = {
       title: title,
@@ -328,12 +416,14 @@
       var $dropdown;
       if (!callback) {
         // 普通下拉菜单
+        buttonOption = $.extend({}, buttonOption, {keepOpen: keepOpen});
         $dropdown = this.appendDropdown($btnGroup, buttonOption);
       } else {
         // 分离式下拉菜单
         this.appendButton($btnGroup, buttonOption);
         $dropdown = this.appendDropdown($btnGroup, {
-          btnClass: btnClass
+          btnClass: btnClass,
+          keepOpen: keepOpen
         });
       }
 
@@ -384,11 +474,16 @@
     $btn.appendTo($btnGroup);
     if (callback) {
       $btn.on('click', function (event) {
-        event.preventDefault();
+        if (!($(event.target).is(':checkbox') || $(event.target).is(':radio'))) {
+          event.preventDefault();
+        }
         callback(event);
       });
     } else {
       $btn.on('click', function (event) {
+        if ($(event.target).is(':checkbox') || $(event.target).is(':radio')) {
+          return;
+        }
         event.preventDefault();
       });
     }
@@ -402,6 +497,7 @@
     var btnClass = option.btnClass || this.options.btnClass;
     var icon = option.icon;
     var tooltip = option.tooltip;
+    var keepOpen = option.keepOpen || false;
 
     var $btn = $('<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>');
     $btn.addClass('btn');
@@ -425,6 +521,12 @@
 
     var $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
     $dropdown.appendTo($btnGroup);
+
+    if (keepOpen) {
+      $dropdown.on("click", function (e) {
+        e.stopPropagation();
+      });
+    }
     return $dropdown;
 
   }
@@ -443,7 +545,7 @@
     var $anchor = $('<a href="#"></a>');
 
     if (title && title.length != 0) {
-      $anchor.text(title);
+      $anchor.html(title);
     }
     if (icon && icon.length != 0) {
       $anchor.prepend('<i class="' + icon + ' title-icon"></i>');
@@ -451,14 +553,20 @@
 
     if (callback) {
       $anchor.on('click', function (event) {
-        event.preventDefault();
+        if (!($(event.target).is(':checkbox') || $(event.target).is(':radio'))) {
+          event.preventDefault();
+        }
         callback(event);
       });
     } else {
       $anchor.on('click', function (event) {
+        if ($(event.target).is(':checkbox') || $(event.target).is(':radio')) {
+          return;
+        }
         event.preventDefault();
       });
     }
+
     $anchor.appendTo($li);
 
   }
@@ -1036,6 +1144,12 @@
       type: 'checkbox',
       inputName: "row.id",
       rowSelector: "> tbody > tr"
+    },
+
+    columnOption: {
+      showColumnSelect: false,
+      stickyColumns: [],
+      hideColumns: []
     },
 
     menus: [],
