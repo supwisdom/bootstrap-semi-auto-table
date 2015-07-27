@@ -1,9 +1,10 @@
 {
   "name": "bootstrap-semi-auto-table",
   "version": "1.0.3",
-  "homepage": "https://github.com/chanjarster/bootstrap-semi-auto-table",
+  "homepage": "https://github.com/supwisdom/bootstrap-semi-auto-table",
   "authors": [
-    "Daniel Qian <chanjarster@gmail.com>"
+    "Daniel Qian <chanjarster@gmail.com>",
+    "Sun Ke <tdxt6409fch@163.com>"
   ],
   "description": "Bootstrap v3 semi-auto table. Support toolbar, paginaion and sort.",
   "keywords": [

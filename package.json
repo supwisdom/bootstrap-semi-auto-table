@@ -9,7 +9,7 @@
     "pagination",
     "sortable"
   ],
-  "author": "Daniel Qian <chanjarster@gmail.com>",
+  "author": "Daniel Qian <chanjarster@gmail.com>, Sun Ke <tdxt6409fch@163.com>",
   "devDependencies": {
     "btoa": "~1.1.2",
     "glob": "~5.0.3",
