@@ -4,7 +4,7 @@ Bootstrap v3 semi-auto table. Support toolbar, paginaion and sort.
 
 ## Documentation
 
-[Here](https://chanjarster.github.io/bootstrap-semi-auto-table)
+[Here](https://supwisdom.github.io/bootstrap-semi-auto-table)
 
 ## Dependencies
 
