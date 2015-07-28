@@ -135,7 +135,7 @@
           title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
 
           callback: function () {
-            self.$rowIdInputList.prop('checked', !allChecked);
+            self.$rowIdInputList.not(':hidden').prop('checked', !allChecked);
             allChecked = !allChecked;
           },
 
