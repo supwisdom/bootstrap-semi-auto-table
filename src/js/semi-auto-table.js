@@ -771,6 +771,10 @@
       delete this.$pageInfo;
     }
 
+    if (pageOption.totalRows == 0) {
+      return;
+    }
+    
     var self = this;
     var currentPage = pageOption.currentPage;
     var rowsPerPage = pageOption.rowsPerPage;
