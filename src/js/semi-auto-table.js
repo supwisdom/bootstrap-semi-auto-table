@@ -814,6 +814,10 @@
       delete this.$pageSize;
     }
 
+    if (pageOption.totalRows == 0) {
+      return;
+    }
+
     var self = this;
     var rowsPerPage = pageOption.rowsPerPage;
     var rowsPerPageOptions = pageOption._rowsPerPageOptions;
@@ -868,6 +872,10 @@
       this.$pages.off('click');
       this.$pages.remove();
       delete this.$pages;
+    }
+
+    if (pageOption.totalRows == 0) {
+      return;
     }
 
     var self = this;
@@ -939,6 +947,10 @@
     if (this.$pageGo) {
       this.$pageGo.remove();
       delete this.$pageGo;
+    }
+
+    if (pageOption.totalRows == 0) {
+      return;
     }
 
     var self = this;
