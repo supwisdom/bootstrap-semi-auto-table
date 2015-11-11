@@ -14,7 +14,7 @@ url:              http://getbootstrap.com
 encoding:         UTF-8
 
 # Custom vars
-current_version:  1.1.1
+current_version:  1.1.2
 repo:             https://github.com/supwisdom/bootstrap-semi-auto-table 
 
 download:
