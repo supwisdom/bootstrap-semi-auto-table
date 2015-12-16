@@ -36,6 +36,60 @@
     this.initPaginator();
     this.initSortBy();
 
+    var dataTable = null;
+    if (options.colReorder || options.colResizable) {
+      var colResize = {};
+      if (options.colResizable) {
+        this.$table.addClass("dataTable-col-resize");
+        colResize = options.colResizable == true ? {"tableWidthFixed": false} : options.colResizable
+      }
+      dataTable = this.$table.DataTable({
+        colReorder: options.colReorder,
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        "dom": 'Zlfrtip',
+        "colResize": {"tableWidthFixed": false}
+      });
+
+      var order = dataTable.columns().indexes();
+      var hideColumns = this.options.columnOption.hideColumns;
+      if (hideColumns.length > 0) {
+        for (var i = 0; i < hideColumns.length; i++) {
+          order.splice($.inArray(hideColumns[i], order), 1);
+        }
+      }
+      dataTable.colReorder.order(order, true);
+    }
+
+    this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $th_hide, $td_hide) {
+      if (!isDisabled) {
+        var show = $(clickEvent.currentTarget).find(':checkbox').prop("checked");
+        if (!$(clickEvent.target).is(':checkbox')) {
+          show = !show;
+          $(clickEvent.currentTarget).find(':checkbox').prop("checked", show);
+        }
+        if (show) {
+          $th_hide.show();
+          $td_hide.show();
+          if (options.colReorder) {
+            var new_order = dataTable.colReorder.order();
+            new_order.splice(dataTable.column($th_hide.index()).index(), 1);
+            new_order.splice(index, 0, index);
+            dataTable.colReorder.order(new_order, true);
+          }
+        } else {
+          $th_hide.hide();
+          $td_hide.hide();
+          if (options.colReorder) {
+            var new_order = dataTable.colReorder.order();
+            new_order.splice(index, 1);
+            dataTable.colReorder.order(new_order, true);
+          }
+        }
+      }
+    });
   }
 
   SemiAutoTable.VERSION = '0.0.1';
@@ -251,6 +305,7 @@
       $th.each(function (index, th) {
         var $th_hide = $tr.find('th:eq('+index+')');
         var $td_hide = $tr.find('td:eq('+index+')');
+        var $table = self.$table;
         var checked = true;
         var disabled = false;
         //初始化隐藏的列
@@ -277,21 +332,7 @@
           dropdowns.push({
             title: dropdown_title,
             callback: function (event) {
-              var $target = $(event.target);
-              if (!disabled) {
-                var show = $(event.currentTarget).find(':checkbox').prop("checked");
-                if (!$target.is(':checkbox')) {
-                  show = !show;
-                  $(event.currentTarget).find(':checkbox').prop("checked", show);
-                }
-                if (show) {
-                  $th_hide.show();
-                  $td_hide.show();
-                } else {
-                  $th_hide.hide();
-                  $td_hide.hide();
-                }
-              }
+              $table.trigger('showOrHideCol', [event, disabled, index, $th_hide, $td_hide]);
             }
           });
         }
@@ -1180,7 +1221,10 @@
       totalPages: null,
       totalRows: null
 
-    }
+    },
+
+    colResizable: false,
+    colReorder: false
 
   }
 

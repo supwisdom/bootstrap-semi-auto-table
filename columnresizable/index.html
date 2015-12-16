@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Row Selector - Hide select-all button</title>
+  <title>Resizable Column</title>
 
   <link href="../../assets/css/pygments-manni.css" rel="stylesheet">
 
@@ -186,9 +186,9 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <h2>Row Selector - 不显示全选按钮 <small></small></h2>
+      <h2>Resizable Column</h2>
       <p>
-        Select-all button is hidden but you can still check the checkbox by clicking the row.
+        拖动改变列宽
       </p>
     </div>
   </div>
@@ -196,59 +196,77 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <table id="table">
+      <table id="table" class="table">
   <thead>
   <tr>
-    <th></th><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th>
+    <th></th>
+    <th><a href="#" data-sort-by="A">Column A</a></th>
+    <th><a href="#" data-sort-by="B">Column B</a></th>
+    <th><a href="#" data-sort-by="C">Column C</a></th>
+    <th>Column D</th>
   </tr>
   </thead>
   <tbody>
   <tr>
-    <td><input type="checkbox" name="row.id"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td><input type="checkbox" name="row.id" value="1"/></td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   <tr>
-    <td><input type="checkbox" name="row.id"/></td>
-    <td>a</td><td>b</td><td>c</td><td>d</td>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
   </tr>
   </tbody>
 </table>
 
 <script>
-  $(function() {
-    $("#table").semiAutoTable({
-      rowOption: {
-        showSelectAll: false
-      },
+  $(function () {
+    var $table = $("#table");
+    $table.semiAutoTable({
+      colResizable:true,
       pageOption: false
     })
   });
 </script>
 
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;thead&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;th&gt;&lt;/th&gt;&lt;th&gt;</span>Column A<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column B<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column C<span class="nt">&lt;/th&gt;&lt;th&gt;</span>Column D<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"A"</span><span class="nt">&gt;</span>Column A<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"B"</span><span class="nt">&gt;</span>Column B<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"C"</span><span class="nt">&gt;</span>Column C<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Column D<span class="nt">&lt;/th&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;/thead&gt;</span>
   <span class="nt">&lt;tbody&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span><span class="nt">/&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
-    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span><span class="nt">/&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>a<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>b<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>c<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>d<span class="nt">&lt;/td&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;/tbody&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">({</span>
-      <span class="na">rowOption</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">showSelectAll</span><span class="p">:</span> <span class="kc">false</span>
-      <span class="p">},</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">$table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">);</span>
+    <span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">({</span>
+      <span class="na">colResizable</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
       <span class="na">pageOption</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">})</span>
   <span class="p">});</span>
@@ -259,7 +277,6 @@
   </div>
 
 </div>
-
 
 </body>
 

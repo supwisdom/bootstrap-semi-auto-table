@@ -26,11 +26,18 @@
 
   <!-- bootstrap-select -->
   <link rel="stylesheet" href="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.css">
-  <script src="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
+
+  <!-- datatable -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.0/css/colReorder.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/colreorder/1.3.0/js/dataTables.colReorder.min.js"></script>
 
   <!-- bootstrap-semi-auto-table -->
   <link rel="stylesheet" href="../dist/css/semi-auto-table.css">
   <script src="../dist/semi-auto-table.js"></script>
+  <script src="../dist/colResize.js"></script>
+
   <script>
     $.fn.semiAutoTable.defaults.locale = 'en-US';
   </script>
@@ -77,7 +84,7 @@
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Column Selector<span class="caret"></span>
+            Column Plugin<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
@@ -88,6 +95,14 @@
             </li>
             <li>
               <a href="../columnselector/stickyColumns">Specify sticky Columns</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="../columnreorder">Reorder Columns</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="../columnresizable">Resizable Columns</a>
             </li>
           </ul>
         </li>
@@ -632,6 +647,52 @@
           <td>array</td>
           <td><code>[]</code></td>
           <td>Sticky Column. If  <code>stickyColumns:[0,1]</code>, the first and second columns can not be shown or hidden</td>
+        </tr>
+
+        <!-- column reorder -->
+        <tr>
+          <td colspan="4"><h4>columnReorder - <a href="https://www.datatables.net/extensions/colreorder/">DataTable Extension</a></h4></td>
+        </tr>
+        <tr>
+          <td>colReorder</td>
+          <td>object</td>
+          <td>
+            <code>
+              false
+            </code>
+          </td>
+          <td>
+            example:
+            <br/>
+            <code>
+              true or<br/>
+              {
+                fixedColumnsLeft: 1<br/>
+              } <br/></code>
+          </td>
+        </tr>
+
+        <!-- column reorder -->
+        <tr>
+          <td colspan="4"><h4>columnResizable - <a href="https://github.com/Silvacom/colResize">DataTable ColResizable</a></h4></td>
+        </tr>
+        <tr>
+          <td>colResizable</td>
+          <td>object</td>
+          <td>
+            <code>
+              false
+            </code>
+          </td>
+          <td>
+            example:
+            <br/>
+            <code>
+              true or<br/>
+              {<br/>
+              "tableWidthFixed": true<br/>
+              } <br/></code>
+          </td>
         </tr>
       </table>
 
