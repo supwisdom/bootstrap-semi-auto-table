@@ -72,9 +72,16 @@ module.exports = function (grunt) {
       js: {
         src: [
           'src/js/semi-auto-table.js',
-          'src/js/locale/*.js'
+          'src/js/locale/*.js',
         ],
         dest: 'dist/semi-auto-table.js'
+      },
+
+      colResize: {
+        src: [
+          'src/js/colResize.js',
+        ],
+        dest: 'dist/colResize.js'
       }
     },
 
@@ -105,7 +112,11 @@ module.exports = function (grunt) {
       js: {
         src: 'dist/semi-auto-table.js',
         dest: 'dist/semi-auto-table.min.js'
-      }
+      },
+      colResize: {
+        src: 'dist/colResize.js',
+        dest: 'dist/colResize.min.js'
+      },
     },
 
     less: {
@@ -242,7 +253,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('less-compile', ['less']);
 
-  grunt.registerTask('dist-js', ['concat:js', 'uglify']);
+  grunt.registerTask('dist-js', ['concat', 'uglify']);
   grunt.registerTask('dist-css', ['copy:less', 'less-compile', 'autoprefixer', 'csscomb', 'cssmin']);
   grunt.registerTask('dist', ['clean:dist', 'dist-js', 'dist-css']);
 

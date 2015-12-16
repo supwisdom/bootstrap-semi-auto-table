@@ -64,4 +64,13 @@
 {
     cursor: pointer;
 }
+table.dataTable-col-resize td,
+table.dataTable-col-resize th
+{
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+
+    border-right: 1px solid #ddd !important;
+}
 /*# sourceMappingURL=semi-auto-table.css.map */

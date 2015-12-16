@@ -1,0 +1,37 @@
+<table id="table" class="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th><a href="#" data-sort-by="A">Column A</a></th>
+    <th><a href="#" data-sort-by="B">Column B</a></th>
+    <th><a href="#" data-sort-by="C">Column C</a></th>
+    <th>Column D</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="1"/></td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>a</td>
+    <td>b</td>
+    <td>c</td>
+    <td>d</td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  $(function () {
+    var $table = $("#table");
+    $table.semiAutoTable({
+      colReorder: true,
+      pageOption: false
+    })
+  });
+</script>
