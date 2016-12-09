@@ -77,11 +77,11 @@ module.exports = function (grunt) {
         dest: 'dist/semi-auto-table.js'
       },
 
-      colResize: {
+      colResizable: {
         src: [
-          'src/js/colResize.js',
+          'src/js/colResizable.js',
         ],
-        dest: 'dist/colResize.js'
+        dest: 'dist/colResizable.js'
       }
     },
 
@@ -113,9 +113,9 @@ module.exports = function (grunt) {
         src: 'dist/semi-auto-table.js',
         dest: 'dist/semi-auto-table.min.js'
       },
-      colResize: {
-        src: 'dist/colResize.js',
-        dest: 'dist/colResize.min.js'
+      colResizable: {
+        src: 'dist/colResizable.js',
+        dest: 'dist/colResizable.min.js'
       },
     },
 

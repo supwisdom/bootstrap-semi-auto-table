@@ -81,12 +81,12 @@
   cursor: pointer;
 }
 
-table.dataTable-col-resize {
-  td,
-  th {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    border-right: 1px solid #ddd !important;
+table.col-resizable {
+  tr {
+    > th,
+    > td {
+      border-right: 1px solid #ddd !important;
+      padding: 5px;
+    }
   }
 }

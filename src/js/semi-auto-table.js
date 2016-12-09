@@ -20,6 +20,18 @@
     return source;
   };
 
+  var keySet = function(obj) {
+    var keys = [];
+    $.each(_.keys(obj), function() {
+      keys.push(parseInt(this));
+    });
+    return keys;
+  }
+
+  var localStorage = window.localStorage;
+
+  var storageKeySuffix = "-table";
+
   // SemiAutoTable CLASS DEFINITION
   // ======================
 
@@ -29,31 +41,52 @@
 
     this.$table = $(element);
 
+    this.itemKey = this.options.saveStatus.key + storageKeySuffix;
+
     this.initLayout();
     this.initRowButton();
     this.initMenuItems();
-    this.initColumnSelect();
     this.initPaginator();
     this.initSortBy();
+    this.addDataTablePlugin();
 
-    var dataTable = null;
-    if (options.colReorder || options.colResizable) {
-      var colResize = {};
-      if (options.colResizable) {
-        this.$table.addClass("dataTable-col-resize");
-        colResize = options.colResizable == true ? {"tableWidthFixed": false} : options.colResizable
+  }
+
+  SemiAutoTable.VERSION = '0.0.1';
+
+  SemiAutoTable.prototype.getSavedStatus = function() {
+    return localStorage.getItem(this.itemKey) ? JSON.parse(localStorage.getItem(this.itemKey)) : {};
+  }
+
+  SemiAutoTable.prototype.addDataTablePlugin = function() {
+
+    var _self = this;
+    var dataTable = _self.$table.DataTable({
+      colReorder: _self.options.colOrderArrangable,
+      searching: false,
+      paging: false,
+      ordering: false,
+      info: false,
+      autoWidth: false,
+      "dom": 'Zlfrtip',
+      fnDrawCallback: function (settings) {
+        if (settings.fnRecordsDisplay() <= 0) {
+          $(settings.nTBody).hide();
+        }
       }
-      dataTable = this.$table.DataTable({
-        colReorder: options.colReorder,
-        searching: false,
-        paging: false,
-        ordering: false,
-        info: false,
-        "dom": 'Zlfrtip',
-        "colResize": {"tableWidthFixed": false}
-      });
+    });
 
-      var order = dataTable.columns().indexes();
+
+    if (_self.options.colOrderArrangable) {
+      this.$table.find('th').css("cursor", "pointer");
+
+      var order = [];
+      if (_self.options.saveStatus.enabled) {
+        order = _self.getSavedStatus()["order"];
+      } else {
+        order = dataTable.columns().indexes();
+      }
+
       var hideColumns = this.options.columnOption.hideColumns;
       if (hideColumns.length > 0) {
         for (var i = 0; i < hideColumns.length; i++) {
@@ -63,37 +96,99 @@
       dataTable.colReorder.order(order, true);
     }
 
+    //隐藏列
+    this.initColumnSelect(order ? order : null);
+
+    if (_self.options.colResizable) {
+      _self.$table.addClass("col-resizable");
+
+      _self.$table.colResizable({
+        liveDrag:true,
+        postbackSafe: {
+          enabled: _self.options.saveStatus.enabled,
+          key: _self.options.saveStatus.key + storageKeySuffix
+        },
+        gripInnerHtml:"<div class='grip'></div>",
+        draggingClass:"dragging",
+        partialRefresh:true,
+        resizeMode:'overflow'
+      });
+    }
+
+
+    dataTable.on( 'column-reorder', function ( e, settings, details ) {
+      var order = dataTable.colReorder.order();
+      _self.renderResizableTable();
+
+      _self.reOrderColumnSelect(order, details);
+
+      if (_self.options.saveStatus.enabled) {
+
+        var savedStatus = _self.getSavedStatus();
+        savedStatus['order'] = order;
+        localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
+      }
+    });
+
+
+    var hiddenColumns = {};
+    $.each(_self.options.columnOption.hideColumns, function() {
+      hiddenColumns[this] = 125;
+    });
     this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $th_hide, $td_hide) {
-      if (!isDisabled) {
-        var show = $(clickEvent.currentTarget).find(':checkbox').prop("checked");
-        if (!$(clickEvent.target).is(':checkbox')) {
-          show = !show;
-          $(clickEvent.currentTarget).find(':checkbox').prop("checked", show);
-        }
-        if (show) {
-          $th_hide.show();
-          $td_hide.show();
-          if (options.colReorder) {
-            var new_order = dataTable.colReorder.order();
-            new_order.splice(dataTable.column($th_hide.index()).index(), 1);
-            new_order.splice(index, 0, index);
-            dataTable.colReorder.order(new_order, true);
-          }
-        } else {
-          $th_hide.hide();
-          $td_hide.hide();
-          if (options.colReorder) {
-            var new_order = dataTable.colReorder.order();
-            new_order.splice(index, 1);
-            dataTable.colReorder.order(new_order, true);
+      if (isDisabled) {
+        return false;
+      }
+
+      if (_self.options.saveStatus.enabled) {
+        var current_savedStatus = _self.getSavedStatus()['hidden-columns'];
+        for (var key in current_savedStatus) {
+          if (_.keys(hiddenColumns).indexOf(key) == -1) {
+            hiddenColumns[key] = current_savedStatus[key];
           }
         }
+      }
+
+      var show = $(clickEvent.currentTarget).find(':checkbox').prop("checked");
+      if (!$(clickEvent.target).is(':checkbox')) {
+        show = !show;
+        $(clickEvent.currentTarget).find(':checkbox').prop("checked", show).trigger('change');
+      }
+      if (show) {
+        $th_hide.show();
+        $td_hide.show();
+        delete hiddenColumns[index];
+        _self.renderResizableTable();
+      } else {
+        $th_hide.hide();
+        $td_hide.hide();
+        hiddenColumns[index] = $th_hide.width();
+        _self.renderResizableTable();
+      }
+
+      if (_self.options.saveStatus.enabled) {
+        var savedStatus = _self.getSavedStatus();
+        savedStatus['hidden-columns'] = hiddenColumns;
+        localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
       }
     });
   }
 
-  SemiAutoTable.VERSION = '0.0.1';
-
+  SemiAutoTable.prototype.renderResizableTable = function () {
+    var _self = this;
+    this.$table.colResizable({
+      liveDrag:true,
+      postbackSafe: {
+        enabled: _self.options.saveStatus.enabled,
+        key: _self.options.saveStatus.key + storageKeySuffix,
+        refreshStorage: true
+      },
+      gripInnerHtml:"<div class='grip'></div>",
+      draggingClass:"dragging",
+      partialRefresh:true,
+      resizeMode:'overflow'
+    });
+  }
 
   SemiAutoTable.prototype.initLayout = function () {
 
@@ -189,7 +284,13 @@
           title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
 
           callback: function () {
-            self.$rowIdInputList.not(':hidden').prop('checked', !allChecked);
+            $.each(self.$rowIdInputList.not(':hidden'), function() {
+              if ($(this).prop('checked') == allChecked) {
+                $(this).prop('checked', !allChecked).trigger('change');
+              } else {
+                $(this).prop('checked', !allChecked);
+              }
+            });
             allChecked = !allChecked;
           },
 
@@ -200,7 +301,7 @@
 
                 $.each(self.$rowIdInputList, function (index, input) {
                   var $input = $(input);
-                  $input.prop('checked', !$input.prop('checked'));
+                  $input.prop('checked', !$input.prop('checked')).trigger('change');
                 });
                 allChecked = false;
 
@@ -228,7 +329,7 @@
           return;
         }
 
-        $input.prop('checked', !$input.prop('checked'));
+        $input.prop('checked', !$input.prop('checked')).trigger('change');
 
       });
 
@@ -249,7 +350,7 @@
         if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
           $.each(self.$rowIdInputList, function (index, input) {
             var $input = $(input);
-            $input.prop('checked', false);
+            $input.prop('checked', false).trigger('change');
           });
           return;
         }
@@ -257,10 +358,10 @@
 
         $.each(self.$rowIdInputList, function (index, input) {
           var $input = $(input);
-          $input.prop('checked', false);
+          $input.prop('checked', false).trigger('change');
         });
 
-        $input.prop('checked', checked);
+        $input.prop('checked', checked).trigger('change');
 
       });
 
@@ -276,14 +377,14 @@
   /**
    * 初始化选择展示的列菜单按钮
    */
-  SemiAutoTable.prototype.initColumnSelect = function () {
-    this.updateColumnSelect(this.options.columnOption);
+  SemiAutoTable.prototype.initColumnSelect = function (order) {
+    this.updateColumnSelect(this.options.columnOption, order);
   }
 
   /**
    * 更新选择展示的列菜单按钮
    */
-  SemiAutoTable.prototype.updateColumnSelect = function (option) {
+  SemiAutoTable.prototype.updateColumnSelect = function (option, order) {
 
     if (this.$selectColumn) {
       this.$selectColumn.remove();
@@ -297,6 +398,10 @@
     var showColumnSelect = columnOption.showColumnSelect;
     var stickyColumns = columnOption.stickyColumns;
     var hideColumns = columnOption.hideColumns;
+    if (this.options.saveStatus.enabled) {
+      var savedStatus = this.getSavedStatus();
+      hideColumns = savedStatus['hidden-columns'] ? keySet(savedStatus['hidden-columns']) : [];
+    }
 
     var dropdowns = [];
     var $th = this.$table.find("thead>tr>th");
@@ -309,7 +414,7 @@
         var checked = true;
         var disabled = false;
         //初始化隐藏的列
-        if (hideColumns.indexOf(index) != -1) {
+        if (hideColumns.indexOf(order ? order[index] : index) != -1) {
           checked = false;
           $th_hide.hide();
           $td_hide.hide();
@@ -319,8 +424,8 @@
           disabled = true;
         }
         if ($(th).text() && $(th).text().length != 0) {
-          var dropdown_title = '<label class="checkbox-inline">' +
-              '<input type="checkbox" value="' + index;
+          var dropdown_title = '<label class="checkbox-inline columns-title">' +
+            '<input type="checkbox" value="' + (order ? order[index] : index);
           if (checked) {
             dropdown_title += '" checked="' + checked;
           }
@@ -332,7 +437,7 @@
           dropdowns.push({
             title: dropdown_title,
             callback: function (event) {
-              $table.trigger('showOrHideCol', [event, disabled, index, $th_hide, $td_hide]);
+              $table.trigger('showOrHideCol', [event, disabled, (order ? order[index] : index), $th_hide, $td_hide]);
             }
           });
         }
@@ -343,6 +448,19 @@
         keepOpen: true
       });
       this.$selectColumn.prependTo(this.$menuBar);
+    }
+  }
+
+  /**
+   * 重新排列选择隐藏列的菜单
+   * @param order
+   * @param details
+   */
+  SemiAutoTable.prototype.reOrderColumnSelect = function (order, details) {
+    if (details.from < details.to) {
+      $(".columns-title input[value="+order[details.from]+"]").parents('li').after($(".columns-title input[value="+order[details.to]+"]").parents('li'))
+    } else {
+      $(".columns-title input[value="+order[details.from]+"]").parents('li').before($(".columns-title input[value="+order[details.to]+"]").parents('li'))
     }
   }
 
@@ -815,7 +933,7 @@
     if (pageOption.totalRows == 0) {
       return;
     }
-    
+
     var self = this;
     var currentPage = pageOption.currentPage;
     var rowsPerPage = pageOption.rowsPerPage;
@@ -1223,8 +1341,17 @@
 
     },
 
+    //是否可拉伸
     colResizable: false,
-    colReorder: false
+
+    //是否可移动列的位置
+    colOrderArrangable: false,
+
+    //是否记录表状态
+    saveStatus: {
+      enabled: false,
+      key: ""
+    }
 
   }
 
@@ -1236,6 +1363,50 @@
 
     $.fn.semiAutoTable = old;
     return this;
+
+  }
+
+}(jQuery);
+
++function ($) {
+
+  $.fn.semiAutoTable.locales['en-US'] = {
+
+    select_all: 'All',
+    select_inverse: 'Inverse select',
+
+    next_page: 'Next page {0}',
+    prev_page: 'Prev page {0}',
+    first_page: 'First page',
+    last_page: 'Last page',
+    current_page: 'Current page {0}',
+    page_size: '{0} rows per page',
+
+    sort_asc: 'Ascending',
+    sort_desc: 'Descending',
+    sort_none: 'Unsorted'
+
+  }
+
+}(jQuery);
+
++function ($) {
+
+  $.fn.semiAutoTable.locales['zh-CN'] = {
+
+    select_all: '全选',
+    select_inverse: '反选',
+
+    next_page: '下页第 {0} 页',
+    prev_page: '上页第 {0} 页',
+    first_page: '第一页',
+    last_page: '最后一页',
+    current_page: '当前第 {0} 页',
+    page_size: '每页 {0} 条',
+
+    sort_asc: '升序排列',
+    sort_desc: '降序排列',
+    sort_none: '未排序'
 
   }
 
