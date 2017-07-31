@@ -1,6 +1,43 @@
+.semi-auto-table-toolbar
+{
+    margin: 0;
+    padding: 5px 0;
+
+    background-color: #e4e4e4;
+}
 .semi-auto-table-toolbar .semi-auto-table-menubar i.title-icon
 {
     margin-right: 5px;
+}
+.semi-auto-table-toolbar .semi-auto-table-menubar .btn-group
+{
+    position: relative;
+}
+.semi-auto-table-toolbar .semi-auto-table-menubar .btn-group-tag
+{
+    font-size: 12px;
+
+    position: absolute;
+    z-index: 9;
+    top: -5px;
+    right: -5px;
+
+    overflow-x: hidden;
+
+    width: 18px;
+    height: 18px;
+
+    text-align: center;
+
+    color: #fff;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .selected-items
+{
+    line-height: 30px;
+
+    padding-right: 10px;
 }
 .semi-auto-table-toolbar .semi-auto-table-paginator .rows-per-page
 {
@@ -55,10 +92,6 @@
 {
     width: 35px;
     height: 20px;
-}
-.semi-auto-table-data
-{
-    margin-top: 10px;
 }
 .semi-auto-table-sorter
 {

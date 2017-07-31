@@ -2,15 +2,42 @@
 
 .semi-auto-table-toolbar {
 
+  background-color: #E4E4E4;
+  margin: 0px;
+  padding: 5px 0px;
+
   .semi-auto-table-menubar {
 
     i.title-icon {
       margin-right: 5px;
     }
 
+    .btn-group {
+      position: relative;
+    }
+
+    .btn-group-tag {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: #ff6b6b;
+      color: #fff;
+      z-index: 9;
+      text-align: center;
+      font-size: 12px;
+      overflow-x: hidden;
+    }
   }
 
   .semi-auto-table-paginator {
+
+    .selected-items {
+      line-height: 30px;
+      padding-right: 10px;
+    }
 
     .rows-per-page {
       width: 110px !important;
@@ -71,10 +98,6 @@
 
   }
 
-}
-
-.semi-auto-table-data {
-  margin-top: 10px;
 }
 
 .semi-auto-table-sorter {

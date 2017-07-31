@@ -14,7 +14,12 @@
 
     sort_asc: '升序排列',
     sort_desc: '降序排列',
-    sort_none: '未排序'
+    sort_none: '未排序',
+
+    data_table: {
+      emptyTable: "无数据",
+      loadingRecords: "正在加载..."
+    }
 
   }
 

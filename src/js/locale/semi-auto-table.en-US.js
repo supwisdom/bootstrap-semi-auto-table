@@ -14,7 +14,12 @@
 
     sort_asc: 'Ascending',
     sort_desc: 'Descending',
-    sort_none: 'Unsorted'
+    sort_none: 'Unsorted',
+
+    data_table: {
+      emptyTable: "No data available in table",
+      loadingRecords: "Loading..."
+    }
 
   }
 

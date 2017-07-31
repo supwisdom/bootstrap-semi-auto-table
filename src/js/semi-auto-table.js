@@ -28,9 +28,39 @@
     return keys;
   }
 
+  var reCalColumnWidth = function(datatable, tableWidth) {
+    var $thead = $(datatable.table().header());
+    var $tbody = $(datatable.table().body());
+
+    $.each($thead.find("th:visible"), function () {
+      var index = parseInt($(this).attr("data-column-index"));
+      $(this).outerWidth($tbody.find("tr:first").find("td:eq("+index+")").outerWidth());
+    });
+
+    if (tableWidth) {
+      $thead.parent("table").width(tableWidth);
+    } else {
+      var width = $tbody.parent("table").outerWidth();
+      $thead.parent("table").css('width', width);
+      $thead.parent("table").css('max-width', width);
+    }
+
+    // var tableDom = $thead.parent("table");
+    // if (tableWidth) {
+    //   tableDom.css('width', tableWidth + "px");
+    //   tableDom.css('max-width', tableWidth + "px");
+    // } else {
+    //   tableDom.css('width', $tbody.outerWidth() + "px");
+    //   tableDom.css('max-width', $tbody.outerWidth() + "px");
+    // }
+  }
+
   var localStorage = window.localStorage;
 
   var storageKeySuffix = "-table";
+
+  var resizable = true;
+
 
   // SemiAutoTable CLASS DEFINITION
   // ======================
@@ -40,15 +70,22 @@
     this.options = options;
 
     this.$table = $(element);
+    this.$table.css('max-width', this.$table[0].style.width);
 
     this.itemKey = this.options.saveStatus.key + storageKeySuffix;
 
+    this.initTable = true;
     this.initLayout();
-    this.initRowButton();
-    this.initMenuItems();
-    this.initPaginator();
-    this.initSortBy();
-    this.addDataTablePlugin();
+
+    if (this.options.useDataTable) {
+      this.initMenuItems();
+      this.addDataTablePlugin();
+    } else {
+      this.initRowButton();
+      this.initMenuItems();
+      this.initPaginator();
+      this.initSortBy();
+    }
 
   }
 
@@ -61,48 +98,182 @@
   SemiAutoTable.prototype.addDataTablePlugin = function() {
 
     var _self = this;
-    var dataTable = _self.$table.DataTable({
-      colReorder: _self.options.colOrderArrangable,
-      searching: false,
-      paging: false,
-      ordering: false,
-      info: false,
-      autoWidth: false,
-      "dom": 'Zlfrtip',
-      fnDrawCallback: function (settings) {
-        if (settings.fnRecordsDisplay() <= 0) {
-          $(settings.nTBody).hide();
+
+    // if ((this.options.columns instanceof Array) && _self.options.columns.length == 0) {
+    //   throw "parameter columns is not a empty array";
+    // }
+
+    var tableData = false;
+    if (_self.options.data && _self.options.data.length > 0) {
+      tableData = _self.options.data;
+    }
+
+    var colReorder;
+    if (_self.options.colOrderArrangable) {
+      colReorder = {
+        reorderCallback: function (){
+          if (!resizable) {
+            return false;
+          }
+          _self.renderResizableTable();
         }
       }
-    });
+    }
 
+    if (_self.options.fixedHeader.enabled) {
 
-    if (_self.options.colOrderArrangable) {
+      _self.$table.DataTable({
+        retrieve: true,
+        data: tableData,
+        columns: _self.options.columns,
+        ajax: _self.options.ajax,
+        colReorder: colReorder,
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        autoWidth: false,
+        "dom": 'Zlfrtip',
+        "scrollY": (_self.options.fixedHeader.scrollY || 0) + "px",
+        "scrollX": _self.$table.width() + "px",
+        "scrollCollapse": true,
+        fnDrawCallback: _self.fnDrawCallback(),
+        initComplete: _self.initComplete(),
+        language: {
+          "emptyTable": $.fn.semiAutoTable.locales[_self.options.locale].data_table.emptyTable,
+          "loadingRecords": $.fn.semiAutoTable.locales[_self.options.locale].data_table.loadingRecords
+        }
+      });
+    } else {
+      _self.$table.DataTable({
+        retrieve: true,
+        data: tableData,
+        columns: _self.options.columns,
+        ajax: _self.options.ajax,
+        colReorder: colReorder,
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        autoWidth: false,
+        "dom": 'Zlfrtip',
+        fnDrawCallback: _self.fnDrawCallback(),
+        initComplete: _self.initComplete(),
+        language: {
+          "emptyTable": $.fn.semiAutoTable.locales[_self.options.locale].data_table.emptyTable,
+          "loadingRecords": $.fn.semiAutoTable.locales[_self.options.locale].data_table.loadingRecords
+        }
+      });
+    }
+
+  }
+
+  SemiAutoTable.prototype.fnDrawCallback = function() {
+    var _self = this;
+    return function (settings) {
+
+      var dataTableAPI = $(settings.nTable).DataTable();
+      var json = dataTableAPI.ajax.json();
+      var isLoading = dataTableAPI.settings()[0].iDraw <= 1;
+
+      if (!isLoading) {
+        _self.bindRowClick();
+        _self.selectedRowCount();
+
+        if (_self.$selectColumn) {
+          // var hidenColumns = _self.$selectColumn.find("input:not(:checked)");
+          //
+          // var $trs = _self.$table.find("tbody > tr");
+          // $.each(hidenColumns, function() {
+          //   var index = $(this).parents('li').index() + 1;
+          //   $.each($trs, function () {
+          //     $(this).find('td:eq('+index+')').hide();
+          //   });
+          // });
+          var originOrder = [];
+          if (_self.options.saveStatus.enabled) {
+            originOrder = _self.getSavedStatus()["order"];
+          } else {
+            originOrder = dataTable.columns().indexes();
+          }
+          _self.updateColumnSelect({}, originOrder);
+        }
+      }
+
+      _self.options.reDrawCallback(json, isLoading);
+    }
+  }
+
+  SemiAutoTable.prototype.initComplete = function() {
+    var _self = this;
+    return function( settings, json ) {
+      // if (settings.fnRecordsDisplay() <= 0) {
+      //   $(settings.nTBody).hide();
+      // }
+      //更新分页
+      if (json && json.data) {
+        _self.options.pageOption["totalRows"] = json.data.length;
+        _self.options.pageOption["totalPages"] = Math.ceil(json.data.length/_self.options.rowsPerPage);
+      }
+
+      _self.renderColumnSelect();
+      _self.initRowButton();
+      _self.initPaginator();
+      _self.initSortBy();
+      if (_self.options.fixedHeader.enabled) {
+        var datatable = _self.$table.DataTable();
+        reCalColumnWidth(datatable);
+        $(datatable.table().header()).parent("table").css('height', '');
+      }
+      _self.changeTableScrollY($(settings.nScrollBody), _self.options.fixedHeader);
+
+      _self.options.completeTableCallback(json);
+    }
+  }
+
+  SemiAutoTable.prototype.changeTableScrollY = function($scrollBody, option) {
+    this.options.fixedHeader = $.extend({}, this.options.fixedHeader, option);
+    if (!this.options.fixedHeader.enabled) {
+      return false;
+    }
+    var maxHeight = this.options.fixedHeader.scrollY ? (this.options.fixedHeader.scrollY - $('.semi-auto-table-toolbar').outerHeight()) : 0;
+    $scrollBody.css('max-height', maxHeight + 'px');
+    $scrollBody.height(maxHeight);
+  }
+
+  SemiAutoTable.prototype.renderColumnSelect = function() {
+    var dataTable = this.$table.DataTable();
+    var _self = this;
+
+    if (this.options.colOrderArrangable) {
       this.$table.find('th').css("cursor", "pointer");
 
-      var order = [];
+      var originOrder = [];
       if (_self.options.saveStatus.enabled) {
-        order = _self.getSavedStatus()["order"];
+        originOrder = _self.getSavedStatus()["order"];
       } else {
-        order = dataTable.columns().indexes();
+        originOrder = dataTable.columns().indexes();
       }
 
-      var hideColumns = this.options.columnOption.hideColumns;
-      if (hideColumns.length > 0) {
-        for (var i = 0; i < hideColumns.length; i++) {
-          order.splice($.inArray(hideColumns[i], order), 1);
-        }
+      // var hideColumns = this.options.columnOption.hideColumns;
+      // if (hideColumns.length > 0) {
+      //   for (var i = 0; i < hideColumns.length; i++) {
+      //     order.splice($.inArray(hideColumns[i], order), 1);
+      //   }
+      // }
+      if (originOrder && originOrder.length > 0) {
+        resizable = false;
       }
-      dataTable.colReorder.order(order, true);
+      dataTable.colReorder.order(originOrder, true);
     }
 
     //隐藏列
-    this.initColumnSelect(order ? order : null);
+    this.initColumnSelect(originOrder ? originOrder : null);
 
-    if (_self.options.colResizable) {
-      _self.$table.addClass("col-resizable");
+    if (this.options.colResizable) {
+      this.$table.addClass("col-resizable");
 
-      _self.$table.colResizable({
+      this.$table.colResizable({
         liveDrag:true,
         postbackSafe: {
           enabled: _self.options.saveStatus.enabled,
@@ -110,15 +281,16 @@
         },
         gripInnerHtml:"<div class='grip'></div>",
         draggingClass:"dragging",
-        partialRefresh:true,
-        resizeMode:'overflow'
+        partialRefresh: false,
+        resizeMode:'overflow',
+        onDrag: _self.freshHeaderWidth()
       });
     }
 
 
     dataTable.on( 'column-reorder', function ( e, settings, details ) {
+
       var order = dataTable.colReorder.order();
-      _self.renderResizableTable();
 
       _self.reOrderColumnSelect(order, details);
 
@@ -128,14 +300,16 @@
         savedStatus['order'] = order;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
       }
+
+      _self.bindRowClick();
     });
 
 
     var hiddenColumns = {};
-    $.each(_self.options.columnOption.hideColumns, function() {
+    $.each(this.options.columnOption.hideColumns, function() {
       hiddenColumns[this] = 125;
     });
-    this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $th_hide, $td_hide) {
+    this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $fixed_th_hide, $td_hide) {
       if (isDisabled) {
         return false;
       }
@@ -154,15 +328,30 @@
         show = !show;
         $(clickEvent.currentTarget).find(':checkbox').prop("checked", show).trigger('change');
       }
+
+
+      var $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
+      var i = parseInt($fixed_th_hide.attr("data-column-index"));
       if (show) {
         $th_hide.show();
         $td_hide.show();
-        delete hiddenColumns[index];
+        $fixed_th_hide.show();
+
+        delete hiddenColumns[i];
         _self.renderResizableTable();
       } else {
+        var originWidth = 0;
+        $.each($fixed_th_hide.parent('tr').find("th:visible"), function() {
+          originWidth += $(this).outerWidth();
+        });
+
         $th_hide.hide();
         $td_hide.hide();
-        hiddenColumns[index] = $th_hide.width();
+        $fixed_th_hide.hide();
+
+        hiddenColumns[i] = $fixed_th_hide.width() + 1;
+        _self.$table.width(originWidth - $fixed_th_hide.outerWidth());
+
         _self.renderResizableTable();
       }
 
@@ -171,11 +360,32 @@
         savedStatus['hidden-columns'] = hiddenColumns;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
       }
+
+      if (_self.options.fixedHeader.enabled) {
+        reCalColumnWidth(dataTable, originWidth - $fixed_th_hide.outerWidth());
+      }
     });
+
   }
+
+  SemiAutoTable.prototype.freshHeaderWidth = function() {
+    if (!this.options.fixedHeader.enabled) {
+      return false;
+    }
+
+    var _self = this
+    return function (event, ss) {
+      var datatable = _self.$table.DataTable();
+      reCalColumnWidth(datatable);
+    }
+  }
+
 
   SemiAutoTable.prototype.renderResizableTable = function () {
     var _self = this;
+    this.$table.colResizable({
+      disable: true
+    });
     this.$table.colResizable({
       liveDrag:true,
       postbackSafe: {
@@ -186,8 +396,13 @@
       gripInnerHtml:"<div class='grip'></div>",
       draggingClass:"dragging",
       partialRefresh:true,
-      resizeMode:'overflow'
+      resizeMode:'overflow',
+      onDrag: _self.freshHeaderWidth()
     });
+  }
+
+  SemiAutoTable.prototype.getTableJson = function() {
+    return this.$table.DataTable().ajax.json();
   }
 
   SemiAutoTable.prototype.initLayout = function () {
@@ -212,10 +427,15 @@
     $paginatorWrapper.appendTo($toolbarRow);
 
     var $paginator = $('<div class="' + this.options.paginatorClass + '" role="toolbar"></div>');
+    $paginator.append('<div class="pull-left text-primary selected-items">已选<span class="selected-items-num">0</span>条</div>');
     $paginator.appendTo($paginatorWrapper);
     this.$paginator = $paginator;
 
     var $tableWrapper = $('<div class="' + this.options.tableWrapperClass + '" >');
+    if (!this.options.fixedHeader.enabled) {
+      $tableWrapper.addClass("table-responsive");
+    }
+
     $tableWrapper.appendTo($container);
     this.$table.appendTo($tableWrapper);
     this.$table.addClass(this.options.tableClass);
@@ -265,15 +485,13 @@
 
     var self = this;
     var rowOption = this.options.rowOption;
+    var selectColor = this.options.selectColor;
 
     var type = rowOption.type;
     var showSelectAll = rowOption.showSelectAll;
     var inputName = rowOption.inputName;
-    var rowSelector = rowOption.rowSelector;
 
     if (type == 'checkbox') {
-
-      this.$rowIdInputList = this.$table.find(':checkbox[name="' + inputName + '"]');
 
       if (showSelectAll) {
 
@@ -287,10 +505,18 @@
             $.each(self.$rowIdInputList.not(':hidden'), function() {
               if ($(this).prop('checked') == allChecked) {
                 $(this).prop('checked', !allChecked).trigger('change');
+
+                if ($(this).is(':checked')) {
+                  $(this).closest('tr').addClass(selectColor);
+                } else {
+                  $(this).closest('tr').removeClass(selectColor);
+
+                }
               } else {
                 $(this).prop('checked', !allChecked);
               }
             });
+            self.selectedRowCount();
             allChecked = !allChecked;
           },
 
@@ -302,7 +528,14 @@
                 $.each(self.$rowIdInputList, function (index, input) {
                   var $input = $(input);
                   $input.prop('checked', !$input.prop('checked')).trigger('change');
+                  if ($input.is(':checked')) {
+                    $input.closest('tr').addClass(selectColor);
+                  } else {
+                    $input.closest('tr').removeClass(selectColor);
+
+                  }
                 });
+                self.selectedRowCount();
                 allChecked = false;
 
               }
@@ -316,37 +549,92 @@
 
       }
 
-      this.$rows = this.$table.find(rowSelector);
-      this.$rows.on('click', function (event) {
-
-        if ($(event.target).is(':checkbox')) {
-          return;
-        }
-
-        var $row = $(event.currentTarget);
-        var $input = $row.find(':checkbox[name="' + inputName + '"]');
-        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
-          return;
-        }
-
-        $input.prop('checked', !$input.prop('checked')).trigger('change');
-
-      });
+      this.bindRowClick(this.options.rowOption);
 
     }
 
     else if (type == 'radio') {
 
+      this.bindRowClick(this.options.rowOption);
+
+    } else {
+
+      throw 'Unrecgonized rowOption.type';
+
+    }
+
+  }
+
+  SemiAutoTable.prototype.bindRowClick = function (option) {
+
+    this.options.rowOption = $.extend({}, this.options.rowOption, option);
+
+    var self = this;
+    var rowOption = this.options.rowOption;
+    var selectColor = this.options.selectColor;
+
+    var type = rowOption.type;
+    var inputName = rowOption.inputName;
+    var rowSelector = rowOption.rowSelector;
+
+    this.$rows = this.$table.find(rowSelector);
+
+    if (type == 'checkbox') {
+      this.$rowIdInputList = this.$table.find(':checkbox[name="' + inputName + '"]');
+
+      this.$rows.unbind('click').on('click', function (event) {
+
+        if ($(this).find(':checkbox[name="' + inputName + '"]').is(':checked')) {
+          $(this).addClass(selectColor);
+        } else {
+          $(this).removeClass(selectColor);
+        }
+
+        if ($(event.target).is(':checkbox')) {
+          self.selectedRowCount();
+          return;
+        }
+
+        var $row = $(event.currentTarget);
+        var $input = $row.find(':checkbox[name="' + inputName + '"]');
+        if ($input.length == 0) {
+          return;
+        }
+        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
+          return;
+        }
+
+        if ($input.is(':checked')) {
+          $(this).removeClass(selectColor);
+        } else {
+          $(this).addClass(selectColor);
+        }
+
+        $input.prop('checked', !$input.prop('checked')).trigger('change');
+        self.selectedRowCount();
+
+      });
+
+    } else if (type == 'radio') {
       this.$rowIdInputList = this.$table.find(':radio[name="' + inputName + '"]');
 
-      this.$rows = this.$table.find(rowSelector);
-      this.$rows.on('click', function (event) {
+      this.$rows.unbind('click').on('click', function (event) {
+
+        if ($(this).find(':radio[name="' + inputName + '"]').is(':checked')) {
+          $(this).addClass(selectColor).siblings().removeClass("selectColor");
+        } else {
+          $(this).removeClass(selectColor);
+        }
 
         if ($(event.target).is(':radio')) {
+          self.selectedRowCount();
           return;
         }
         var $row = $(event.currentTarget);
         var $input = $row.find(':radio[name="' + inputName + '"]');
+        if ($input.length == 0) {
+          return;
+        }
         if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
           $.each(self.$rowIdInputList, function (index, input) {
             var $input = $(input);
@@ -354,6 +642,14 @@
           });
           return;
         }
+
+        if ($input.is(':checked')) {
+          $(this).removeClass(selectColor);
+        } else {
+          $(this).addClass(selectColor).siblings().removeClass("selectColor");
+
+        }
+
         var checked = !$input.prop('checked');
 
         $.each(self.$rowIdInputList, function (index, input) {
@@ -362,17 +658,12 @@
         });
 
         $input.prop('checked', checked).trigger('change');
+        self.selectedRowCount();
 
       });
-
-    } else {
-
-      throw 'Unrecgonized rowOption.type';
-
     }
-
-
   }
+
 
   /**
    * 初始化选择展示的列菜单按钮
@@ -410,14 +701,17 @@
       $th.each(function (index, th) {
         var $th_hide = $tr.find('th:eq('+index+')');
         var $td_hide = $tr.find('td:eq('+index+')');
+        var $fixed_th_hide = $(self.$table.DataTable().table().header()).find("th:eq("+index+")");
+
         var $table = self.$table;
         var checked = true;
         var disabled = false;
         //初始化隐藏的列
-        if (hideColumns.indexOf(order ? order[index] : index) != -1) {
+        if (hideColumns.indexOf(index) != -1) {
           checked = false;
           $th_hide.hide();
           $td_hide.hide();
+          $fixed_th_hide.hide();
         }
         //不能操作的列
         if (stickyColumns.indexOf(index) != -1) {
@@ -437,7 +731,7 @@
           dropdowns.push({
             title: dropdown_title,
             callback: function (event) {
-              $table.trigger('showOrHideCol', [event, disabled, (order ? order[index] : index), $th_hide, $td_hide]);
+              $table.trigger('showOrHideCol', [event, disabled, (order ? order[index] : index), $fixed_th_hide, /*$table.find("tbody>tr").find("td:eq("+index+")")*/$td_hide]);
             }
           });
         }
@@ -458,9 +752,9 @@
    */
   SemiAutoTable.prototype.reOrderColumnSelect = function (order, details) {
     if (details.from < details.to) {
-      $(".columns-title input[value="+order[details.from]+"]").parents('li').after($(".columns-title input[value="+order[details.to]+"]").parents('li'))
+      $(".columns-title input[value="+order[details.to-1]+"]").parents('li').after($(".columns-title input[value="+order[details.to]+"]").parents('li'))
     } else {
-      $(".columns-title input[value="+order[details.from]+"]").parents('li').before($(".columns-title input[value="+order[details.to]+"]").parents('li'))
+      $(".columns-title input[value="+order[details.to+1]+"]").parents('li').before($(".columns-title input[value="+order[details.to]+"]").parents('li'))
     }
   }
 
@@ -480,14 +774,25 @@
    */
   SemiAutoTable.prototype.updateMenuItems = function (option) {
 
-    if (this.$selectAll) {
-      this.$menuBar.children().not(this.$selectAll).find('[data-toggle="dropdown"]').tooltip('destroy');
-      this.$menuBar.children().not(this.$selectAll).find('[data-toggle="tooltip"]').tooltip('destroy');
-      this.$menuBar.children().not(this.$selectAll).remove();
-    } else {
+    if (!this.$selectAll && !this.$selectColumn) {
       this.$menuBar.find('[data-toggle="dropdown"]').tooltip('destroy');
       this.$menuBar.find('[data-toggle="tooltip"]').tooltip('destroy');
       this.$menuBar.children().remove();
+    }
+    if (this.$selectAll && !this.$selectColumn) {
+      this.$menuBar.children().not(this.$selectAll).find('[data-toggle="dropdown"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectAll).find('[data-toggle="tooltip"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectAll).remove();
+    }
+    if (!this.$selectAll && this.$selectColumn) {
+      this.$menuBar.children().not(this.$selectColumn).find('[data-toggle="dropdown"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectColumn).find('[data-toggle="tooltip"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectColumn).remove();
+    }
+    if (this.$selectAll && this.$selectColumn) {
+      this.$menuBar.children().not(this.$selectAll).not(this.$selectColumn).find('[data-toggle="dropdown"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectAll).not(this.$selectColumn).find('[data-toggle="tooltip"]').tooltip('destroy');
+      this.$menuBar.children().not(this.$selectAll).not(this.$selectColumn).remove();
     }
 
     this.options.menus = option;
@@ -496,15 +801,45 @@
     var self = this;
 
     $.each(menus, function (index, menuItemDefinition) {
-
       self.addMenuItem(menuItemDefinition);
 
     });
+
+    this.renderButtonTag(menus);
 
     this.$menuBar.find('[data-toggle="tooltip"]').tooltip({
       container: 'body'
     });
 
+  }
+
+  /**
+   * 添加标记
+   * @param menuItemDefinition
+   */
+  SemiAutoTable.prototype.renderButtonTag = function(menus) {
+
+    var _self = this;
+    $.each(menus, function(index, menuItemDefinition) {
+      var menuItems;
+      if (menuItemDefinition instanceof Array) {
+        menuItems = menuItemDefinition;
+      } else {
+        menuItems = [menuItemDefinition];
+      }
+      $.each(menuItems, function (index, menu) {
+        if (!menu.tag || !menu.tag.trim()) {
+          return;
+        }
+        if (!menu.id) {
+          return;
+        }
+        var btnGroup = _self.$menuBar.find('[data-id=' + menu.id + ']');
+        btnGroup.append('<div class="btn-group-tag" data-tag="' + menu.tag + '">'
+          + menu.tag.substring(0,2) + '</div>');
+      });
+
+    });
   }
 
   /**
@@ -527,6 +862,9 @@
     var $btnGroup = this.appendButtonGroup($container);
     if ($.isArray(menuItemDefinition)) {
       $.each(menuItemDefinition, function (index, groupItemDef) {
+        if (groupItemDef.dropdowns && groupItemDef.dropdowns.length == 0) {
+          return;
+        }
         self.appendButtonItem($btnGroup, groupItemDef);
       });
     } else {
@@ -548,6 +886,7 @@
   SemiAutoTable.prototype.appendButtonItem = function ($btnGroup, buttonDefinition) {
 
     var self = this;
+    var id = buttonDefinition.id;
     var title = buttonDefinition.title;
     var btnClass = buttonDefinition.btnClass;
     var callback = buttonDefinition.callback;
@@ -557,6 +896,7 @@
     var keepOpen = buttonDefinition.keepOpen;
 
     var buttonOption = {
+      id: id,
       title: title,
       icon: icon,
       callback: callback,
@@ -609,13 +949,14 @@
   SemiAutoTable.prototype.appendButton = function ($btnGroup, option) {
 
     var self = this;
+    var id = option.id;
     var title = option.title;
     var callback = option.callback;
     var icon = option.icon;
     var btnClass = option.btnClass || this.options.btnClass;
     var tooltip = option.tooltip;
 
-    var $btn = $('<button type="button"></button>');
+    var $btn = $('<button type="button" data-id=' + id + '></button>');
     $btn.addClass('btn');
     $btn.addClass(btnClass);
 
@@ -942,10 +1283,11 @@
     var rowStart = (currentPage - 1) * rowsPerPage + 1;
     var rowEnd = rowStart + rowsPerPage - 1 > totalRows ? totalRows : rowStart + rowsPerPage - 1;
 
+    var hasPageTooltip = this.options.pageTooltip;
     this.$pageInfo = this._addMenuItem(this.$paginator, {
 
       title: rowStart + '-' + rowEnd + ' of ' + totalRows,
-      tooltip: format($.fn.semiAutoTable.locales[this.options.locale].current_page, currentPage),
+      tooltip: hasPageTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].current_page, currentPage) : "",
       callback: function (event) {
 
         self.$pageInfo.hide();
@@ -1045,11 +1387,13 @@
     var currentPage = pageOption.currentPage;
     var totalPages = pageOption.totalPages;
 
+    var hasTooltip = this.options.pageTooltip;
+
     var pages = [];
     if (currentPage != 1) {
       pages.push({
         icon: 'fa fa-angle-double-left',
-        tooltip: $.fn.semiAutoTable.locales[this.options.locale].first_page,
+        tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].first_page : "",
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: 1
@@ -1058,7 +1402,7 @@
       });
       pages.push({
         icon: 'fa fa-angle-left',
-        tooltip: format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage - 1),
+        tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage - 1) : "",
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: self.pageObject.currentPage - 1
@@ -1070,7 +1414,7 @@
     if (currentPage != totalPages) {
       pages.push({
         icon: 'fa fa-angle-right',
-        tooltip: format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage + 1),
+        tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].next_page, currentPage + 1) : "",
         callback: function () {
           self.triggerPageChangeEvent({
               currentPage: self.pageObject.currentPage + 1
@@ -1080,7 +1424,7 @@
       });
       pages.push({
         icon: 'fa fa-angle-double-right',
-        tooltip: $.fn.semiAutoTable.locales[this.options.locale].last_page,
+        tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].last_page : "",
         callback: function () {
           self.triggerPageChangeEvent({
             currentPage: totalPages
@@ -1211,6 +1555,13 @@
   }
 
   /**
+   * 获取选中条数并显示
+   */
+  SemiAutoTable.prototype.selectedRowCount = function() {
+    $(".selected-items-num").text(this.getSelectedRows().length);
+  }
+
+  /**
    * 触发分页变动事件
    */
   SemiAutoTable.prototype.triggerPageChangeEvent = function (pageObject) {
@@ -1241,9 +1592,15 @@
    */
   SemiAutoTable.prototype.destroy = function () {
 
-    this.$sortItems.off('click');
-    this.$sortItems.find('i.fa').remove();
-    this.$sortItems.removeClass('semi-auto-table-sorter');
+    if (this.$sortItems) {
+      this.$sortItems.off('click');
+      this.$sortItems.find('i.fa').remove();
+      this.$sortItems.removeClass('semi-auto-table-sorter');
+    }
+
+    this.$table.unbind('pageChange');
+    this.$table.unbind('sortChange');
+
     this.$table.removeClass(this.options.tableClass);
     this.$table.removeData('semiAutoTable');
     this.$container.after(this.$table);
@@ -1311,7 +1668,8 @@
     paginatorWrapperClass: "col-sm-12 col-md-4 semi-auto-table-paginator",
     paginatorClass: "btn-toolbar pull-right",
 
-    tableWrapperClass: "table-responsive semi-auto-table-data",
+    // tableWrapperClass: "table-responsive semi-auto-table-data",
+    tableWrapperClass: "semi-auto-table-data",
     tableClass: "table table-striped table-condensed table-hover",
 
     rowOption: {
@@ -1341,6 +1699,17 @@
 
     },
 
+    //分页按钮是否显示tooltip
+    pageTooltip: false,
+
+    // 设置选中行的背景颜色，仅支持Bootstrap定义的五种颜色 success、info、active、warning、danger
+    // 默认为info
+    selectColor:'info',
+
+
+    //是否使用dataTable, 如果为false, 下面的colResizable, colOrderArrangable等配置均无效
+    useDataTable: true,
+
     //是否可拉伸
     colResizable: false,
 
@@ -1351,6 +1720,27 @@
     saveStatus: {
       enabled: false,
       key: ""
+    },
+
+    //表格json数据
+    data: [],
+
+    //表格数据格式，对应data, 不能为空数组
+    columns: null,
+
+    //dataTable用ajax获取数据
+    ajax: null,
+
+    //画完table需要调用的函数，用户自定义
+    completeTableCallback: function() {},
+
+    //重新渲染表格的回调函数
+    reDrawCallback: function(){},
+
+    //表头是否固定
+    fixedHeader: {
+      enabled: false,
+      scrollY: 0
     }
 
   }
@@ -1363,50 +1753,6 @@
 
     $.fn.semiAutoTable = old;
     return this;
-
-  }
-
-}(jQuery);
-
-+function ($) {
-
-  $.fn.semiAutoTable.locales['en-US'] = {
-
-    select_all: 'All',
-    select_inverse: 'Inverse select',
-
-    next_page: 'Next page {0}',
-    prev_page: 'Prev page {0}',
-    first_page: 'First page',
-    last_page: 'Last page',
-    current_page: 'Current page {0}',
-    page_size: '{0} rows per page',
-
-    sort_asc: 'Ascending',
-    sort_desc: 'Descending',
-    sort_none: 'Unsorted'
-
-  }
-
-}(jQuery);
-
-+function ($) {
-
-  $.fn.semiAutoTable.locales['zh-CN'] = {
-
-    select_all: '全选',
-    select_inverse: '反选',
-
-    next_page: '下页第 {0} 页',
-    prev_page: '上页第 {0} 页',
-    first_page: '第一页',
-    last_page: '最后一页',
-    current_page: '当前第 {0} 页',
-    page_size: '每页 {0} 条',
-
-    sort_asc: '升序排列',
-    sort_desc: '降序排列',
-    sort_none: '未排序'
 
   }
 
