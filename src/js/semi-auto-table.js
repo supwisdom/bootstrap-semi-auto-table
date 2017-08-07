@@ -194,6 +194,7 @@
           if (_self.options.saveStatus.enabled) {
             originOrder = _self.getSavedStatus()["order"];
           } else {
+            var dataTable = _self.$table.DataTable();
             originOrder = dataTable.columns().indexes();
           }
           _self.updateColumnSelect({}, originOrder);
@@ -569,99 +570,13 @@
 
     this.options.rowOption = $.extend({}, this.options.rowOption, option);
 
-    var self = this;
     var rowOption = this.options.rowOption;
-    var selectColor = this.options.selectColor;
 
-    var type = rowOption.type;
-    var inputName = rowOption.inputName;
     var rowSelector = rowOption.rowSelector;
 
     this.$rows = this.$table.find(rowSelector);
 
-    if (type == 'checkbox') {
-      this.$rowIdInputList = this.$table.find(':checkbox[name="' + inputName + '"]');
-
-      this.$rows.unbind('click').on('click', function (event) {
-
-        if ($(this).find(':checkbox[name="' + inputName + '"]').is(':checked')) {
-          $(this).addClass(selectColor);
-        } else {
-          $(this).removeClass(selectColor);
-        }
-
-        if ($(event.target).is(':checkbox')) {
-          self.selectedRowCount();
-          return;
-        }
-
-        var $row = $(event.currentTarget);
-        var $input = $row.find(':checkbox[name="' + inputName + '"]');
-        if ($input.length == 0) {
-          return;
-        }
-        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
-          return;
-        }
-
-        if ($input.is(':checked')) {
-          $(this).removeClass(selectColor);
-        } else {
-          $(this).addClass(selectColor);
-        }
-
-        $input.prop('checked', !$input.prop('checked')).trigger('change');
-        self.selectedRowCount();
-
-      });
-
-    } else if (type == 'radio') {
-      this.$rowIdInputList = this.$table.find(':radio[name="' + inputName + '"]');
-
-      this.$rows.unbind('click').on('click', function (event) {
-
-        if ($(this).find(':radio[name="' + inputName + '"]').is(':checked')) {
-          $(this).addClass(selectColor).siblings().removeClass("selectColor");
-        } else {
-          $(this).removeClass(selectColor);
-        }
-
-        if ($(event.target).is(':radio')) {
-          self.selectedRowCount();
-          return;
-        }
-        var $row = $(event.currentTarget);
-        var $input = $row.find(':radio[name="' + inputName + '"]');
-        if ($input.length == 0) {
-          return;
-        }
-        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
-          $.each(self.$rowIdInputList, function (index, input) {
-            var $input = $(input);
-            $input.prop('checked', false).trigger('change');
-          });
-          return;
-        }
-
-        if ($input.is(':checked')) {
-          $(this).removeClass(selectColor);
-        } else {
-          $(this).addClass(selectColor).siblings().removeClass("selectColor");
-
-        }
-
-        var checked = !$input.prop('checked');
-
-        $.each(self.$rowIdInputList, function (index, input) {
-          var $input = $(input);
-          $input.prop('checked', false).trigger('change');
-        });
-
-        $input.prop('checked', checked).trigger('change');
-        self.selectedRowCount();
-
-      });
-    }
+    this.bindRowsAndAddRowClick(option, this.$rows);
   }
 
 
@@ -1607,8 +1522,127 @@
     this.$container.remove();
 
   }
+  /**
+   * 增加一行,
+   * 使用dataTable的情况下，传入的参数是对象Object，属性和原有的相同
+   *      dataObj={"name":"wang", "id":"3",...}
+   * 不使用dataTable的情况下，传入的参数是数组，可以做渲染
+   *      dataObj=["<input name="row.id" type="checkbox" value="4"/>",2,3,4,5], 第一列的name必须和原有的一样。
+   * @param dataObj
+   */
+  SemiAutoTable.prototype.addRow = function (dataObj) {
+    if(this.options.useDataTable){
+      var dataTable = this.$table.DataTable();
+      dataTable.row.add(dataObj).draw();
+    }else{
+      var originTdLength = this.$table.find('tbody tr').eq(0).find('td').length;
+      var $tr = $('<tr role="row"></tr>');
 
+      for (var i = 0; i < originTdLength; i++) {
+        $tr.append('<td>' + dataObj[i] + '</td>')
+      }
+      this.$table.find('tbody').append($tr);
+      var $addTr = this.$table.find('tr:last');
 
+      this.bindRowsAndAddRowClick(this.options.rowOption, $addTr);
+    }
+
+  }
+
+  SemiAutoTable.prototype.bindRowsAndAddRowClick = function (option, $rows) {
+
+    this.options.rowOption = $.extend({}, this.options.rowOption, option);
+
+    var self = this;
+    var rowOption = this.options.rowOption;
+    var selectColor = this.options.selectColor;
+
+    var type = rowOption.type;
+    var inputName = rowOption.inputName;
+
+    this.$rows = $rows;
+    if (type == 'checkbox') {
+      this.$rowIdInputList = this.$table.find(':checkbox[name="' + inputName + '"]');
+      this.$rows.unbind('click').on('click', function (event) {
+        if ($(this).find(':checkbox[name="' + inputName + '"]').is(':checked')) {
+          $(this).addClass(selectColor);
+        } else {
+          $(this).removeClass(selectColor);
+        }
+
+        if ($(event.target).is(':checkbox')) {
+          self.selectedRowCount();
+          return;
+        }
+
+        var $row = $(event.currentTarget);
+        var $input = $row.find(':checkbox[name="' + inputName + '"]');
+        if ($input.length == 0) {
+          return;
+        }
+        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
+          return;
+        }
+
+        if ($input.is(':checked')) {
+          $(this).removeClass(selectColor);
+        } else {
+          $(this).addClass(selectColor);
+        }
+
+        $input.prop('checked', !$input.prop('checked')).trigger('change');
+        self.selectedRowCount();
+
+      });
+
+    } else if (type == 'radio') {
+      this.$rowIdInputList = this.$table.find(':radio[name="' + inputName + '"]');
+
+      this.$rows.unbind('click').on('click', function (event) {
+
+        if ($(this).find(':radio[name="' + inputName + '"]').is(':checked')) {
+          $(this).addClass(selectColor).siblings().removeClass("selectColor");
+        } else {
+          $(this).removeClass(selectColor);
+        }
+
+        if ($(event.target).is(':radio')) {
+          self.selectedRowCount();
+          return;
+        }
+        var $row = $(event.currentTarget);
+        var $input = $row.find(':radio[name="' + inputName + '"]');
+        if ($input.length == 0) {
+          return;
+        }
+        if ($(event.target).is('label') && $(event.target).attr('for') == $input.attr('id')) {
+          $.each(self.$rowIdInputList, function (index, input) {
+            var $input = $(input);
+            $input.prop('checked', false).trigger('change');
+          });
+          return;
+        }
+
+        if ($input.is(':checked')) {
+          $(this).removeClass(selectColor);
+        } else {
+          $(this).addClass(selectColor).siblings().removeClass("selectColor");
+
+        }
+
+        var checked = !$input.prop('checked');
+
+        $.each(self.$rowIdInputList, function (index, input) {
+          var $input = $(input);
+          $input.prop('checked', false).trigger('change');
+        });
+
+        $input.prop('checked', checked).trigger('change');
+        self.selectedRowCount();
+
+      });
+    }
+  }
   // SemiAutoTable PLUGIN DEFINITION
   // =======================
 
