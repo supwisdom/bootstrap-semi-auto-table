@@ -217,8 +217,8 @@
         _self.options.pageOption["totalPages"] = Math.ceil(json.data.length/_self.options.rowsPerPage);
       }
 
-      _self.renderColumnSelect();
       _self.initRowButton();
+      _self.renderColumnSelect();
       _self.initPaginator();
       _self.initSortBy();
       if (_self.options.fixedHeader.enabled) {
@@ -332,6 +332,13 @@
 
 
       var $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
+      if (!$th_hide.length) {
+        $fixed_th_hide = $(_self.$table.DataTable().table().header()).find("th:eq("+index+")");
+        if (!$td_hide.length) {
+          $td_hide = _self.$table.find("tbody>tr").find("td:eq("+index+")")
+        }
+      }
+
       var i = parseInt($fixed_th_hide.attr("data-column-index"));
       if (show) {
         $th_hide.show();

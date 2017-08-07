@@ -126,7 +126,12 @@
       g.t = t;
       g.i = i;
       g.c = c;
-      c.w = c.width() > 0 ? c.width() : t.opt.minWidth;
+
+      if (c.attr("width") != null && c.attr("width").indexOf("px") != -1) {
+        c.w = c.attr("width");
+      } else {
+        c.w = c.width() > 0 ? c.width() : t.opt.minWidth;
+      }
       if (t.p && S && S[t.key] && JSON.parse(S[t.key])['hidden-columns']) {
         var coulmn_index = c.data('column-index');
         var columnWidth = JSON.parse(S[t.key])['hidden-columns'][coulmn_index];
@@ -137,7 +142,12 @@
 
       t.g.push(g);
       t.c.push(c);						//the current grip and column are added to its table object
-      c.width(c.w).removeAttr("width");				//the width of the column is converted into pixel-based measurements
+
+      if (c.attr("width") != null && c.attr("width").indexOf("px") != -1) {
+        c.outerWidth(c.w).removeAttr("width");
+      } else {
+        c.width(c.w).removeAttr("width");
+      }
       g.data(SIGNATURE, {i: i, t: t.attr(ID), last: i == t.ln - 1});	 //grip index and its table name are stored in the HTML
 
     });
