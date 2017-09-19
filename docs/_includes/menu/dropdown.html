@@ -1,4 +1,4 @@
-<table id="table">
+<table id="table2">
   <thead>
   <tr>
     <th></th>
@@ -16,7 +16,7 @@
 </table>
 <script>
   $(function () {
-    var $table = $("#table");
+    var $table = $("#table2");
 
     var showSelectedRows = function () {
       alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
@@ -81,8 +81,9 @@
               callback: showSelectedRows
             }
           ]
-        },
-      ]
+        }
+      ],
+      useDataTable: false
     });
   });
 </script>

@@ -40,19 +40,11 @@
     if (tableWidth) {
       $thead.parent("table").width(tableWidth);
     } else {
-      var width = $tbody.parent("table").outerWidth();
+      var width = $tbody.parent("table")[0].style.width;
       $thead.parent("table").css('width', width);
       $thead.parent("table").css('max-width', width);
     }
 
-    // var tableDom = $thead.parent("table");
-    // if (tableWidth) {
-    //   tableDom.css('width', tableWidth + "px");
-    //   tableDom.css('max-width', tableWidth + "px");
-    // } else {
-    //   tableDom.css('width', $tbody.outerWidth() + "px");
-    //   tableDom.css('max-width', $tbody.outerWidth() + "px");
-    // }
   }
 
   var localStorage = window.localStorage;
@@ -60,6 +52,12 @@
   var storageKeySuffix = "-table";
 
   var resizable = true;
+
+  var toolbarHeight = $('.semi-auto-table-toolbar').outerHeight();
+
+  var tableHeaderHeight = $(".dataTables_scrollHead").outerHeight();
+
+  var resizableTable = null;
 
 
   // SemiAutoTable CLASS DEFINITION
@@ -85,6 +83,7 @@
       this.initMenuItems();
       this.initPaginator();
       this.initSortBy();
+      this.selectedRowCount();
     }
 
   }
@@ -199,6 +198,11 @@
           }
           _self.updateColumnSelect({}, originOrder);
         }
+
+
+        if (_self.options.fixedHeader.enabled && resizableTable) {
+          _self.renderResizableTable();
+        }
       }
 
       _self.options.reDrawCallback(json, isLoading);
@@ -217,16 +221,41 @@
         _self.options.pageOption["totalPages"] = Math.ceil(json.data.length/_self.options.rowsPerPage);
       }
 
-      _self.initRowButton();
       _self.renderColumnSelect();
+      _self.initRowButton();
       _self.initPaginator();
       _self.initSortBy();
+      _self.selectedRowCount();
+
       if (_self.options.fixedHeader.enabled) {
         var datatable = _self.$table.DataTable();
-        reCalColumnWidth(datatable);
+        if (settings.fnRecordsTotal() > 0) {
+          reCalColumnWidth(datatable);
+        }
         $(datatable.table().header()).parent("table").css('height', '');
+
+        _self.$table.on("change-scrollY", function(event, $body, fixedHeader) {
+          _self.changeTableScrollY($body, {enabled: fixedHeader});
+        });
+
+        _self.$table.trigger("change-scrollY", [$(settings.nScrollBody), _self.options.fixedHeader.enabled]);
+        resizable = true;
+
+        //窗口变化时，重新计算表格宽度
+        $(window).resize(_.throttle(function() {
+          var $thead = $(datatable.table().header());
+          var $hide_head = $(datatable.table().body()).parent("table").find("thead");
+
+          $.each($thead.find("th"), function () {
+            var index = parseInt($(this).attr("data-column-index"));
+            $hide_head.find("th:eq("+index+")").css('width', this.style.width);
+          });
+
+          var width = $thead.parent("table")[0].style.width;
+          $hide_head.parent("table").css('width', width);
+          $hide_head.parent("table").css('max-width', width);
+        }, 300));
       }
-      _self.changeTableScrollY($(settings.nScrollBody), _self.options.fixedHeader);
 
       _self.options.completeTableCallback(json);
     }
@@ -237,7 +266,14 @@
     if (!this.options.fixedHeader.enabled) {
       return false;
     }
-    var maxHeight = this.options.fixedHeader.scrollY ? (this.options.fixedHeader.scrollY - $('.semi-auto-table-toolbar').outerHeight()) : 0;
+    if ((toolbarHeight && toolbarHeight == $('.semi-auto-table-toolbar').outerHeight()) &&
+      (tableHeaderHeight && tableHeaderHeight == $(".dataTables_scrollHead").outerHeight())) {
+      return false;
+    }
+
+    tableHeaderHeight = $(".dataTables_scrollHead").outerHeight();
+    toolbarHeight = $('.semi-auto-table-toolbar').outerHeight();
+    var maxHeight = this.options.fixedHeader.scrollY ? (this.options.fixedHeader.scrollY - toolbarHeight - tableHeaderHeight) : 0;
     $scrollBody.css('max-height', maxHeight + 'px');
     $scrollBody.height(maxHeight);
   }
@@ -274,7 +310,7 @@
     if (this.options.colResizable) {
       this.$table.addClass("col-resizable");
 
-      this.$table.colResizable({
+      resizableTable = this.$table.colResizable({
         liveDrag:true,
         postbackSafe: {
           enabled: _self.options.saveStatus.enabled,
@@ -308,12 +344,13 @@
 
     var hiddenColumns = {};
     $.each(this.options.columnOption.hideColumns, function() {
-      hiddenColumns[this] = 125;
+      hiddenColumns[this] = _self.getSavedStatus()['hidden-columns'][this] ? _self.getSavedStatus()['hidden-columns'][this] : 125;
     });
     this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $fixed_th_hide, $td_hide) {
       if (isDisabled) {
         return false;
       }
+
 
       if (_self.options.saveStatus.enabled) {
         var current_savedStatus = _self.getSavedStatus()['hidden-columns'];
@@ -339,14 +376,19 @@
         }
       }
 
-      var i = parseInt($fixed_th_hide.attr("data-column-index"));
+      var current_order = $(this).DataTable().colReorder.order();
+      var i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
       if (show) {
+        if (current_savedStatus && hiddenColumns[i]) {
+          var width = hiddenColumns[i];
+          $th_hide.css('width', width+'px');
+          $th_hide.outerWidth(width);
+        }
         $th_hide.show();
         $td_hide.show();
         $fixed_th_hide.show();
 
         delete hiddenColumns[i];
-        _self.renderResizableTable();
       } else {
         var originWidth = 0;
         $.each($fixed_th_hide.parent('tr').find("th:visible"), function() {
@@ -360,7 +402,6 @@
         hiddenColumns[i] = $fixed_th_hide.width() + 1;
         _self.$table.width(originWidth - $fixed_th_hide.outerWidth());
 
-        _self.renderResizableTable();
       }
 
       if (_self.options.saveStatus.enabled) {
@@ -372,6 +413,7 @@
       if (_self.options.fixedHeader.enabled) {
         reCalColumnWidth(dataTable, originWidth - $fixed_th_hide.outerWidth());
       }
+      _self.renderResizableTable();
     });
 
   }
@@ -385,6 +427,8 @@
     return function (event, ss) {
       var datatable = _self.$table.DataTable();
       reCalColumnWidth(datatable);
+
+      _self.$table.trigger("change-scrollY", [$(".dataTables_scrollBody"), _self.options.fixedHeader.enabled]);
     }
   }
 
@@ -435,12 +479,11 @@
     $paginatorWrapper.appendTo($toolbarRow);
 
     var $paginator = $('<div class="' + this.options.paginatorClass + '" role="toolbar"></div>');
-    $paginator.append('<div class="pull-left text-primary selected-items">已选<span class="selected-items-num">0</span>条</div>');
     $paginator.appendTo($paginatorWrapper);
     this.$paginator = $paginator;
 
     var $tableWrapper = $('<div class="' + this.options.tableWrapperClass + '" >');
-    if (!this.options.fixedHeader.enabled) {
+    if (!this.options.fixedHeader.enabled && this.options.overflow) {
       $tableWrapper.addClass("table-responsive");
     }
 
@@ -552,7 +595,7 @@
 
         });
 
-        this.$selectAll.addClass('.select-all-btn');
+        this.$selectAll.addClass('select-all-btn');
         this.$selectAll.prependTo(this.$menuBar);
 
       }
@@ -629,7 +672,9 @@
         var checked = true;
         var disabled = false;
         //初始化隐藏的列
-        if (hideColumns.indexOf(index) != -1) {
+
+        var order_index = (savedStatus && savedStatus['order']) ? savedStatus['order'][index] : index;
+        if (hideColumns.indexOf(order_index) != -1) {
           checked = false;
           $th_hide.hide();
           $td_hide.hide();
@@ -663,7 +708,12 @@
         dropdowns: dropdowns,
         keepOpen: true
       });
-      this.$selectColumn.prependTo(this.$menuBar);
+
+      if (this.$menuBar.find(".select-all-btn").length > 0) {
+        this.$menuBar.find(".select-all-btn").after(this.$selectColumn);
+      } else {
+        this.$selectColumn.prependTo(this.$menuBar);
+      }
     }
   }
 
@@ -1033,7 +1083,7 @@
     var sortObject = $.extend({}, sortOption);
     this.sortObject = sortObject;
 
-    this.$sortItems = this.$table.find('[data-sort-by]');
+    this.$sortItems = this.options.fixedHeader.enabled ? $('[data-sort-by]') : this.$table.find('[data-sort-by]');
     this.$sortItems.addClass('semi-auto-table-sorter');
 
     // 初始化tooltip
@@ -1480,7 +1530,10 @@
    * 获取选中条数并显示
    */
   SemiAutoTable.prototype.selectedRowCount = function() {
-    $(".selected-items-num").text(this.getSelectedRows().length);
+    if (this.options.selectedNum && this.$paginator.find(".selected-items-num").length == 0) {
+      this.$paginator.prepend('<div class="pull-left text-primary selected-items">已选<span class="selected-items-num">0</span>条</div>');
+    }
+    this.$paginator.find(".selected-items-num").text(this.getSelectedRows().length);
   }
 
   /**
@@ -1740,6 +1793,9 @@
 
     },
 
+    //是否显示选中条数
+    selectedNum: true,
+
     //分页按钮是否显示tooltip
     pageTooltip: false,
 
@@ -1782,7 +1838,10 @@
     fixedHeader: {
       enabled: false,
       scrollY: 0
-    }
+    },
+
+    //表格是否可以横纵向拉伸
+    overflow: true
 
   }
 

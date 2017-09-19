@@ -97,7 +97,8 @@
         currentPage: 1,
         totalPages: 20,
         totalRows: 202
-      }
+      },
+      useDataTable: false
     }).on('pageChange', function(event, pageObject) {
       request(pageObject, $table.semiAutoTable('getSortObject'));
     }).on('sortChange', function(event, sortObject) {

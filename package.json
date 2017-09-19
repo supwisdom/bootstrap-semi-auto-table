@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-semi-auto-table",
   "description": "Bootstrap v3 semi-auto table. Support toolbar, paginaion and sort.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "keywords": [
     "bootstrap",
     "table",
