@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Menu - Button</title>
+
+  <link href="../../assets/css/pygments-manni.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- bootstrap-select -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
+
+  <!-- datatable -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.0/css/colReorder.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/colreorder/1.3.0/js/dataTables.colReorder.min.js"></script>
+
+  <!-- underscore -->
+  <script src="http://underscorejs.org/underscore.js"></script>
+
+  <!-- bootstrap-semi-auto-table -->
+  <link rel="stylesheet" href="../../dist/css/semi-auto-table.css">
+  <script src="../../dist/semi-auto-table.js"></script>
+  <script src="../../dist/colResizable.js"></script>
+
+  <script>
+    $.fn.semiAutoTable.defaults.locale = 'en-US';
+  </script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <a href="../../" class="navbar-brand">Bootstrap Semi-Auto Table</a>
+    </div>
+
+    <div>
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Basic<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+            <a href="../../rowselector/index">Row Selector</a>
+            </li>
+            <li>
+              <a href="../../menu/index">Menu</a>
+            </li>
+            <li>
+              <a href="../../pagination/index">Pagination</a>
+            </li>
+            <li>
+              <a href="../../sort/default">Sort</a>
+            </li>
+          </ul>
+        </li>
+
+        <!--<li class="dropdown">-->
+          <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
+            <!--Column Plugin<span class="caret"></span>-->
+          <!--</a>-->
+          <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li>-->
+              <!--<a href="../../columnselector/show-button">Show or Hide Column</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="../../columnselector/hideColumns">Specify Hide Columns</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="../../columnselector/stickyColumns">Specify sticky Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="../../columnreorder">Reorder Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="../../columnresizable">Resizable Columns</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
+
+        <li>
+          <a href="../../datatable/default">Use DataTable</a>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Examples <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../../examples/form">Form post</a>
+            </li>
+            <li>
+              <a href="../../examples/ajax">Ajax</a>
+            </li>
+            <li>
+              <a href="../../examples/not-table">Non-table</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Documentation <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../../options">Options</a>
+            </li>
+            <li>
+              <a href="../../methods">Methods</a>
+            </li>
+            <li>
+              <a href="../../events">Events</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>DataTable - Default</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <table id="table" style="width: 1500px;max-width: 1500px">
+  <thead>
+  <tr>
+    <th></th>
+    <th><a href="#" data-sort-by="A">课程代码</a></th>
+    <th><a href="#" data-sort-by="B">课程名称</a></th>
+    <th><a href="#" data-sort-by="C">英文名</a></th>
+    <th><a href="#" data-sort-by="D">开课院系</a></th>
+    <th><a href="#" data-sort-by="E">学历层次</a></th>
+    <th><a href="#" data-sort-by="F">学分</a></th>
+    <th>审核状态</th>
+    <th><a href="#" data-sort-by="G">更新时间</a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="1"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>2.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="row.id" value="2"/></td>
+    <td>0001210</td>
+    <td>新闻写作技巧</td>
+    <td>writting</td>
+    <td>教研科</td>
+    <td>本科</td>
+    <td>3.0</td>
+    <td>审核通过</td>
+    <td>2014-07-22 17:26</td>
+  </tr>
+
+  </tbody>
+</table>
+<script>
+  var $table = $("#table");
+  $table.semiAutoTable({
+    colOrderArrangable: true,
+    colResizable: true,
+    columnOption: {
+      showColumnSelect: true
+    },
+    sortOption: {
+      'A': 'asc',
+      'B': 'desc'
+    },
+    menus: [
+      {
+        title: '上传',
+        tooltip: 'tooltip',
+        callback: function () {
+
+        }
+      },
+      {
+        title: '下载',
+        callback: function () {
+          console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+        }
+      },
+      {
+        id: 1,
+        title: '删除',
+        tag: '11'
+      },
+      {
+        id: 3,
+        title: '删除删除删除',
+        tag: ''
+      },
+      {
+        title: '删除删除删除'
+      },
+      {
+        id: 2,
+        title: '删除删除删除',
+        tag: '1232'
+      }
+    ],
+    pageOption: {
+      currentPage: 11,
+      totalPages: 20,
+      totalRows: 202
+    },
+    fixedHeader: {
+      enabled: true,
+      scrollY: 500
+    },
+    saveStatus: {
+      enabled: true,
+      key: "table"
+    }
+  }).on('pageChange', function (event, pageObject) {
+
+    console.log(JSON.stringify(pageObject));
+    $(this).semiAutoTable('updatePaginator', pageObject);
+
+  }).on('sortChange', function (event, sortObject) {
+
+    console.log(JSON.stringify(sortObject));
+    var $this = $(this);
+    $this.semiAutoTable('updateSortBy', sortObject);
+
+  });
+</script>
+      <figure class="highlight"><pre><code class="language-html" data-lang="html">      <span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span> <span class="na">style=</span><span class="s">"width: 1500px;max-width: 1500px"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"A"</span><span class="nt">&gt;</span>课程代码<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"B"</span><span class="nt">&gt;</span>课程名称<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"C"</span><span class="nt">&gt;</span>英文名<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"D"</span><span class="nt">&gt;</span>开课院系<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"E"</span><span class="nt">&gt;</span>学历层次<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"F"</span><span class="nt">&gt;</span>学分<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>审核状态<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-sort-by=</span><span class="s">"G"</span><span class="nt">&gt;</span>更新时间<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"row.id"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>0001210<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>新闻写作技巧<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>writting<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>教研科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>本科<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>3.0<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>审核通过<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>2014-07-22 17:26<span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="kd">var</span> <span class="nx">$table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#table"</span><span class="p">);</span>
+  <span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">({</span>
+    <span class="na">colOrderArrangable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">colResizable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">columnOption</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">showColumnSelect</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="na">sortOption</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'A'</span><span class="p">:</span> <span class="s1">'asc'</span><span class="p">,</span>
+      <span class="s1">'B'</span><span class="p">:</span> <span class="s1">'desc'</span>
+    <span class="p">},</span>
+    <span class="na">menus</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'上传'</span><span class="p">,</span>
+        <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'下载'</span><span class="p">,</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">$table</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">)));</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'删除'</span><span class="p">,</span>
+        <span class="na">tag</span><span class="p">:</span> <span class="s1">'11'</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'删除删除删除'</span><span class="p">,</span>
+        <span class="na">tag</span><span class="p">:</span> <span class="s1">''</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'删除删除删除'</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="na">title</span><span class="p">:</span> <span class="s1">'删除删除删除'</span><span class="p">,</span>
+        <span class="na">tag</span><span class="p">:</span> <span class="s1">'1232'</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="na">pageOption</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">currentPage</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+      <span class="na">totalPages</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="na">totalRows</span><span class="p">:</span> <span class="mi">202</span>
+    <span class="p">},</span>
+    <span class="na">fixedHeader</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">enabled</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">scrollY</span><span class="p">:</span> <span class="mi">500</span>
+    <span class="p">},</span>
+    <span class="na">saveStatus</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">enabled</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">key</span><span class="p">:</span> <span class="s2">"table"</span>
+    <span class="p">}</span>
+  <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">pageObject</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updatePaginator'</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">);</span>
+
+  <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">sortObject</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="nx">$this</span><span class="p">.</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateSortBy'</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">);</span>
+
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+      </code></pre></figure>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+
+</html>
+

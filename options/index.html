@@ -25,18 +25,21 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- bootstrap-select -->
-  <link rel="stylesheet" href="http://silviomoreto.github.io/bootstrap-select/bootstrap-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
 
   <!-- datatable -->
   <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.0/css/colReorder.dataTables.min.css">
-  <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/colreorder/1.3.0/js/dataTables.colReorder.min.js"></script>
+
+  <!-- underscore -->
+  <script src="http://underscorejs.org/underscore.js"></script>
 
   <!-- bootstrap-semi-auto-table -->
   <link rel="stylesheet" href="../dist/css/semi-auto-table.css">
   <script src="../dist/semi-auto-table.js"></script>
-  <script src="../dist/colResize.js"></script>
+  <script src="../dist/colResizable.js"></script>
 
   <script>
     $.fn.semiAutoTable.defaults.locale = 'en-US';
@@ -64,81 +67,52 @@
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Row Selector<span class="caret"></span>
+            Basic<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="../rowselector/inputname">Specify input name</a>
+            <a href="../rowselector/index">Row Selector</a>
             </li>
             <li>
-              <a href="../rowselector/radio">Radio</a>
+              <a href="../menu/index">Menu</a>
             </li>
             <li>
-              <a href="../rowselector/hide">Hide Select-all button</a>
+              <a href="../pagination/index">Pagination</a>
             </li>
             <li>
-              <a href="../rowselector/disable">Disable</a>
+              <a href="../sort/default">Sort</a>
             </li>
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Column Plugin<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="../columnselector/show-button">Show or Hide Column</a>
-            </li>
-            <li>
-              <a href="../columnselector/hideColumns">Specify Hide Columns</a>
-            </li>
-            <li>
-              <a href="../columnselector/stickyColumns">Specify sticky Columns</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="../columnreorder">Reorder Columns</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="../columnresizable">Resizable Columns</a>
-            </li>
-          </ul>
-        </li>
+        <!--<li class="dropdown">-->
+          <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
+            <!--Column Plugin<span class="caret"></span>-->
+          <!--</a>-->
+          <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li>-->
+              <!--<a href="../columnselector/show-button">Show or Hide Column</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="../columnselector/hideColumns">Specify Hide Columns</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="../columnselector/stickyColumns">Specify sticky Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="../columnreorder">Reorder Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="../columnresizable">Resizable Columns</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Menu <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="../menu/button">Button</a>
-            </li>
-            <li>
-              <a href="../menu/dropdown">Button dropdowns</a>
-            </li>
-            <li>
-              <a href="../menu/split-dropdown">Split button dropdowns</a>
-            </li>
-            <li>
-              <a href="../menu/group">Button groups</a>
-            </li>
-          </ul>
+        <li>
+          <a href="../datatable/default">Use DataTable</a>
         </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Pagination <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="../pagination/default">Default</a></li>
-            <li><a href="../pagination/specify-row-size-option">Specify rows size option</a></li>
-            <li><a href="../pagination/disable">Disable</a></li>
-          </ul>
-        </li>
-
-        <li><a href="../sort/default">Sort</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -277,6 +251,26 @@
           <td>string</td>
           <td><code>'table table-striped table-condensed table-hover'</code></td>
           <td>table class</td>
+        </tr>
+        <tr>
+          <td>selectedNum</td>
+          <td>boolean</td>
+          <td>true</td>
+          <td>是否显示选中条数</td>
+        </tr>
+        <tr>
+          <td>pageTooltip</td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>分页按钮是否显示tooltip</td>
+        </tr>
+        <tr>
+          <td>selectColor</td>
+          <td>string</td>
+          <td>
+            <code>'info'</code>
+          </td>
+          <td>设置选中行的背景颜色，仅支持Bootstrap定义的五种颜色<code>success、info、active、warning、danger</code></td>
         </tr>
 
         <tr>
@@ -506,6 +500,22 @@
             not required, triggered when click
           </td>
         </tr>
+        <tr>
+          <td>id</td>
+          <td>number</td>
+          <td></td>
+          <td>
+            菜单的唯一标识
+          </td>
+        </tr>
+        <tr>
+          <td>tag</td>
+          <td>string</td>
+          <td></td>
+          <td>
+            menu右上角的小标记，与id配合使用
+          </td>
+        </tr>
 
         <tr>
           <td colspan="4"><h4>ButtonDefinition - Single button dropdowns</h4></td>
@@ -654,7 +664,7 @@
           <td colspan="4"><h4>columnReorder - <a href="https://www.datatables.net/extensions/colreorder/">DataTable Extension</a></h4></td>
         </tr>
         <tr>
-          <td>colReorder</td>
+          <td>colOrderArrangable</td>
           <td>object</td>
           <td>
             <code>
@@ -694,6 +704,99 @@
               } <br/></code>
           </td>
         </tr>
+
+
+        <!-- DataTable -->
+        <tr>
+          <td colspan="4"><h4><a href="https://www.datatables.net">DataTable</a></h4></td>
+        </tr>
+        <tr>
+          <td>useDataTable</td>
+          <td>boolean</td>
+          <td>
+            <code>
+              true
+            </code>
+          </td>
+          <td>
+            是否调用dataTable插件,为true,以下选项才有效
+          </td>
+        </tr>
+        <tr>
+          <td>columns</td>
+          <td>array</td>
+          <td>
+            <code>
+              null
+            </code>
+          </td>
+          <td>
+            表格数据与头部的对应。格式为:
+            <br/>
+            <code>
+              [
+                {"data": "course.code"},
+                {"data": "course.name"}
+              ]
+            </code>
+              对应thead是:
+            <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;thead&gt;&lt;tr&gt;&lt;th&gt;</span>代码<span class="nt">&lt;/th&gt;&lt;th&gt;</span>名称<span class="nt">&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></code></pre></figure>
+          </td>
+        </tr>
+        <tr>
+          <td>ajax</td>
+          <td>ajax</td>
+          <td>null</td>
+          <td>
+            发请求拿到数据:
+            <code>
+              $.ajax({
+                url: '',
+                type: 'get'
+              })
+            </code>
+          </td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>json</td>
+          <td>
+            <code>
+              []
+            </code>
+          </td>
+          <td>
+            表格数据, 与ajax二选一, 要么是ajax异步得到数据，要么通过data直接给
+          </td>
+        </tr>
+        <tr>
+          <td>completeTableCallback</td>
+          <td>function</td>
+          <td></td>
+          <td>渲染完成table需要调用的函数，用户自定义，只调用一次</td>
+        </tr>
+        <tr>
+          <td>reDrawCallback</td>
+          <td>function</td>
+          <td></td>
+          <td>渲染table时调用的函数，用户自定义，每次画完table调用一次</td>
+        </tr>
+        <tr>
+          <td>fixedHeader</td>
+          <td>object</td>
+          <td>
+            <code>
+              {
+              enabled: false,
+              scrollY: 0
+              }
+            </code>
+          </td>
+          <td>
+            enabled为true表示：启用表头固定；scrollY为固定高度
+          </td>
+        </tr>
+
       </table>
 
     </div>
