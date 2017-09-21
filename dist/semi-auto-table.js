@@ -368,7 +368,14 @@
       }
 
 
-      var $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
+      var $th_hide = _self.$table.find("tr th:eq(" + $fixed_th_hide.index() + ")");
+      var i = $fixed_th_hide.index();
+      if (_self.options.colOrderArrangable) {
+        $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
+        var current_order = $(this).DataTable().colReorder.order();
+        i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
+      }
+
       if (!$th_hide.length) {
         $fixed_th_hide = $(_self.$table.DataTable().table().header()).find("th:eq("+index+")");
         if (!$td_hide.length) {
@@ -376,8 +383,6 @@
         }
       }
 
-      var current_order = $(this).DataTable().colReorder.order();
-      var i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
       if (show) {
         if (current_savedStatus && hiddenColumns[i]) {
           var width = hiddenColumns[i];
@@ -399,7 +404,7 @@
         $td_hide.hide();
         $fixed_th_hide.hide();
 
-        hiddenColumns[i] = $fixed_th_hide.width() + 1;
+        hiddenColumns[i] = $fixed_th_hide.outerWidth();
         _self.$table.width(originWidth - $fixed_th_hide.outerWidth());
 
       }
