@@ -134,7 +134,9 @@
       }
       if (t.p && S && S[t.key] && JSON.parse(S[t.key])['hidden-columns']) {
         var coulmn_index = c.data('column-index');
-        var columnWidth = JSON.parse(S[t.key])['hidden-columns'][coulmn_index];
+        var storage = JSON.parse(S[t.key]);
+        var index = storage.order ? storage.order[coulmn_index] : coulmn_index;
+        var columnWidth = storage['hidden-columns'][index];
         if (columnWidth) {
           c.w = columnWidth;
         }
