@@ -110,8 +110,18 @@
           <!--</ul>-->
         <!--</li>-->
 
-        <li>
-          <a href="{{ page.basePath }}/datatable/default">Use DataTable</a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Use DataTable <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="{{ page.basePath }}/datatable/default">Default</a>
+            </li>
+            <li>
+              <a href="{{ page.basePath }}/datatable/toolbar">Toolbar</a>
+            </li>
+          </ul>
         </li>
 
         <li class="dropdown">

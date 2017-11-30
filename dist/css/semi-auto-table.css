@@ -33,6 +33,32 @@
     border-radius: 50%;
     background-color: #ff6b6b;
 }
+.semi-auto-table-toolbar .semi-auto-table-menubar .dropdown-menu > tbody > tr > td > a
+{
+    font-weight: normal;
+    line-height: 1.42857143;
+
+    display: block;
+    clear: both;
+
+    padding: 3px 20px;
+
+    white-space: nowrap;
+
+    color: #333;
+}
+.semi-auto-table-toolbar .semi-auto-table-menubar .dropdown-menu > tbody > tr > td > a:hover,
+.semi-auto-table-toolbar .semi-auto-table-menubar .dropdown-menu > tbody > tr > td > a:focus
+{
+    text-decoration: none;
+
+    color: #262626;
+    background-color: #f5f5f5;
+}
+.semi-auto-table-toolbar .semi-auto-table-menubar .dropdown-menu > tbody > tr > td > a > label > input
+{
+    margin-top: 2px;
+}
 .semi-auto-table-toolbar .semi-auto-table-paginator .selected-items
 {
     line-height: 30px;

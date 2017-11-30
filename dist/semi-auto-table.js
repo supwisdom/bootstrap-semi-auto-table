@@ -893,14 +893,14 @@
       if (!callback) {
         // 普通下拉菜单
         buttonOption = $.extend({}, buttonOption, {keepOpen: keepOpen});
-        $dropdown = this.appendDropdown($btnGroup, buttonOption);
+        $dropdown = this.appendDropdown($btnGroup, buttonOption, dropdowns.length);
       } else {
         // 分离式下拉菜单
         this.appendButton($btnGroup, buttonOption);
         $dropdown = this.appendDropdown($btnGroup, {
           btnClass: btnClass,
           keepOpen: keepOpen
-        });
+        }, dropdowns.length);
       }
 
       $.each(dropdowns, function (index, dropdown) {
@@ -911,15 +911,38 @@
             throw "Unrecgonized menu item: " + dropdown;
           }
         } else {
-          self.appendDropdownItem($dropdown, {
-            title: dropdown.title,
-            callback: dropdown.callback,
-            icon: dropdown.icon
-          });
+          if (title && title.indexOf('<input type="checkbox"') == -1) {
+            self.appendDropdownItemByDropdown($dropdown, dropdown, dropdowns.length);
+          } else {
+
+            if (dropdowns.length <= 9) {
+              self.appendDropdownItemByDropdown($dropdown, dropdown, dropdowns.length);
+            } else {
+
+              if (index % 3 == 0) {
+                var $tr = $('<tr></tr>');
+                $dropdown.find("tbody").append($tr);
+                self.appendDropdownItemByDropdown($tr, dropdown, dropdowns.length);
+              } else {
+                self.appendDropdownItemByDropdown($dropdown.find("tr").eq(-1), dropdown, dropdowns.length);
+              }
+            }
+          }
         }
       });
 
     }
+
+  }
+
+  SemiAutoTable.prototype.appendDropdownItemByDropdown = function ($dropdown, dropdown, dropdownLen) {
+
+    var self = this;
+    self.appendDropdownItem($dropdown, {
+      title: dropdown.title,
+      callback: dropdown.callback,
+      icon: dropdown.icon
+    }, dropdownLen);
 
   }
 
@@ -968,7 +991,7 @@
 
   }
 
-  SemiAutoTable.prototype.appendDropdown = function ($btnGroup, option) {
+  SemiAutoTable.prototype.appendDropdown = function ($btnGroup, option, dropdownLen) {
 
     var title = option.title;
     var btnClass = option.btnClass || this.options.btnClass;
@@ -996,7 +1019,16 @@
     var $icon = $('<i class="fa fa-caret-down"></i>');
     $icon.appendTo($btn);
 
-    var $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
+    var $dropdown;
+    if (title && title.length != 0) {
+      $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
+    } else {
+      if (dropdownLen <= 9) {
+        $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
+      } else {
+        $dropdown = $('<table class="dropdown-menu" role="menu"><tbody></tbody></table>');
+      }
+    }
     $dropdown.appendTo($btnGroup);
 
     if (keepOpen) {
@@ -1009,15 +1041,25 @@
   }
 
 
-  SemiAutoTable.prototype.appendDropdownItem = function ($dropdown, option) {
+
+  SemiAutoTable.prototype.appendDropdownItem = function ($dropdown, option, dropdownLen) {
 
     var self = this;
     var title = option.title;
     var callback = option.callback;
     var icon = option.icon;
 
-    var $li = $('<li></li>');
-    $li.appendTo($dropdown);
+    var $liOrTd;
+    if (title && title.indexOf('<input type="checkbox"') == -1) {
+      $liOrTd = $('<li></li>');
+    } else {
+      if (dropdownLen <= 9) {
+        $liOrTd = $('<li></li>');
+      } else {
+        $liOrTd = $('<td></td>');
+      }
+    }
+    $liOrTd.appendTo($dropdown);
 
     var $anchor = $('<a href="#"></a>');
 
@@ -1044,7 +1086,7 @@
       });
     }
 
-    $anchor.appendTo($li);
+    $anchor.appendTo($liOrTd);
 
   }
 
