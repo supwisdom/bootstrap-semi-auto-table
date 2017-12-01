@@ -28,9 +28,19 @@
   <link rel="stylesheet" href="{{ site.cdn.bootstrap_select_css }}">
   <script src="{{ site.cdn.bootstrap_select_js }}"></script>
 
+  <!-- datatable -->
+  <link rel="stylesheet" href="{{site.cdn.datatable_colReorder_css}}">
+  <script src="{{ site.cdn.datatable_js }}"></script>
+  <script src="{{ site.cdn.datatable_colReorder_js }}"></script>
+
+  <!-- underscore -->
+  <script src="{{ site.cdn.underscore_js }}"></script>
+
   <!-- bootstrap-semi-auto-table -->
   <link rel="stylesheet" href="{{ page.basePath }}/dist/css/semi-auto-table.css">
   <script src="{{ page.basePath }}/dist/semi-auto-table.js"></script>
+  <script src="{{ page.basePath }}/dist/colResizable.js"></script>
+
   <script>
     $.fn.semiAutoTable.defaults.locale = 'en-US';
   </script>
@@ -57,73 +67,62 @@
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Row Selector<span class="caret"></span>
+            Basic<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="{{ page.basePath }}/rowselector/inputname">Specify input name</a>
+            <a href="{{ page.basePath }}/rowselector/index">Row Selector</a>
             </li>
             <li>
-              <a href="{{ page.basePath }}/rowselector/radio">Radio</a>
+              <a href="{{ page.basePath }}/menu/index">Menu</a>
             </li>
             <li>
-              <a href="{{ page.basePath }}/rowselector/hide">Hide Select-all button</a>
+              <a href="{{ page.basePath }}/pagination/index">Pagination</a>
             </li>
             <li>
-              <a href="{{ page.basePath }}/rowselector/disable">Disable</a>
+              <a href="{{ page.basePath }}/sort/default">Sort</a>
             </li>
           </ul>
         </li>
+
+        <!--<li class="dropdown">-->
+          <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
+            <!--Column Plugin<span class="caret"></span>-->
+          <!--</a>-->
+          <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li>-->
+              <!--<a href="{{ page.basePath }}/columnselector/show-button">Show or Hide Column</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="{{ page.basePath }}/columnselector/hideColumns">Specify Hide Columns</a>-->
+            <!--</li>-->
+            <!--<li>-->
+              <!--<a href="{{ page.basePath }}/columnselector/stickyColumns">Specify sticky Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="{{ page.basePath }}/columnreorder">Reorder Columns</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li>-->
+              <!--<a href="{{ page.basePath }}/columnresizable">Resizable Columns</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Column Selector<span class="caret"></span>
+            Use DataTable <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="{{ page.basePath }}/columnselector/show-button">Show or Hide Column</a>
+              <a href="{{ page.basePath }}/datatable/default">Default</a>
             </li>
             <li>
-              <a href="{{ page.basePath }}/columnselector/hideColumns">Specify Hide Columns</a>
-            </li>
-            <li>
-              <a href="{{ page.basePath }}/columnselector/stickyColumns">Specify sticky Columns</a>
+              <a href="{{ page.basePath }}/datatable/toolbar">Toolbar</a>
             </li>
           </ul>
         </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Menu <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="{{ page.basePath }}/menu/button">Button</a>
-            </li>
-            <li>
-              <a href="{{ page.basePath }}/menu/dropdown">Button dropdowns</a>
-            </li>
-            <li>
-              <a href="{{ page.basePath }}/menu/split-dropdown">Split button dropdowns</a>
-            </li>
-            <li>
-              <a href="{{ page.basePath }}/menu/group">Button groups</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Pagination <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ page.basePath }}/pagination/default">Default</a></li>
-            <li><a href="{{ page.basePath }}/pagination/specify-row-size-option">Specify rows size option</a></li>
-            <li><a href="{{ page.basePath }}/pagination/disable">Disable</a></li>
-          </ul>
-        </li>
-
-        <li><a href="{{ page.basePath }}/sort/default">Sort</a></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

@@ -1,4 +1,4 @@
-<table id="table3">
+<table id="table5">
   <thead>
   <tr>
     <th></th>
@@ -16,7 +16,8 @@
 </table>
 <script>
   $(function () {
-    var $table = $("#table3");
+
+    var $table = $("#table5");
 
     var showSelectedRows = function () {
       alert('Selected rows: ' + JSON.stringify($table.semiAutoTable('getSelectedRows')));
@@ -26,29 +27,27 @@
       pageOption: false,
       menus: [
         {
+          id: 1,
           title: 'Simple',
+          callback: showSelectedRows,
+          tag: '20'
+        },
+        {
+          title: 'With Icon',
           icon: 'fa fa-calendar',
           callback: showSelectedRows
         },
-        [
-          {
-            title: 'Simple',
-            icon: 'fa fa-calendar',
-            callback: showSelectedRows
-          },
-          {
-            title: 'Simple',
-            dropdowns: [
-              {
-                title: '子Menu1',
-                icon: 'fa fa-pagelines',
-                callback: showSelectedRows
-              }
-            ]
-          }
-        ]
+        {
+          id: 3,
+          title: 'Styled',
+          btnClass: 'btn-success',
+          callback: showSelectedRows
+        }
       ],
       useDataTable: false
     })
+
+    $table.semiAutoTable('renderButtonTag', [{id:3, tag: '11'}]);
+
   });
 </script>

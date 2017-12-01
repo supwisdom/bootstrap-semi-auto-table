@@ -100,6 +100,26 @@ title: Options
           <td><code>'table table-striped table-condensed table-hover'</code></td>
           <td>table class</td>
         </tr>
+        <tr>
+          <td>selectedNum</td>
+          <td>boolean</td>
+          <td>true</td>
+          <td>是否显示选中条数</td>
+        </tr>
+        <tr>
+          <td>pageTooltip</td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>分页按钮是否显示tooltip</td>
+        </tr>
+        <tr>
+          <td>selectColor</td>
+          <td>string</td>
+          <td>
+            <code>'info'</code>
+          </td>
+          <td>设置选中行的背景颜色，仅支持Bootstrap定义的五种颜色<code>success、info、active、warning、danger</code></td>
+        </tr>
 
         <tr>
           <td colspan="4"><h4 id="rowOption">rowOption <small>option for select-all button and row selector</small></h4></td>
@@ -328,6 +348,22 @@ title: Options
             not required, triggered when click
           </td>
         </tr>
+        <tr>
+          <td>id</td>
+          <td>number</td>
+          <td></td>
+          <td>
+            菜单的唯一标识
+          </td>
+        </tr>
+        <tr>
+          <td>tag</td>
+          <td>string</td>
+          <td></td>
+          <td>
+            menu右上角的小标记，与id配合使用
+          </td>
+        </tr>
 
         <tr>
           <td colspan="4"><h4>ButtonDefinition - Single button dropdowns</h4></td>
@@ -470,6 +506,145 @@ title: Options
           <td><code>[]</code></td>
           <td>Sticky Column. If  <code>stickyColumns:[0,1]</code>, the first and second columns can not be shown or hidden</td>
         </tr>
+
+        <!-- column reorder -->
+        <tr>
+          <td colspan="4"><h4>columnReorder - <a href="https://www.datatables.net/extensions/colreorder/">DataTable Extension</a></h4></td>
+        </tr>
+        <tr>
+          <td>colOrderArrangable</td>
+          <td>object</td>
+          <td>
+            <code>
+              false
+            </code>
+          </td>
+          <td>
+            example:
+            <br/>
+            <code>
+              true or<br/>
+              {
+                fixedColumnsLeft: 1<br/>
+              } <br/></code>
+          </td>
+        </tr>
+
+        <!-- column reorder -->
+        <tr>
+          <td colspan="4"><h4>columnResizable - <a href="https://github.com/Silvacom/colResize">DataTable ColResizable</a></h4></td>
+        </tr>
+        <tr>
+          <td>colResizable</td>
+          <td>object</td>
+          <td>
+            <code>
+              false
+            </code>
+          </td>
+          <td>
+            example:
+            <br/>
+            <code>
+              true or<br/>
+              {<br/>
+              "tableWidthFixed": true<br/>
+              } <br/></code>
+          </td>
+        </tr>
+
+
+        <!-- DataTable -->
+        <tr>
+          <td colspan="4"><h4><a href="https://www.datatables.net">DataTable</a></h4></td>
+        </tr>
+        <tr>
+          <td>useDataTable</td>
+          <td>boolean</td>
+          <td>
+            <code>
+              true
+            </code>
+          </td>
+          <td>
+            是否调用dataTable插件,为true,以下选项才有效
+          </td>
+        </tr>
+        <tr>
+          <td>columns</td>
+          <td>array</td>
+          <td>
+            <code>
+              null
+            </code>
+          </td>
+          <td>
+            表格数据与头部的对应。格式为:
+            <br/>
+            <code>
+              [
+                {"data": "course.code"},
+                {"data": "course.name"}
+              ]
+            </code>
+              对应thead是:
+            {% highlight html %}<thead><tr><th>代码</th><th>名称</th></tr></thead>{% endhighlight %}
+          </td>
+        </tr>
+        <tr>
+          <td>ajax</td>
+          <td>ajax</td>
+          <td>null</td>
+          <td>
+            发请求拿到数据:
+            <code>
+              $.ajax({
+                url: '',
+                type: 'get'
+              })
+            </code>
+          </td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>json</td>
+          <td>
+            <code>
+              []
+            </code>
+          </td>
+          <td>
+            表格数据, 与ajax二选一, 要么是ajax异步得到数据，要么通过data直接给
+          </td>
+        </tr>
+        <tr>
+          <td>completeTableCallback</td>
+          <td>function</td>
+          <td></td>
+          <td>渲染完成table需要调用的函数，用户自定义，只调用一次</td>
+        </tr>
+        <tr>
+          <td>reDrawCallback</td>
+          <td>function</td>
+          <td></td>
+          <td>渲染table时调用的函数，用户自定义，每次画完table调用一次</td>
+        </tr>
+        <tr>
+          <td>fixedHeader</td>
+          <td>object</td>
+          <td>
+            <code>
+              {
+              enabled: false,
+              scrollY: 0
+              }
+            </code>
+          </td>
+          <td>
+            enabled为true表示：启用表头固定；scrollY为固定高度
+          </td>
+        </tr>
+
       </table>
 
     </div>

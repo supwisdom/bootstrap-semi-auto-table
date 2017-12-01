@@ -1,16 +1,16 @@
 ---
 layout: default
 basePath: ../..
-title: Menu - 菜单组
+title: Column Reorder
 ---
 
 <div class="container">
 
   <div class="row">
     <div class="col-sm-12">
-      <h2>Menu - 菜单组 <small>将多个菜单放在一个数组里</small></h2>
+      <h2>Column Reorder</h2>
       <p>
-        菜单组可以和其他菜单的定义并列
+        用dataTable的ColReorder plugin, 拖动标题来改变列的位置
       </p>
     </div>
   </div>
@@ -18,9 +18,9 @@ title: Menu - 菜单组
   <div class="row">
     <div class="col-sm-12">
 
-      {% include menu/group.html %}
+      {% include columnreorder.html %}
       {% highlight html %}
-      {% include menu/group.html %}
+      {% include columnreorder.html %}
       {% endhighlight %}
 
     </div>
