@@ -110,8 +110,18 @@
           <!--</ul>-->
         <!--</li>-->
 
-        <li>
-          <a href="../../datatable/default">Use DataTable</a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Use DataTable <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../../datatable/default">Default</a>
+            </li>
+            <li>
+              <a href="../../datatable/toolbar">Toolbar</a>
+            </li>
+          </ul>
         </li>
 
         <li class="dropdown">
@@ -208,7 +218,7 @@
   });
 </script>
 
-      <figure class="highlight"><pre><code class="language-html" data-lang="html">      <span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"table"</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;thead&gt;</span>
   <span class="nt">&lt;tr&gt;</span>
     <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
@@ -244,9 +254,7 @@
       <span class="na">pageOption</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">})</span>
   <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-
-      </code></pre></figure>
+<span class="nt">&lt;/script&gt;</span></code></pre></div>
 
     </div>
 

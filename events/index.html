@@ -110,8 +110,18 @@
           <!--</ul>-->
         <!--</li>-->
 
-        <li>
-          <a href="../datatable/default">Use DataTable</a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Use DataTable <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../datatable/default">Default</a>
+            </li>
+            <li>
+              <a href="../datatable/toolbar">Toolbar</a>
+            </li>
+          </ul>
         </li>
 
         <li class="dropdown">
@@ -182,11 +192,9 @@
           <td>
             Triggered when click top page, prev page, next page, last page and Go button.
 
-            <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">            <span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
+            <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'pageChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">pageObject</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// do something</span>
-<span class="p">});</span>
-
-            </code></pre></figure>
+<span class="p">});</span></code></pre></div>
           </td>
         </tr>
         <tr>
@@ -196,11 +204,9 @@
 
             The <code>sortObject</code> passed in just include the clicked <code>[data-sort-by]</code> element, not all.
 
-            <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">            <span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
+            <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#table'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sortChange'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">sortObject</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// do something</span>
-<span class="p">});</span>
-
-            </code></pre></figure>
+<span class="p">});</span></code></pre></div>
           </td>
         </tr>
 

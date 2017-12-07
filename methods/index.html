@@ -110,8 +110,18 @@
           <!--</ul>-->
         <!--</li>-->
 
-        <li>
-          <a href="../datatable/default">Use DataTable</a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Use DataTable <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="../datatable/default">Default</a>
+            </li>
+            <li>
+              <a href="../datatable/toolbar">Toolbar</a>
+            </li>
+          </ul>
         </li>
 
         <li class="dropdown">
@@ -182,10 +192,8 @@
       <p>
         Get the semiAutoTable object attached on the element. Examples:
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="kd">var</span> <span class="nx">semiAutoTable</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'get'</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">semiAutoTable</span><span class="p">.</span><span class="nx">getSelectedRows</span><span class="p">();</span>
-
-      </code></pre></figure>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">semiAutoTable</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'get'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">semiAutoTable</span><span class="p">.</span><span class="nx">getSelectedRows</span><span class="p">();</span></code></pre></div>
 
       <hr/>
 
@@ -195,9 +203,7 @@
       <p>
         Get value array of checked <code>checkbox</code> or <code>radio</code>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">);</span>
-
-      </code></pre></figure>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">rowIds</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSelectedRows'</span><span class="p">);</span></code></pre></div>
 
       <hr/>
 
@@ -207,16 +213,13 @@
       <p>
         Update select-all button and row selector. <code>rowOption</code> doc <a href="../options#rowOption">see here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="p">{</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">type</span><span class="p">:</span> <span class="s1">'checkbox'</span><span class="p">,</span>
   <span class="na">showSelectAll</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="na">inputName</span><span class="p">:</span> <span class="s2">"row.id"</span>
 <span class="p">});</span>
 
-<span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-
-
-      </code></pre></figure>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateRowButton'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span></code></pre></div>
 
       <hr/>
 
@@ -226,7 +229,7 @@
       <p>
         Update menus. <code>menus</code> doc <a href="../options#menus">see here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateMenuItems'</span><span class="p">,</span> <span class="p">[</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateMenuItems'</span><span class="p">,</span> <span class="p">[</span>
   <span class="p">{</span>
     <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu1'</span><span class="p">,</span>
     <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
@@ -236,9 +239,7 @@
     <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu2'</span><span class="p">,</span>
     <span class="na">callback</span><span class="p">:</span> <span class="p">...</span>
   <span class="p">}</span>
-<span class="p">]);</span>
-
-      </code></pre></figure>
+<span class="p">]);</span></code></pre></div>
 
       <hr/>
 
@@ -248,13 +249,11 @@
       <p>
         Add menu. <code>buttonDefinition</code> doc see <a href="../options#ButtonDefinition">here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'addMenuItem'</span><span class="p">,</span> <span class="p">{</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'addMenuItem'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">title</span><span class="p">:</span> <span class="s1">'Menu1'</span><span class="p">,</span>
   <span class="na">tooltip</span><span class="p">:</span> <span class="s1">'tooltip'</span><span class="p">,</span>
   <span class="na">callback</span><span class="p">:</span> <span class="p">...</span>
-<span class="p">});</span>
-
-      </code></pre></figure>
+<span class="p">});</span></code></pre></div>
 
       <hr/>
 
@@ -264,12 +263,10 @@
       <p>
         Update sorter. <code>sortOption</code> doc see <a href="../options#sortOption">here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateSortBy'</span><span class="p">,</span> <span class="p">{</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateSortBy'</span><span class="p">,</span> <span class="p">{</span>
   <span class="s1">'A'</span><span class="p">:</span> <span class="s1">'asc'</span><span class="p">,</span>
   <span class="s1">'B'</span><span class="p">:</span> <span class="s1">'desc'</span>
-<span class="p">});</span>
-
-      </code></pre></figure>
+<span class="p">});</span></code></pre></div>
 
       <hr/>
 
@@ -279,7 +276,7 @@
       <p>
         Get sortObject.
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="kd">var</span> <span class="nx">sortObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSortObject'</span><span class="p">);</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sortObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getSortObject'</span><span class="p">);</span>
 <span class="cm">/*
 {
   'A': 'asc',
@@ -287,9 +284,7 @@
   'C': 'none',
   ...
 }
-*/</span>
-
-      </code></pre></figure>
+*/</span></code></pre></div>
 
       <hr/>
 
@@ -299,13 +294,11 @@
       <p>
         Update paginator. <code>pageOption</code> doc see <a href="../options#pageOption">here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updatePaginator'</span><span class="p">,</span> <span class="p">{</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updatePaginator'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">currentPage</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
   <span class="na">totalPages</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
   <span class="na">totalRows</span><span class="p">:</span> <span class="mi">202</span>
-<span class="p">});</span>
-
-      </code></pre></figure>
+<span class="p">});</span></code></pre></div>
 
       <hr/>
 
@@ -315,7 +308,7 @@
       <p>
         Get current pagination info
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="kd">var</span> <span class="nx">pageObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getPageObject'</span><span class="p">);</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pageObject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'getPageObject'</span><span class="p">);</span>
 <span class="cm">/*
 {
   currentPage: ...,
@@ -323,9 +316,7 @@
   totalRows: ...,
   rowsPerPage: ...
 }
-*/</span>
-
-      </code></pre></figure>
+*/</span></code></pre></div>
 
       <hr/>
 
@@ -335,9 +326,7 @@
       <p>
         Destroy <code>semiAutoTable</code> element
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'destroy'</span><span class="p">);</span>
-
-      </code></pre></figure>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'destroy'</span><span class="p">);</span></code></pre></div>
 
       <hr/>
 
@@ -347,13 +336,11 @@
       <p>
         Update show/hide column button. <code>columnOption</code> doc <a href="../options#columnOption">see here</a>
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">      <span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateColumnSelect'</span><span class="p">,</span> <span class="p">{</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'updateColumnSelect'</span><span class="p">,</span> <span class="p">{</span>
     <span class="na">showColumnSelector</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="na">stickyColumns</span><span class="p">:</span> <span class="p">[],</span>
     <span class="na">hideColumns</span><span class="p">:</span> <span class="p">[]</span>
-<span class="p">});</span>
-
-      </code></pre></figure>
+<span class="p">});</span></code></pre></div>
 
       <hr/>
 
@@ -363,7 +350,7 @@
       <p>
         更新menu右上角的标记
       </p>
-      <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'renderButtonTag'</span><span class="p">,</span> <span class="p">[</span>
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">'#element'</span><span class="p">).</span><span class="nx">semiAutoTable</span><span class="p">(</span><span class="s1">'renderButtonTag'</span><span class="p">,</span> <span class="p">[</span>
   <span class="p">{</span>
     <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="na">tag</span><span class="p">:</span> <span class="s1">'newTag'</span>
@@ -371,8 +358,7 @@
   <span class="p">{</span>
     <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
     <span class="na">tag</span><span class="p">:</span> <span class="s1">'newTag'</span>
-  <span class="p">});</span>
-    </code></pre></figure>
+  <span class="p">});</span></code></pre></div>
     </div>
 
   </div>
