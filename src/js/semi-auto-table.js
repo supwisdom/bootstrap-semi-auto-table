@@ -555,9 +555,12 @@
 
         this.$selectAll = this.addMenuItem({
 
-          title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
-
+          // title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
+          // title: '<input type="checkbox"/>',
+          checkbox:true,
           callback: function () {
+              self.$selectAll.find("input[type='checkbox']").prop('checked',!allChecked);
+
             $.each(self.$rowIdInputList.not(':hidden'), function() {
               if ($(this).prop('checked') == allChecked) {
                 $(this).prop('checked', !allChecked).trigger('change');
@@ -709,7 +712,8 @@
         }
       });
       this.$selectColumn = this.addMenuItem({
-        icon: 'fa fa-th',
+        // icon: 'fa fa-th',
+        title:'列显设置',
         dropdowns: dropdowns,
         keepOpen: true
       });
@@ -871,6 +875,7 @@
     var dropdowns = buttonDefinition.dropdowns;
     var tooltip = buttonDefinition.tooltip;
     var keepOpen = buttonDefinition.keepOpen;
+    var checkbox = buttonDefinition.checkbox;
 
     var buttonOption = {
       id: id,
@@ -878,7 +883,8 @@
       icon: icon,
       callback: callback,
       btnClass: btnClass,
-      tooltip: tooltip
+      tooltip: tooltip,
+      checkbox:checkbox
     };
 
     if (!dropdowns || dropdowns.length == 0) {
@@ -911,9 +917,9 @@
             throw "Unrecgonized menu item: " + dropdown;
           }
         } else {
-          if (title && title.indexOf('<input type="checkbox"') == -1) {
-            self.appendDropdownItemByDropdown($dropdown, dropdown, dropdowns.length);
-          } else {
+          // if (title && title.indexOf('<input type="checkbox"') == -1) {
+          //   self.appendDropdownItemByDropdown($dropdown, dropdown, dropdowns.length);
+          // } else {
 
             if (dropdowns.length <= 9) {
               self.appendDropdownItemByDropdown($dropdown, dropdown, dropdowns.length);
@@ -928,7 +934,7 @@
               }
             }
           }
-        }
+        // }
       });
 
     }
@@ -955,6 +961,7 @@
     var icon = option.icon;
     var btnClass = option.btnClass || this.options.btnClass;
     var tooltip = option.tooltip;
+    var checkbox = option.checkbox;
 
     var $btn = $('<button type="button" data-id=' + id + '></button>');
     $btn.addClass('btn');
@@ -969,6 +976,9 @@
     }
     if (icon && icon.length != 0) {
       $btn.prepend('<i class="' + icon + ' title-icon"></i>');
+    }
+    if(checkbox){
+      $btn.prepend("<input type='checkbox' style='margin:0;padding:0;'/>")
     }
 
     $btn.appendTo($btnGroup);
@@ -998,6 +1008,7 @@
     var icon = option.icon;
     var tooltip = option.tooltip;
     var keepOpen = option.keepOpen || false;
+    var checkbox = option.checkbox;
 
     var $btn = $('<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>');
     $btn.addClass('btn');
@@ -1020,15 +1031,15 @@
     $icon.appendTo($btn);
 
     var $dropdown;
-    if (title && title.length != 0) {
-      $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
-    } else {
+    // if (title && title.length != 0) {
+    //   $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
+    // } else {
       if (dropdownLen <= 9) {
         $dropdown = $('<ul class="dropdown-menu" role="menu"></ul>');
       } else {
         $dropdown = $('<table class="dropdown-menu" role="menu"><tbody></tbody></table>');
       }
-    }
+    // }
     $dropdown.appendTo($btnGroup);
 
     if (keepOpen) {
