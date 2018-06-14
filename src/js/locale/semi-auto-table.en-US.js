@@ -4,6 +4,7 @@
 
     select_all: 'All',
     select_inverse: 'Inverse select',
+    select_no:'Clear select',
 
     next_page: 'Next page {0}',
     prev_page: 'Prev page {0}',

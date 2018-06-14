@@ -580,6 +580,26 @@
           },
 
           dropdowns: [
+
+            {
+              title:$.fn.semiAutoTable.locales[this.options.locale].select_all,
+              callback:function () {
+              $.each(self.$rowIdInputList, function (index, input) {
+                  var $input = $(input);
+                  var checked = $input.prop("checked");
+                  if(!checked){
+                    $input.prop('checked', !checked).trigger('change');
+                  }
+                  if ($input.is(':checked')) {
+                    $input.closest('tr').addClass(selectColor);
+                  } else {
+                    $input.closest('tr').removeClass(selectColor);
+
+                  }
+                });
+                self.selectedRowCount();
+              }
+            },
             {
               title: $.fn.semiAutoTable.locales[this.options.locale].select_inverse,
               callback: function () {
@@ -597,6 +617,25 @@
                 self.selectedRowCount();
                 allChecked = false;
 
+              }
+            },
+            {
+              title:$.fn.semiAutoTable.locales[this.options.locale].select_clear,
+              callback:function () {
+                $.each(self.$rowIdInputList, function (index, input) {
+                  var $input = $(input);
+                  var checked = $input.prop("checked");
+                  if(checked){
+                    $input.prop('checked', !checked).trigger('change');
+                  }
+                  if ($input.is(':checked')) {
+                    $input.closest('tr').addClass(selectColor);
+                  } else {
+                    $input.closest('tr').removeClass(selectColor);
+
+                  }
+                });
+                self.selectedRowCount();
               }
             }
           ]

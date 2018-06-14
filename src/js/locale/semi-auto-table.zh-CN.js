@@ -4,6 +4,7 @@
 
     select_all: '全选',
     select_inverse: '反选',
+    select_clear:'不选',
 
     next_page: '下页第 {0} 页',
     prev_page: '上页第 {0} 页',
