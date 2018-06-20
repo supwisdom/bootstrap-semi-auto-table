@@ -1549,7 +1549,8 @@
     $pageJumper.addClass('rows-per-page');
     $pageJumper.addClass(this.options.btnGroupSize);
 
-    $.each(_.range(1, totalPages+1), function (index, num) {
+    for (var i = 0; i < totalPages; i++) {
+      var num = i + 1;
       var $option = $('<option></option>');
       $option.attr('value', num);
       $option.text(num + '/' + totalPages);
@@ -1558,7 +1559,8 @@
       if (num == currentPage) {
         $option.prop('selected', 'selected');
       }
-    });
+
+    }
 
     $pageJumper.on('change', function () {
       var val = $(this).val();
