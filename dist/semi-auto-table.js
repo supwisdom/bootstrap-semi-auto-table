@@ -1407,38 +1407,72 @@
     var rowsPerPage = pageOption.rowsPerPage;
     var rowsPerPageOptions = pageOption._rowsPerPageOptions;
 
-    var $pageSize = $('<select></select>');
+    var $pageSize = $('<div class="dropdown">' +
+        '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+        '   <i class="fa fa-cog"></i>' +
+        '  </button>' +
+        '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+        // '    <li><a href="#">Action</a></li>' +
+        // '    <li><a href="#">Another action</a></li>' +
+        // '    <li><a href="#">Something else here</a></li>' +
+        // '    <li role="separator" class="divider"></li>' +
+        // '    <li><a href="#">Separated link</a></li>' +
+        '  </ul>' +
+        '</div>');
     this.$pageSize = $pageSize;
 
     $pageSize.addClass('rows-per-page');
     $pageSize.addClass(this.options.btnGroupSize);
     $.each(rowsPerPageOptions, function (index, num) {
+      var $option = $('<li><a></a></li>');
+      var $a = $option.find('a');
+      $a.attr('value', num);
+      $a.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
+      $option.appendTo($pageSize.find("ul.dropdown-menu"));
 
-      var $option = $('<option></option>');
-      $option.attr('value', num);
-      $option.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
-      $option.appendTo($pageSize);
-
-      if (num == rowsPerPage) {
-        $option.prop('selected', 'selected');
-      }
-
+      // $a.on('click',function () {
+      //   var val = $(this).attr('value');
+      //   var rowsPerPage = parseInt(val, 10);
+      //   var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+      //   var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+      //
+      //   self.pageObject.rowsPerPage = rowsPerPage;
+      //   self.pageObject.totalPages = totalPages;
+      //   self.pageObject.currentPage = currentPage;
+      //   self.triggerPageChangeEvent({});
+      // })
     });
 
-    $pageSize.on('change', function () {
+    $pageSize.on('click', function (e) {
+      console.log(e);
+      if (e.target.nodeName === 'A') {
+        var $a = $(e.target);
+        var val = $a.attr('value');
+        var rowsPerPage = parseInt(val, 10);
+        var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+        var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
 
-      var val = $(this).val();
-      var rowsPerPage = parseInt(val, 10);
-      var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
-      var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+        self.pageObject.rowsPerPage = rowsPerPage;
+        self.pageObject.totalPages = totalPages;
+        self.pageObject.currentPage = currentPage;
+        self.triggerPageChangeEvent({});
+      }
+    });
 
-      self.pageObject.rowsPerPage = rowsPerPage;
-      self.pageObject.totalPages = totalPages;
-      self.pageObject.currentPage = currentPage;
-      // self.$table.triggerHandler('pageSizeChange');
-      self.triggerPageChangeEvent({})
-
-    })
+    // $pageSize.on('change', function () {
+    //
+    //   var val = $(this).val();
+    //   var rowsPerPage = parseInt(val, 10);
+    //   var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+    //   var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+    //
+    //   self.pageObject.rowsPerPage = rowsPerPage;
+    //   self.pageObject.totalPages = totalPages;
+    //   self.pageObject.currentPage = currentPage;
+    //   // self.$table.triggerHandler('pageSizeChange');
+    //   self.triggerPageChangeEvent({})
+    //
+    // })
 
     $pageSize.appendTo(this.$paginator);
 
