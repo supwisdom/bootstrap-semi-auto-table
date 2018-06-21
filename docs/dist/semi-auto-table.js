@@ -1421,7 +1421,7 @@
         '</div>');
     this.$pageSize = $pageSize;
 
-    $pageSize.addClass('rows-per-page');
+    $pageSize.addClass('page-size');
     $pageSize.addClass(this.options.btnGroupSize);
     $.each(rowsPerPageOptions, function (index, num) {
       var $option = $('<li><a></a></li>');

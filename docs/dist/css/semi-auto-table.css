@@ -71,6 +71,18 @@
 
     width: 110px !important;
 }
+.semi-auto-table-toolbar .semi-auto-table-paginator .rows-per-page ul > li.selected:before
+{
+    position: absolute;
+    top: 1px;
+    left: 5px;
+
+    content: '●';
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .page-size
+{
+    float: left !important;
+}
 .semi-auto-table-toolbar .semi-auto-table-paginator .page-jump
 {
     font-size: 14px;
