@@ -82,8 +82,10 @@
 .semi-auto-table-toolbar .semi-auto-table-paginator .page-size
 {
     float: left !important;
-
-    width: 110px;
+}
+.semi-auto-table-toolbar .semi-auto-table-paginator .page-size .dropdown-menu
+{
+    left: -135px;
 }
 .semi-auto-table-toolbar .semi-auto-table-paginator .page-jump
 {
