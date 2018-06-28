@@ -64,6 +64,41 @@
     .rows-per-page {
       width: 110px !important;
       float: left !important;
+
+      ul > li.selected:before {
+        position: absolute;
+        top: 1px;
+        left: 5px;
+        content: '●';
+      }
+    }
+
+    .page-config {
+      float: left !important;
+      .dropdown-menu {
+        width: 320px;
+        left: -285px;
+        li {
+          position:relative;
+          height: 24px;
+          line-height: 24px;
+          padding-left:8px;
+          font-size:12px;
+          .btn-group {
+            top:0;
+            right:0;
+            position: absolute;
+            width: 60%;
+            .btn{
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space:nowrap;
+              font-size:12px;
+              padding:0;
+            }
+          }
+        }
+      }
     }
 
     .page-jump {
@@ -132,6 +167,36 @@ table.col-resizable {
     > td {
       border-right: 1px solid #ddd !important;
       padding: 5px;
+    }
+  }
+
+  &.dms {
+    tr {
+      >th,
+      >td{
+        line-height:29px;
+        font-size:12px;
+      }
+    }
+  }
+
+  &.dmm {
+    tr {
+      >th,
+      >td{
+        line-height:32px;
+        font-size:12px;
+      }
+    }
+  }
+
+  &.dml {
+    tr {
+      >th,
+      >td{
+        line-height:36px;
+        font-size:14px;
+      }
     }
   }
 }

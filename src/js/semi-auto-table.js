@@ -1271,10 +1271,10 @@
     };
 
     this.initPageInfo(pageOption);
-    this.initPageSize(pageOption);
+    // this.initPageSize(pageOption);
     this.initPages(pageOption);
     this.initPageJumper(pageOption);
-
+    this.initConfig(pageOption);
   }
 
   /**
@@ -1545,6 +1545,108 @@
     this.$pageGo = $pageGo;
     this.$pageJumper = $pageJumper;
   }
+  SemiAutoTable.prototype.initConfig = function (pageOption) {
+    if (this.$config) {
+      this.$config.off("click");
+      this.$config.remove();
+      delete this.$config;
+    }
+
+    var self = this;
+    var configOptions = [
+      {
+        name: 'rowsPerPage',
+        title: '每页显示行数',
+        init: function () {
+          var _self = this;
+          if (this.$pageSize) {
+            this.$pageSize.selectpicker('destroy');
+            this.$pageSize.off('change');
+            this.$pageSize.remove();
+            delete this.$pageSize;
+          }
+          var $li = Array.prototype.slice.call(arguments)[0];
+          this.$pageSize = $li;
+          var rowsPerPageOptions = pageOption._rowsPerPageOptions;
+          $.each(rowsPerPageOptions,function (index,num) {
+            var $a = $("<a class='btn btn-default' role='button'></a>");
+            $a.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
+            if(_self.pageObject.rowsPerPage == num){
+              $a.addClass("active");
+            }
+            $a.attr("value",num);
+            console.log($li);
+            $li.find(".btn-group").append($a);
+            // $a.appendTo($li.find(".btn-group"));
+          });
+
+          $li.on('click',function (e) {
+            if (e.target.nodeName === 'A') {
+              var $a = $(e.target);
+              var val = $a.attr('value');
+              var rowsPerPage = parseInt(val, 10);
+              var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+              var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+
+              _self.pageObject.rowsPerPage = rowsPerPage;
+              _self.pageObject.totalPages = totalPages;
+              _self.pageObject.currentPage = currentPage;
+              self.triggerPageChangeEvent({});
+            }
+          })
+        }
+      },
+      {
+        name:'displayMode',
+        title:'显示模式',
+        init:function () {
+          var _self = this;
+          var $li = Array.prototype.slice.call(arguments)[0];
+          var displayModeOptions = {'dml':'宽松','dmm':'适中','dms':'紧凑'};
+          $.each(Object.keys(displayModeOptions),function (index,item) {
+            var $a = $("<a class='btn btn-default' role='button' ></a>");
+            $a.attr("value",item).text(displayModeOptions[item]);
+            if(_self.pageObject.displayMode == item){
+              $a.addClass("active");
+            }
+            $a.appendTo($li.find(".btn-group"));
+          });
+
+          $li.on("click",function (e) {
+            if(e.target.nodeName === "A"){
+              var $a = $(e.target);
+              var val = $a.attr("value");
+              _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
+              _self.pageObject.displayMode = val;
+            }
+          })
+        }
+
+
+      }
+    ];
+
+
+    var $config = $('<div class="dropdown">' +
+        '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+        '   <i class="fa fa-cog"></i>' +
+        '  </button>' +
+        '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+        '  </ul>' +
+        '</div>');
+    this.$config = $config;
+
+    $config.addClass('page-config');
+    $config.addClass(this.options.btnGroupSize);
+    $.each(configOptions, function (index, item) {
+      var $li = $("<li><span>"+item.title+"</span><div class='btn-group btn-group-justified' role='group'></div></li>");
+      item.init.apply(self,[$li]);
+      $li.appendTo($config.find("ul.dropdown-menu"));
+    });
+
+    this.$config.appendTo(this.$paginator);
+
+  };
 
   /**
    * 获得当前的分页对象
