@@ -1570,14 +1570,12 @@
           var rowsPerPageOptions = pageOption._rowsPerPageOptions;
           $.each(rowsPerPageOptions,function (index,num) {
             var $a = $("<a class='btn btn-default' role='button'></a>");
-            $a.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
+            $a.text(num);
             if(_self.pageObject.rowsPerPage == num){
               $a.addClass("active");
             }
             $a.attr("value",num);
-            console.log($li);
             $li.find(".btn-group").append($a);
-            // $a.appendTo($li.find(".btn-group"));
           });
 
           $li.on('click',function (e) {
@@ -1587,7 +1585,6 @@
               var rowsPerPage = parseInt(val, 10);
               var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
               var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
-
               _self.pageObject.rowsPerPage = rowsPerPage;
               _self.pageObject.totalPages = totalPages;
               _self.pageObject.currentPage = currentPage;
