@@ -34,7 +34,13 @@
 
     $.each($thead.find("th:visible"), function () {
       var index = parseInt($(this).attr("data-column-index"));
-      $(this).outerWidth($tbody.find("tr:first").find("td:eq(" + index + ")").outerWidth());
+      var _td = $tbody.find("tr:first").find("td:eq("+index+")");
+      if (_td.attr('colspan') > 0){
+        return true;
+      }
+
+      $(this).outerWidth(_td).outerWidth();
+
     });
 
     if (tableWidth) {
