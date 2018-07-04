@@ -39,7 +39,7 @@
         return true;
       }
 
-      $(this).outerWidth(_td).outerWidth();
+      $(this).outerWidth(_td.outerWidth());
 
     });
 
