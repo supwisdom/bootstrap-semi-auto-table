@@ -1619,7 +1619,7 @@
               var $a = $(e.target);
               var val = $a.attr("value");
               _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
-              $a.siblings.removeClass("active");
+              $a.siblings().removeClass("active");
               $a.addClass("active");
               _self.pageObject.displayMode = val;
               localStorage.setItem('_page_displayMode',val);
