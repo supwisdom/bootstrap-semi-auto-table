@@ -1336,12 +1336,11 @@
       rowsPerPage: pageOption.rowsPerPage || pageOption._rowsPerPageOptions[0]
     };
 
-    // this.initPageInfo(pageOption);
-    this.initPageJumper(pageOption);
+    this.initPageInfo(pageOption);
+    // this.initPageSize(pageOption);
     this.initPages(pageOption);
-    this.initPageSize(pageOption);
-    // this.initPageJumper(pageOption);
-
+    this.initPageJumper(pageOption);
+    this.initConfig(pageOption);
   }
 
   /**
@@ -1413,77 +1412,42 @@
     var rowsPerPage = pageOption.rowsPerPage;
     var rowsPerPageOptions = pageOption._rowsPerPageOptions;
 
-    var $pageSize = $('<div class="dropdown">' +
-        '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
-        '   <i class="fa fa-cog"></i>' +
-        '  </button>' +
-        '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
-        // '    <li><a href="#">Action</a></li>' +
-        // '    <li><a href="#">Another action</a></li>' +
-        // '    <li><a href="#">Something else here</a></li>' +
-        // '    <li role="separator" class="divider"></li>' +
-        // '    <li><a href="#">Separated link</a></li>' +
-        '  </ul>' +
-        '</div>');
+    var $pageSize = $('<select></select>');
     this.$pageSize = $pageSize;
 
-    $pageSize.addClass('page-size');
+    $pageSize.addClass('rows-per-page');
     $pageSize.addClass(this.options.btnGroupSize);
     $.each(rowsPerPageOptions, function (index, num) {
-      var $option = $('<li><a></a></li>');
-      var $a = $option.find('a');
-      $a.attr('value', num);
-      $a.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
-      $option.appendTo($pageSize.find("ul.dropdown-menu"));
 
-      // $a.on('click',function () {
-      //   var val = $(this).attr('value');
-      //   var rowsPerPage = parseInt(val, 10);
-      //   var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
-      //   var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
-      //
-      //   self.pageObject.rowsPerPage = rowsPerPage;
-      //   self.pageObject.totalPages = totalPages;
-      //   self.pageObject.currentPage = currentPage;
-      //   self.triggerPageChangeEvent({});
-      // })
-    });
+      var $option = $('<option></option>');
+      $option.attr('value', num);
+      $option.text(format($.fn.semiAutoTable.locales[self.options.locale].page_size, num));
+      $option.appendTo($pageSize);
 
-    $pageSize.on('click', function (e) {
-      console.log(e);
-      if (e.target.nodeName === 'A') {
-        var $a = $(e.target);
-        var val = $a.attr('value');
-        var rowsPerPage = parseInt(val, 10);
-        var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
-        var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
-
-        self.pageObject.rowsPerPage = rowsPerPage;
-        self.pageObject.totalPages = totalPages;
-        self.pageObject.currentPage = currentPage;
-        self.triggerPageChangeEvent({});
+      if (num == rowsPerPage) {
+        $option.prop('selected', 'selected');
       }
+
     });
 
-    // $pageSize.on('change', function () {
-    //
-    //   var val = $(this).val();
-    //   var rowsPerPage = parseInt(val, 10);
-    //   var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
-    //   var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
-    //
-    //   self.pageObject.rowsPerPage = rowsPerPage;
-    //   self.pageObject.totalPages = totalPages;
-    //   self.pageObject.currentPage = currentPage;
-    //   // self.$table.triggerHandler('pageSizeChange');
-    //   self.triggerPageChangeEvent({})
-    //
-    // })
+    $pageSize.on('change', function () {
+
+      var val = $(this).val();
+      var rowsPerPage = parseInt(val, 10);
+      var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+      var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+
+      self.pageObject.rowsPerPage = rowsPerPage;
+      self.pageObject.totalPages = totalPages;
+      self.pageObject.currentPage = currentPage;
+      self.$table.triggerHandler('pageSizeChange');
+
+    })
 
     $pageSize.appendTo(this.$paginator);
 
     $pageSize.selectpicker();
-    // $pageSize.selectpicker('hide');
+    $pageSize.selectpicker('hide');
 
   }
 
@@ -1511,50 +1475,48 @@
     var hasTooltip = this.options.pageTooltip;
 
     var pages = [];
-    // if (currentPage != 1) {
-    // pages.push({
-    //   icon: 'fa fa-angle-double-left',
-    //   tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].first_page : "",
-    //   callback: function () {
-    //     self.triggerPageChangeEvent({
-    //       currentPage: 1
-    //     });
-    //   }
-    // });
-    pages.push({
-      icon: 'fa fa-angle-left',
-      tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage - 1) : "",
-      enabled: currentPage != 1 ? true : false,
-      callback: function () {
-        self.triggerPageChangeEvent({
-          currentPage: self.pageObject.currentPage - 1
-        });
-      }
-    });
-    // }
+    if (currentPage != 1) {
+      pages.push({
+        icon: 'fa fa-angle-double-left',
+        tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].first_page : "",
+        callback: function () {
+          self.triggerPageChangeEvent({
+            currentPage: 1
+          });
+        }
+      });
+      pages.push({
+        icon: 'fa fa-angle-left',
+        tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].prev_page, currentPage - 1) : "",
+        callback: function () {
+          self.triggerPageChangeEvent({
+            currentPage: self.pageObject.currentPage - 1
+          });
+        }
+      });
+    }
 
-    // if (currentPage != totalPages) {
-    pages.push({
-      icon: 'fa fa-angle-right',
-      tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].next_page, currentPage + 1) : "",
-      enabled: currentPage != totalPages ? true : false,
-      callback: function () {
-        self.triggerPageChangeEvent({
+    if (currentPage != totalPages) {
+      pages.push({
+        icon: 'fa fa-angle-right',
+        tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].next_page, currentPage + 1) : "",
+        callback: function () {
+          self.triggerPageChangeEvent({
               currentPage: self.pageObject.currentPage + 1
             }
-        );
-      }
-    });
-    // pages.push({
-    //   icon: 'fa fa-angle-double-right',
-    //   tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].last_page : "",
-    //   callback: function () {
-    //     self.triggerPageChangeEvent({
-    //       currentPage: totalPages
-    //     });
-    //   }
-    // })
-    // }
+          );
+        }
+      });
+      pages.push({
+        icon: 'fa fa-angle-double-right',
+        tooltip: hasTooltip ? $.fn.semiAutoTable.locales[this.options.locale].last_page : "",
+        callback: function () {
+          self.triggerPageChangeEvent({
+            currentPage: totalPages
+          });
+        }
+      })
+    }
 
     this.$pages = this._addMenuItem(this.$paginator, pages);
     this.$pages.find('[data-toggle="tooltip"]').tooltip({
@@ -1568,11 +1530,17 @@
    * @param pageOption
    */
   SemiAutoTable.prototype.initPageJumper = function (pageOption) {
+
     if (this.$pageJumper) {
       this.$pageJumper.selectpicker('destroy');
       this.$pageSize.off('change');
       this.$pageJumper.remove();
       delete this.$pageJumper;
+    }
+
+    if (this.$pageGo) {
+      this.$pageGo.remove();
+      delete this.$pageGo;
     }
 
     if (pageOption.totalRows == 0) {
@@ -1583,119 +1551,167 @@
     var currentPage = pageOption.currentPage;
     var totalPages = pageOption.totalPages;
 
-    var $pageJumper = $("<select></select>")
-    this.$pageJumper = $pageJumper;
+    var $pageJumper = this.appendButtonGroup(this.$paginator);
+    $pageJumper.addClass('page-jump');
 
-    $pageJumper.addClass('rows-per-page');
-    $pageJumper.addClass(this.options.btnGroupSize);
+    var $pageNo = $('<input type="text" value="' + currentPage + '"/>');
+    $pageNo.appendTo($pageJumper);
+    $pageJumper.append('<span> / ' + totalPages + '</span>');
 
-    for (var i = 0; i < totalPages; i++) {
-      var num = i + 1;
-      var $option = $('<option></option>');
-      $option.attr('value', num);
-      $option.text(num + '/' + totalPages);
-      $option.appendTo($pageJumper);
+    $pageNo.data('prevVal', currentPage);
+    $pageNo.keydown(function (event) {
 
-      if (num == currentPage) {
-        $option.prop('selected', 'selected');
+      if (event.keyCode == 13) {
+        var val = $(this).val();
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        self.triggerPageChangeEvent({
+          currentPage: parseInt(val, 10)
+        });
       }
 
-    }
+    }).keyup(function () {
 
-    $pageJumper.on('change', function () {
-      var val = $(this).val();
-      var selectedPage = parseInt(val, 10);
-      self.pageObject.currentPage = selectedPage;
-      // self.$table.triggerHandler('pageSizeChange');
-      self.triggerPageChangeEvent({});
+      var $input = $(this);
+      var prevVal = $input.data('prevVal') || '';
+      var val = $input.val();
+      if (val == '') {
+        return;
+      }
+      if (!/^[0-9]*[1-9][0-9]*$/.test(val)) {
+        $input.val(prevVal);
+        return;
+      }
+
+      var pageNo = parseInt(val, 10);
+      if (pageNo > self.getPageObject().totalPages) {
+        $input.val(prevVal);
+        return;
+      }
+
+      $input.data('prevVal', pageNo);
+      self.pageObject.currentPage = parseInt(val, 10);
+
     });
 
-    $pageJumper.appendTo(this.$paginator);
+    this.$table.off('pageSizeChange');
+    this.$table.on('pageSizeChange', function () {
+      $pageNo.val(self.pageObject.currentPage);
+      $pageNo.data('prevVal', self.pageObject.currentPage);
+      $pageJumper.children('span').text(' / ' + self.pageObject.totalPages);
+    });
+    $pageJumper.hide();
 
-    $pageJumper.selectpicker();
+    var $pageGo = this._addMenuItem(this.$paginator, {
+      title: 'Go',
+      callback: function () {
+        self.triggerPageChangeEvent({});
+      }
+    })
+    $pageGo.hide();
+
+    this.$pageGo = $pageGo;
+    this.$pageJumper = $pageJumper;
+  }
+  SemiAutoTable.prototype.initConfig = function (pageOption) {
+    if (this.$config) {
+      this.$config.off("click");
+      this.$config.remove();
+      delete this.$config;
+    }
+
+    var self = this;
+    var configOptions = [
+      {
+        name: 'rowsPerPage',
+        title: '每页显示行数',
+        init: function () {
+          var _self = this;
+          if (this.$pageSize) {
+            this.$pageSize.selectpicker('destroy');
+            this.$pageSize.off('change');
+            this.$pageSize.remove();
+            delete this.$pageSize;
+          }
+          var $li = Array.prototype.slice.call(arguments)[0];
+          this.$pageSize = $li;
+          var rowsPerPageOptions = pageOption._rowsPerPageOptions;
+          $.each(rowsPerPageOptions,function (index,num) {
+            var $a = $("<a class='btn btn-default' role='button'></a>");
+            $a.text(num);
+            if(_self.pageObject.rowsPerPage == num){
+              $a.addClass("active");
+            }
+            $a.attr("value",num);
+            $li.find(".btn-group").append($a);
+          });
+
+          $li.on('click',function (e) {
+            if (e.target.nodeName === 'A') {
+              var $a = $(e.target);
+              var val = $a.attr('value');
+              var rowsPerPage = parseInt(val, 10);
+              var totalPages = Math.ceil(self.pageObject.totalRows / rowsPerPage);
+              var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
+              _self.pageObject.rowsPerPage = rowsPerPage;
+              _self.pageObject.totalPages = totalPages;
+              _self.pageObject.currentPage = currentPage;
+              self.triggerPageChangeEvent({});
+            }
+          })
+        }
+      },
+      {
+        name:'displayMode',
+        title:'显示模式',
+        init:function () {
+          var _self = this;
+          var $li = Array.prototype.slice.call(arguments)[0];
+          var displayModeOptions = {'dml':'宽松','dmm':'适中','dms':'紧凑'};
+          $.each(Object.keys(displayModeOptions),function (index,item) {
+            var $a = $("<a class='btn btn-default' role='button' ></a>");
+            $a.attr("value",item).text(displayModeOptions[item]);
+            if(_self.pageObject.displayMode == item){
+              $a.addClass("active");
+            }
+            $a.appendTo($li.find(".btn-group"));
+          });
+
+          $li.on("click",function (e) {
+            if(e.target.nodeName === "A"){
+              var $a = $(e.target);
+              var val = $a.attr("value");
+              _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
+              _self.pageObject.displayMode = val;
+            }
+          })
+        }
+
+
+      }
+    ];
+
+
+    var $config = $('<div class="dropdown">' +
+        '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+        '   <i class="fa fa-cog"></i>' +
+        '  </button>' +
+        '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+        '  </ul>' +
+        '</div>');
+    this.$config = $config;
+
+    $config.addClass('page-config');
+    $config.addClass(this.options.btnGroupSize);
+    $.each(configOptions, function (index, item) {
+      var $li = $("<li><span>"+item.title+"</span><div class='btn-group btn-group-justified' role='group'></div></li>");
+      item.init.apply(self,[$li]);
+      $li.appendTo($config.find("ul.dropdown-menu"));
+    });
+
+    this.$config.appendTo(this.$paginator);
+
   };
-  // SemiAutoTable.prototype.initPageJumper = function (pageOption) {
-  //
-  //   if (this.$pageJumper) {
-  //     this.$pageJumper.remove();
-  //     delete this.$pageJumper;
-  //   }
-  //
-  //   if (this.$pageGo) {
-  //     this.$pageGo.remove();
-  //     delete this.$pageGo;
-  //   }
-  //
-  //   if (pageOption.totalRows == 0) {
-  //     return;
-  //   }
-  //
-  //   var self = this;
-  //   var currentPage = pageOption.currentPage;
-  //   var totalPages = pageOption.totalPages;
-  //
-  //   var $pageJumper = this.appendButtonGroup(this.$paginator);
-  //   $pageJumper.addClass('page-jump');
-  //
-  //   var $pageNo = $('<input type="text" value="' + currentPage + '"/>');
-  //   $pageNo.appendTo($pageJumper);
-  //   $pageJumper.append('<span> / ' + totalPages + '</span>');
-  //
-  //   $pageNo.data('prevVal', currentPage);
-  //   $pageNo.keydown(function (event) {
-  //
-  //     if (event.keyCode == 13) {
-  //       var val = $(this).val();
-  //       event.preventDefault();
-  //       event.stopImmediatePropagation();
-  //       self.triggerPageChangeEvent({
-  //         currentPage: parseInt(val, 10)
-  //       });
-  //     }
-  //
-  //   }).keyup(function () {
-  //
-  //     var $input = $(this);
-  //     var prevVal = $input.data('prevVal') || '';
-  //     var val = $input.val();
-  //     if (val == '') {
-  //       return;
-  //     }
-  //     if (!/^[0-9]*[1-9][0-9]*$/.test(val)) {
-  //       $input.val(prevVal);
-  //       return;
-  //     }
-  //
-  //     var pageNo = parseInt(val, 10);
-  //     if (pageNo > self.getPageObject().totalPages) {
-  //       $input.val(prevVal);
-  //       return;
-  //     }
-  //
-  //     $input.data('prevVal', pageNo);
-  //     self.pageObject.currentPage = parseInt(val, 10);
-  //
-  //   });
-  //
-  //   this.$table.off('pageSizeChange');
-  //   this.$table.on('pageSizeChange', function () {
-  //     $pageNo.val(self.pageObject.currentPage);
-  //     $pageNo.data('prevVal', self.pageObject.currentPage);
-  //     $pageJumper.children('span').text(' / ' + self.pageObject.totalPages);
-  //   });
-  //   $pageJumper.hide();
-  //
-  //   var $pageGo = this._addMenuItem(this.$paginator, {
-  //     title: 'Go',
-  //     callback: function () {
-  //       self.triggerPageChangeEvent({});
-  //     }
-  //   })
-  //   $pageGo.hide();
-  //
-  //   this.$pageGo = $pageGo;
-  //   this.$pageJumper = $pageJumper;
-  // }
 
   /**
    * 获得当前的分页对象

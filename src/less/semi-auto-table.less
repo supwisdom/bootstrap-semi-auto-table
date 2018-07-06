@@ -65,18 +65,39 @@
       width: 110px !important;
       float: left !important;
 
-      ul>li.selected:before{
+      ul > li.selected:before {
         position: absolute;
-        top:1px;
-        left:5px;
-        content:'●';
+        top: 1px;
+        left: 5px;
+        content: '●';
       }
     }
 
-    .page-size {
-      float:left !important;
-      .dropdown-menu{
-        left:-135px;
+    .page-config {
+      float: left !important;
+      .dropdown-menu {
+        width: 320px;
+        left: -285px;
+        li {
+          position:relative;
+          height: 24px;
+          line-height: 24px;
+          padding-left:8px;
+          font-size:12px;
+          .btn-group {
+            top:0;
+            right:0;
+            position: absolute;
+            width: 60%;
+            .btn{
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space:nowrap;
+              font-size:12px;
+              padding:0;
+            }
+          }
+        }
       }
     }
 
