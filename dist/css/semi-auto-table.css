@@ -177,4 +177,22 @@ table.col-resizable tr > td
 
     border-right: 1px solid #ddd !important;
 }
+table.col-resizable.dms tr > th,
+table.col-resizable.dms tr > td
+{
+    font-size: 12px;
+    line-height: 29px;
+}
+table.col-resizable.dmm tr > th,
+table.col-resizable.dmm tr > td
+{
+    font-size: 12px;
+    line-height: 32px;
+}
+table.col-resizable.dml tr > th,
+table.col-resizable.dml tr > td
+{
+    font-size: 14px;
+    line-height: 36px;
+}
 /*# sourceMappingURL=semi-auto-table.css.map */
