@@ -1671,7 +1671,7 @@
           $.each(Object.keys(displayModeOptions),function (index,item) {
             var $a = $("<a class='btn btn-default' role='button' ></a>");
             $a.attr("value",item).text(displayModeOptions[item]);
-            if(_self.pageObject.displayMode == item){
+            if(localStorage.getItem('_page_displayMode') == item){
               $a.addClass("active");
             }
             $a.appendTo($li.find(".btn-group"));
@@ -1682,7 +1682,10 @@
               var $a = $(e.target);
               var val = $a.attr("value");
               _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
+              $a.siblings().removeClass("active");
+              $a.addClass("active");
               _self.pageObject.displayMode = val;
+              localStorage.setItem('_page_displayMode',val);
             }
           })
         }
