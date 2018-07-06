@@ -1610,6 +1610,7 @@
             $a.attr("value",item).text(displayModeOptions[item]);
             if(localStorage.getItem('_page_displayMode') == item){
               $a.addClass("active");
+              _self.$table.addClass(item);
             }
             $a.appendTo($li.find(".btn-group"));
           });
