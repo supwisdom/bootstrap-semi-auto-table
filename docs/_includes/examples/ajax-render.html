@@ -1,0 +1,96 @@
+<table id="table" style="width: 1500px;max-width: 1500px">
+  <thead>
+    <tr>
+    <th width="8%"></th>
+    <th width="8%"><a href="#" data-sort-by="code1">code1</a></th>
+    <th width="8%"><a href="#" data-sort-by="code2">code2</a></th>
+    <th width="8%"><a href="#" data-sort-by="code3">code3</a></th>
+    <th width="8%"><a href="#" data-sort-by="code4">code4</a></th>
+    <th width="8%"><a href="#" data-sort-by="code5">code5</a></th>
+    <th width="8%"><a href="#" data-sort-by="code6">code6</a></th>
+    <th width="8%"><a href="#" data-sort-by="code7">code7</a></th>
+    <th width="6%"><a href="#" data-sort-by="code8">code8</a></th>
+    <th width="6%"><a href="#" data-sort-by="code9">code9</a></th>
+    <th width="6%"><a href="#" data-sort-by="code10">code10</a></th>
+    <th width="6%"><a href="#" data-sort-by="code11">code11</a></th>
+    <th width="6%"><a href="#" data-sort-by="code12">code12</a></th>
+    <th width="6%"><a href="#" data-sort-by="code13">code13</a></th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+   var $table = $("#table");
+
+   $table.semiAutoTable({
+     saveStatus: {
+       enabled: true,
+       key: "order"
+     },
+     colOrderArrangable: true,
+     colResizable: true,
+     rowOption: {showSelectAll: true},
+     columnOption: {
+       showColumnSelect: true,
+       stickyColumns: [1],
+//        hideColumns: [2,4]
+     },
+     sortOption: {
+//        'A': 'asc',
+//        'B': 'desc'
+     },
+     menus: [
+       {
+         title: 'Menu1',
+         tooltip: 'tooltip',
+         callback: function () {
+           console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+         }
+       },
+       {
+         title: 'Menu2',
+         callback: function () {
+           console.log(JSON.stringify($table.semiAutoTable('getSelectedRows')));
+         }
+       },
+     ],
+     pageOption: {
+       currentPage: 11,
+       totalPages: 20,
+       totalRows: 202
+     },
+     fixedHeader: {
+       enabled: true,
+       scrollY: 500
+     },
+     columns: [
+       { "data": "code" },
+       { "data": "code1" },
+       { "data": "code2" },
+       { "data": "code3" },
+       { "data": "code4" },
+       { "data": "code5" },
+       { "data": "code6" },
+       { "data": "code7" },
+       { "data": "code8" },
+       { "data": "code9" },
+       { "data": "code10" },
+       { "data": "code11" },
+       { "data": "code12" },
+       { "data": "code13" }
+     ],
+     ajax: {
+       url: "../../examples/dataTable2.json",
+       type: "get"
+     },
+     reDrawCallback: function() {
+
+     }
+   });
+
+  });
+</script>
+
