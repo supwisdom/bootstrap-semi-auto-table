@@ -39,7 +39,7 @@
 
 
   //append required CSS rules
-  h.append("<style type='text/css'>.dataTables_scroll{position:relative;}.JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden} .JCLRgrips{top:0; position:absolute;} .JCLRgrip{height:100%;margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRLastGrip > .JColResizer{width: 5px!important;} .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
+  h.append("<style type='text/css'>.dataTables_scroll{position:relative;}.JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden} .JCLRgrips{pointer-events:none;top:0; position:absolute;} .JCLRgrip{pointer-events:all;height:100%;margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRLastGrip > .JColResizer{width: 5px!important;} .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
 
   /**
    * Function to allow column resizing for table objects. It is the starting point to apply the plugin.
