@@ -324,7 +324,6 @@
       if (originOrder && originOrder.length > 0) {
         resizable = false;
       }
-
       if (originOrder && _self.options.columns == null) {
         dataTable.colReorder.order(originOrder, true);
       }
