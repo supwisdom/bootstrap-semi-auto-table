@@ -39,7 +39,7 @@
 
 
   //append required CSS rules
-  h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden} .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRLastGrip > .JColResizer{width: 5px!important;} .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
+  h.append("<style type='text/css'>.dataTables_scroll{position:relative;}.JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden} .JCLRgrips{pointer-events:none;top:0; position:absolute;} .JCLRgrip{pointer-events:all;height:100%;margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRLastGrip > .JColResizer{width: 5px!important;} .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
 
   /**
    * Function to allow column resizing for table objects. It is the starting point to apply the plugin.
@@ -61,11 +61,11 @@
 
     $(".JCLRgrips").remove();
     if (t.opt.hoverCursor !== 'col-resize') h.append("<style type='text/css'>.JCLRgrip .JColResizer:hover{cursor:" + t.opt.hoverCursor + "!important}</style>");  //if hoverCursor has been set, append the style
-    t.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>');	//the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
+    t.addClass(SIGNATURE).attr(ID, id).parent().before('<div class="JCLRgrips"/>');	//the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
     t.g = [];
     t.c = [];
     t.w = t.width();
-    t.gc = t.prev();
+    t.gc = t.parent().prev();
     t.f = t.opt.fixed;	//t.c and t.g are arrays of columns and grips respectively
     if (options.marginLeft) t.gc.css("marginLeft", options.marginLeft);  	//if the table contains margins, it must be specified
     if (options.marginRight) t.gc.css("marginRight", options.marginRight);  	//since there is no (direct) way to obtain margin values in its original units (%, em, ...)
@@ -227,11 +227,16 @@
    */
   var syncGrips = function (t) {
     t.gc.width(t.w);			//the grip's container width is updated
+    if(t.outerHeight(false) < t.parent().innerHeight()) {
+      t.gc.css({height: t.outerHeight(false) + t.parent().siblings('.dataTables_scrollHead').outerHeight(false)});
+    } else {
+      t.gc.css({height: t.parent()[0].clientHeight + t.parent().siblings('.dataTables_scrollHead').outerHeight(false)});
+    }
     for (var i = 0; i < t.ln; i++) {	//for each column
       var c = t.c[i];
       t.g[i].css({			//height and position of the grip is updated according to the table layout
-        left: c.offset().left - t.offset().left + c.outerWidth(false) + t.cs / 2 + PX,
-        height: t.opt.headerOnly ? t.c[0].outerHeight(false) : t.outerHeight(false)
+        left: c.offset().left - t.offset().left + c.outerWidth(false) + t.cs / 2 + PX
+        // height: t.opt.headerOnly ? t.c[0].outerHeight(false) : t.outerHeight(false)
       });
     }
   };
