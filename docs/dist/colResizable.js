@@ -228,9 +228,9 @@
   var syncGrips = function (t) {
     t.gc.width(t.w);			//the grip's container width is updated
     if(t.outerHeight(false) < t.parent().innerHeight()) {
-        t.gc.css({height: t.outerHeight(false) + t.parent().siblings('.dataTables_scrollHead').outerHeight(false)});
+      t.gc.css({height: t.outerHeight(false) + t.parent().siblings('.dataTables_scrollHead').outerHeight(false)});
     } else {
-        t.gc.css({height:'100%'});
+      t.gc.css({height: t.parent()[0].clientHeight + t.parent().siblings('.dataTables_scrollHead').outerHeight(false)});
     }
     for (var i = 0; i < t.ln; i++) {	//for each column
       var c = t.c[i];

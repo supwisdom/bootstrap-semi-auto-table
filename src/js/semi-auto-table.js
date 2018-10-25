@@ -1674,7 +1674,7 @@
               var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
               _self.pageObject.rowsPerPage = rowsPerPage;
               _self.pageObject.totalPages = totalPages;
-              _self.pageObject.currentPage = currentPage;
+              _self.pageObject.currentPage = Math.max(currentPage , 1);
               self.triggerPageChangeEvent({});
             }
           })
