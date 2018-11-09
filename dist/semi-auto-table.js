@@ -361,6 +361,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['order'] = order;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
+        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
       }
 
       _self.bindRowClick();
@@ -438,6 +439,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['hidden-columns'] = hiddenColumns;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
+        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
       }
 
       if (_self.options.fixedHeader.enabled) {
@@ -1788,6 +1790,14 @@
   SemiAutoTable.prototype.triggerSortChangeEvent = function (sortObject) {
 
     this.$table.triggerHandler('sortChange', sortObject);
+
+  }
+
+  /**
+   * 触发数据持久化事件
+   */
+  SemiAutoTable.prototype.triggerSaveStatus = function (args) {
+    this.$table.triggerHandler('saveStatus', args);
 
   }
 
