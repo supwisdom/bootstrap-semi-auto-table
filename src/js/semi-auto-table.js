@@ -324,8 +324,9 @@
         gripInnerHtml:"<div class='grip'></div>",
         draggingClass:"dragging",
         partialRefresh: false,
-        resizeMode:'overflow',
-        onDrag: _self.freshHeaderWidth()
+        resizeMode: 'overflow',
+        onDrag: _self.freshHeaderWidth(),
+        onResize:_self.triggerSaveStatus.bind(_self)
       });
     }
 
@@ -341,7 +342,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['order'] = order;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
-        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
+        _self.triggerSaveStatus.call(_self);
       }
 
       _self.bindRowClick();
@@ -419,7 +420,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['hidden-columns'] = hiddenColumns;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
-        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
+        _self.triggerSaveStatus.call(_self);
       }
 
       if (_self.options.fixedHeader.enabled) {
@@ -457,11 +458,12 @@
         key: _self.options.saveStatus.key + storageKeySuffix,
         refreshStorage: true
       },
-      gripInnerHtml:"<div class='grip'></div>",
-      draggingClass:"dragging",
-      partialRefresh:true,
-      resizeMode:'overflow',
-      onDrag: _self.freshHeaderWidth()
+      gripInnerHtml: "<div class='grip'></div>",
+      draggingClass: "dragging",
+      partialRefresh: true,
+      resizeMode: 'overflow',
+      onDrag: _self.freshHeaderWidth(),
+      onResize:_self.triggerSaveStatus.bind(_self)
     });
   }
 
@@ -1715,7 +1717,9 @@
   /**
    * 触发数据持久化事件
    */
-  SemiAutoTable.prototype.triggerSaveStatus = function (args) {
+  SemiAutoTable.prototype.triggerSaveStatus = function (a) {
+    var _self = this;
+    var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
     this.$table.triggerHandler('saveStatus', args);
 
   };
