@@ -345,7 +345,8 @@
         draggingClass: "dragging",
         partialRefresh: false,
         resizeMode: 'overflow',
-        onDrag: _self.freshHeaderWidth()
+        onDrag: _self.freshHeaderWidth(),
+        onResize:_self.triggerSaveStatus
       });
     }
 
@@ -481,7 +482,8 @@
       draggingClass: "dragging",
       partialRefresh: true,
       resizeMode: 'overflow',
-      onDrag: _self.freshHeaderWidth()
+      onDrag: _self.freshHeaderWidth(),
+      onResize:_self.triggerSaveStatus
     });
   }
 
@@ -1796,7 +1798,9 @@
   /**
    * 触发数据持久化事件
    */
-  SemiAutoTable.prototype.triggerSaveStatus = function (args) {
+  SemiAutoTable.prototype.triggerSaveStatus = function (a) {
+    var _self = this;
+    var args = $.extend(a,[_self.itemKey, JSON.stringify(_self.getSavedStatus())]);
     this.$table.triggerHandler('saveStatus', args);
 
   }
