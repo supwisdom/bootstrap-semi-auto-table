@@ -346,7 +346,7 @@
         partialRefresh: false,
         resizeMode: 'overflow',
         onDrag: _self.freshHeaderWidth(),
-        onResize:_self.triggerSaveStatus
+        onResize:_self.triggerSaveStatus.bind(_self)
       });
     }
 
@@ -362,7 +362,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['order'] = order;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
-        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
+        _self.triggerSaveStatus.call(_self);
       }
 
       _self.bindRowClick();
@@ -440,7 +440,7 @@
         var savedStatus = _self.getSavedStatus();
         savedStatus['hidden-columns'] = hiddenColumns;
         localStorage.setItem(_self.itemKey, JSON.stringify(savedStatus));
-        _self.triggerSaveStatus([_self.itemKey, JSON.stringify(savedStatus)]);
+        _self.triggerSaveStatus.call(_self);
       }
 
       if (_self.options.fixedHeader.enabled) {
@@ -483,7 +483,7 @@
       partialRefresh: true,
       resizeMode: 'overflow',
       onDrag: _self.freshHeaderWidth(),
-      onResize:_self.triggerSaveStatus
+      onResize:_self.triggerSaveStatus.bind(_self)
     });
   }
 
@@ -1800,7 +1800,7 @@
    */
   SemiAutoTable.prototype.triggerSaveStatus = function (a) {
     var _self = this;
-    var args = $.extend(a,[_self.itemKey, JSON.stringify(_self.getSavedStatus())]);
+    var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
     this.$table.triggerHandler('saveStatus', args);
 
   }
