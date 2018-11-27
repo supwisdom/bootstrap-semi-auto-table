@@ -1722,7 +1722,7 @@
 
     setTimeout(function () {
       var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
-      this.$table.triggerHandler('saveStatus', args);
+      _self.$table.triggerHandler('saveStatus', args);
     },1000);
   };
 
