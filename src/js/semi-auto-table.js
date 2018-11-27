@@ -1719,9 +1719,11 @@
    */
   SemiAutoTable.prototype.triggerSaveStatus = function (a) {
     var _self = this;
-    var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
-    this.$table.triggerHandler('saveStatus', args);
 
+    setTimeout(function () {
+      var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
+      this.$table.triggerHandler('saveStatus', args);
+    },1000);
   };
 
   /**
