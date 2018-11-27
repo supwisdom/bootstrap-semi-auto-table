@@ -34,8 +34,8 @@
 
     $.each($thead.find("th:visible"), function () {
       var index = parseInt($(this).attr("data-column-index"));
-      var _td = $tbody.find("tr:first").find("td:eq("+index+")");
-      if (_td.attr('colspan') > 0){
+      var _td = $tbody.find("tr:first").find("td:eq(" + index + ")");
+      if (_td.attr('colspan') > 0) {
         return true;
       }
 
@@ -346,7 +346,7 @@
         partialRefresh: false,
         resizeMode: 'overflow',
         onDrag: _self.freshHeaderWidth(),
-        onResize:_self.triggerSaveStatus.bind(_self)
+        onResize: _self.triggerSaveStatus.bind(_self)
       });
     }
 
@@ -483,7 +483,7 @@
       partialRefresh: true,
       resizeMode: 'overflow',
       onDrag: _self.freshHeaderWidth(),
-      onResize:_self.triggerSaveStatus.bind(_self)
+      onResize: _self.triggerSaveStatus.bind(_self)
     });
   }
 
@@ -1525,8 +1525,8 @@
         tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].next_page, currentPage + 1) : "",
         callback: function () {
           self.triggerPageChangeEvent({
-              currentPage: self.pageObject.currentPage + 1
-            }
+                currentPage: self.pageObject.currentPage + 1
+              }
           );
         }
       });
@@ -1659,17 +1659,17 @@
           var $li = Array.prototype.slice.call(arguments)[0];
           this.$pageSize = $li;
           var rowsPerPageOptions = pageOption._rowsPerPageOptions;
-          $.each(rowsPerPageOptions,function (index,num) {
+          $.each(rowsPerPageOptions, function (index, num) {
             var $a = $("<a class='btn btn-default' role='button'></a>");
             $a.text(num);
-            if(_self.pageObject.rowsPerPage == num){
+            if (_self.pageObject.rowsPerPage == num) {
               $a.addClass("active");
             }
-            $a.attr("value",num);
+            $a.attr("value", num);
             $li.find(".btn-group").append($a);
           });
 
-          $li.on('click',function (e) {
+          $li.on('click', function (e) {
             if (e.target.nodeName === 'A') {
               var $a = $(e.target);
               var val = $a.attr('value');
@@ -1678,38 +1678,38 @@
               var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
               _self.pageObject.rowsPerPage = rowsPerPage;
               _self.pageObject.totalPages = totalPages;
-              _self.pageObject.currentPage = Math.max(currentPage , 1);
+              _self.pageObject.currentPage = Math.max(currentPage, 1);
               self.triggerPageChangeEvent({});
             }
           })
         }
       },
       {
-        name:'displayMode',
-        title:'显示模式',
-        init:function () {
+        name: 'displayMode',
+        title: '显示模式',
+        init: function () {
           var _self = this;
           var $li = Array.prototype.slice.call(arguments)[0];
-          var displayModeOptions = {'dml':'宽松','dmm':'适中','dms':'紧凑'};
-          $.each(Object.keys(displayModeOptions),function (index,item) {
+          var displayModeOptions = {'dml': '宽松', 'dmm': '适中', 'dms': '紧凑'};
+          $.each(Object.keys(displayModeOptions), function (index, item) {
             var $a = $("<a class='btn btn-default' role='button' ></a>");
-            $a.attr("value",item).text(displayModeOptions[item]);
-            if(localStorage.getItem('_page_displayMode') == item){
+            $a.attr("value", item).text(displayModeOptions[item]);
+            if (localStorage.getItem('_page_displayMode') == item) {
               $a.addClass("active");
               _self.$table.addClass(item);
             }
             $a.appendTo($li.find(".btn-group"));
           });
 
-          $li.on("click",function (e) {
-            if(e.target.nodeName === "A"){
+          $li.on("click", function (e) {
+            if (e.target.nodeName === "A") {
               var $a = $(e.target);
               var val = $a.attr("value");
               _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
               $a.siblings().removeClass("active");
               $a.addClass("active");
               _self.pageObject.displayMode = val;
-              localStorage.setItem('_page_displayMode',val);
+              localStorage.setItem('_page_displayMode', val);
             }
           })
         }
@@ -1731,8 +1731,8 @@
     $config.addClass('page-config');
     $config.addClass(this.options.btnGroupSize);
     $.each(configOptions, function (index, item) {
-      var $li = $("<li><span>"+item.title+"</span><div class='btn-group btn-group-justified' role='group'></div></li>");
-      item.init.apply(self,[$li]);
+      var $li = $("<li><span>" + item.title + "</span><div class='btn-group btn-group-justified' role='group'></div></li>");
+      item.init.apply(self, [$li]);
       $li.appendTo($config.find("ul.dropdown-menu"));
     });
 
@@ -1800,10 +1800,13 @@
    */
   SemiAutoTable.prototype.triggerSaveStatus = function (a) {
     var _self = this;
-    var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
-    this.$table.triggerHandler('saveStatus', args);
+    setTimeout(function () {
+      var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
+      _self.$table.triggerHandler('saveStatus', args);
+    }, 1000);
 
-  }
+
+  };
 
   /**
    * 获得semiAutoTable对象
