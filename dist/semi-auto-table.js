@@ -399,7 +399,12 @@
       var i = $fixed_th_hide.index();
       if (_self.options.colOrderArrangable) {
         $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
-        var current_order = $(this).DataTable().colReorder.order();
+        var current_order = [];
+        if (_self.options.saveStatus.enabled) {
+          current_order = _self.getSavedStatus()["order"]? _self.getSavedStatus()["order"]:$(this).DataTable().colReorder.order();
+        }else{
+          current_order = $(this).DataTable().colReorder.order();
+        }
         i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
       }
 
