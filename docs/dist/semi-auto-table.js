@@ -121,6 +121,9 @@
           }
           _self.renderResizableTable();
         }
+      };
+      if (_self.options.saveStatus.enabled) {
+        colReorder['order'] = _self.getSavedStatus()["order"];
       }
     }
 
