@@ -122,25 +122,9 @@
           }
           _self.renderResizableTable();
         }
-      }
+      };
     }
 
-    //画table前处理列移动，这样不需要table画完之后再去移动dom，提高性能
-    var originOrder = _self.getSavedStatus()["order"];
-    var $ths = _self.$table.find('thead>tr>th');
-
-    if (originOrder && _self.options.columns != null) {
-      var newThead = _self.$table.find('thead').append('<tr></tr>');
-      var newColumns = [];
-
-      $.each(originOrder, function () {
-        newThead.find("tr:eq(1)").append($ths.eq(this));
-        newColumns.push(_self.options.columns[this]);
-      });
-
-      _self.$table.find('thead').find('tr:eq(0)').remove();
-      _self.options.columns = newColumns;
-    }
 
     if (_self.options.fixedHeader.enabled) {
 
@@ -399,7 +383,12 @@
       var i = $fixed_th_hide.index();
       if (_self.options.colOrderArrangable) {
         $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
-        var current_order = $(this).DataTable().colReorder.order();
+        var current_order = [];
+        if (_self.options.saveStatus.enabled) {
+          current_order = _self.getSavedStatus()["order"]? _self.getSavedStatus()["order"]:$(this).DataTable().colReorder.order();
+        }else{
+          current_order = $(this).DataTable().colReorder.order();
+        }
         i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
       }
 
