@@ -115,13 +115,31 @@
 
     var colReorder;
     if (_self.options.colOrderArrangable) {
+
+      var originOrder = [];
+      if (_self.options.saveStatus.enabled) {
+        originOrder = _self.getSavedStatus()["order"];
+      } else {
+        var dataTable = _self.$table.DataTable();
+        originOrder = dataTable.columns().indexes();
+      }
+
       colReorder = {
+        order: originOrder,
         reorderCallback: function () {
-          if (!resizable) {
-            return false;
-          }
-          _self.renderResizableTable();
-        }
+          var count = 0;
+          return function () {
+            if (!count) {
+              count++;
+              return false;
+            }
+            if (!resizable) {
+              return false;
+            }
+            _self.renderResizableTable();
+          };
+
+        }()
       };
     }
 
@@ -385,8 +403,8 @@
         $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
         var current_order = [];
         if (_self.options.saveStatus.enabled) {
-          current_order = _self.getSavedStatus()["order"]? _self.getSavedStatus()["order"]:$(this).DataTable().colReorder.order();
-        }else{
+          current_order = _self.getSavedStatus()["order"] ? _self.getSavedStatus()["order"] : $(this).DataTable().colReorder.order();
+        } else {
           current_order = $(this).DataTable().colReorder.order();
         }
         i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
