@@ -114,18 +114,34 @@
 
     var colReorder;
     if (_self.options.colOrderArrangable) {
-      colReorder = {
-        reorderCallback: function (){
-          if (!resizable) {
-            return false;
-          }
-          _self.renderResizableTable();
-        }
-      };
+
+      var originOrder = [];
       if (_self.options.saveStatus.enabled) {
-        colReorder['order'] = _self.getSavedStatus()["order"];
+        originOrder = _self.getSavedStatus()["order"];
+      } else {
+        var dataTable = _self.$table.DataTable();
+        originOrder = dataTable.columns().indexes();
       }
+
+      colReorder = {
+        order: originOrder,
+        reorderCallback: function () {
+          var count = 0;
+          return function () {
+            if (!count) {
+              count++;
+              return false;
+            }
+            if (!resizable) {
+              return false;
+            }
+            _self.renderResizableTable();
+          };
+
+        }()
+      };
     }
+
 
     if (_self.options.fixedHeader.enabled) {
 
@@ -289,11 +305,11 @@
   SemiAutoTable.prototype.renderColumnSelect = function() {
     var dataTable = this.$table.DataTable();
     var _self = this;
+    var originOrder = [];
 
     if (this.options.colOrderArrangable) {
       this.$table.find('th').css("cursor", "pointer");
 
-      var originOrder = [];
       if (_self.options.saveStatus.enabled) {
         originOrder = _self.getSavedStatus()["order"];
       } else {
@@ -309,7 +325,9 @@
       if (originOrder && originOrder.length > 0) {
         resizable = false;
       }
-      dataTable.colReorder.order(originOrder, true);
+      if (originOrder && _self.options.columns == null) {
+        dataTable.colReorder.order(originOrder, true);
+      }
     }
 
     //隐藏列
@@ -382,7 +400,12 @@
       var i = $fixed_th_hide.index();
       if (_self.options.colOrderArrangable) {
         $th_hide = _self.$table.find("tr th[data-column-index=" + parseInt($fixed_th_hide.attr("data-column-index")) + "]");
-        var current_order = $(this).DataTable().colReorder.order();
+        var current_order = [];
+        if (_self.options.saveStatus.enabled) {
+          current_order = _self.getSavedStatus()["order"] ? _self.getSavedStatus()["order"] : $(this).DataTable().colReorder.order();
+        } else {
+          current_order = $(this).DataTable().colReorder.order();
+        }
         i = current_order[parseInt($fixed_th_hide.attr("data-column-index"))];
       }
 
