@@ -119,8 +119,7 @@
       if (_self.options.saveStatus.enabled) {
         originOrder = _self.getSavedStatus()["order"];
       } else {
-        var dataTable = _self.$table.DataTable();
-        originOrder = dataTable.columns().indexes();
+        originOrder = null;
       }
 
       colReorder = {
