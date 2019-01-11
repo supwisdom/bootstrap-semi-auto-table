@@ -141,6 +141,9 @@
       };
     }
 
+    if (_self.options.colResizable) {
+      _self.$table.addClass("col-resizable");
+    }
 
     if (_self.options.fixedHeader.enabled) {
 
@@ -333,8 +336,6 @@
     this.initColumnSelect(originOrder ? originOrder : null);
 
     if (this.options.colResizable) {
-      this.$table.addClass("col-resizable");
-
       resizableTable = this.$table.colResizable({
         liveDrag:true,
         postbackSafe: {
