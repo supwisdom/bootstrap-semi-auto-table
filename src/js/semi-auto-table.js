@@ -119,7 +119,7 @@
       }
     }
 
-    if (this.options.colResizable) {
+    if (_self.options.colResizable) {
       _self.$table.addClass("col-resizable");
     }
 
@@ -312,8 +312,6 @@
     this.initColumnSelect(originOrder ? originOrder : null);
 
     if (this.options.colResizable) {
-      this.$table.addClass("col-resizable");
-
       resizableTable = this.$table.colResizable({
         liveDrag:true,
         postbackSafe: {
