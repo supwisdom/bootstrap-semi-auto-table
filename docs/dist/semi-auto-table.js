@@ -119,6 +119,10 @@
       }
     }
 
+    if (this.options.colResizable) {
+      _self.$table.addClass("col-resizable");
+    }
+
     if (_self.options.fixedHeader.enabled) {
 
       _self.$table.DataTable({
