@@ -33,13 +33,13 @@
     var $tbody = $(datatable.table().body());
 
     $.each($thead.find("th:visible"), function () {
-      var index = parseInt($(this).attr("data-column-index"));
-      var _td = $tbody.find("tr:first").find("td:eq(" + index + ")");
-      if (_td.attr('colspan') > 0) {
+      var index = parseInt($(this).attr("data-column-index"),10);
+      var _th = $tbody.siblings().find("tr:first").find("th:eq(" + index + ")");
+      if (_th.attr('colspan') > 1) {
         return true;
       }
 
-      $(this).outerWidth(_td.outerWidth());
+      $(this).outerWidth(_th.outerWidth());
 
     });
 
@@ -256,9 +256,9 @@
 
       if (_self.options.fixedHeader.enabled) {
         var datatable = _self.$table.DataTable();
-        if (settings.fnRecordsTotal() > 0) {
+        // if (settings.fnRecordsTotal() > 0) {
           reCalColumnWidth(datatable);
-        }
+        // }
         $(datatable.table().header()).parent("table").css('height', '');
 
         _self.$table.on("change-scrollY", function (event, $body, fixedHeader) {
