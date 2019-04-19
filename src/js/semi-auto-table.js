@@ -33,9 +33,9 @@
     var $tbody = $(datatable.table().body());
 
     $.each($thead.find("th:visible"), function () {
-      var index = parseInt($(this).attr("data-column-index"));
-      var _td = $tbody.siblings().find("tr:first").find("th:eq("+index+")");
-      if (_td.attr('colspan') > 0){
+      var index = parseInt($(this).attr("data-column-index"),10);
+      var _td = $tbody.siblings("thead").find("tr:first").find("th:eq("+index+")");
+      if (_td.attr('colspan') > 1){
         return true;
       }
 
