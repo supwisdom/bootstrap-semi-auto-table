@@ -20,22 +20,22 @@
     return source;
   };
 
-  var keySet = function(obj) {
+  var keySet = function (obj) {
     var keys = [];
-    $.each(_.keys(obj), function() {
+    $.each(_.keys(obj), function () {
       keys.push(parseInt(this));
     });
     return keys;
   }
 
-  var reCalColumnWidth = function(datatable, tableWidth) {
+  var reCalColumnWidth = function (datatable, tableWidth) {
     var $thead = $(datatable.table().header());
     var $tbody = $(datatable.table().body());
 
     $.each($thead.find("th:visible"), function () {
-      var index = parseInt($(this).attr("data-column-index"),10);
-      var _td = $tbody.siblings("thead").find("tr:first").find("th:eq("+index+")");
-      if (_td.attr('colspan') > 1){
+      var index = parseInt($(this).attr("data-column-index"), 10);
+      var _td = $tbody.siblings("thead").find("tr:first").find("th:eq(" + index + ")");
+      if (_td.attr('colspan') > 1) {
         return true;
       }
 
@@ -95,11 +95,11 @@
 
   SemiAutoTable.VERSION = '0.0.1';
 
-  SemiAutoTable.prototype.getSavedStatus = function() {
+  SemiAutoTable.prototype.getSavedStatus = function () {
     return localStorage.getItem(this.itemKey) ? JSON.parse(localStorage.getItem(this.itemKey)) : {};
   }
 
-  SemiAutoTable.prototype.addDataTablePlugin = function() {
+  SemiAutoTable.prototype.addDataTablePlugin = function () {
 
     var _self = this;
 
@@ -193,7 +193,7 @@
 
   }
 
-  SemiAutoTable.prototype.fnDrawCallback = function() {
+  SemiAutoTable.prototype.fnDrawCallback = function () {
     var _self = this;
     return function (settings) {
 
@@ -235,16 +235,16 @@
     }
   }
 
-  SemiAutoTable.prototype.initComplete = function() {
+  SemiAutoTable.prototype.initComplete = function () {
     var _self = this;
-    return function( settings, json ) {
+    return function (settings, json) {
       // if (settings.fnRecordsDisplay() <= 0) {
       //   $(settings.nTBody).hide();
       // }
       //更新分页
       if (json && json.data) {
         _self.options.pageOption["totalRows"] = json.data.length;
-        _self.options.pageOption["totalPages"] = Math.ceil(json.data.length/_self.options.rowsPerPage);
+        _self.options.pageOption["totalPages"] = Math.ceil(json.data.length / _self.options.rowsPerPage);
       }
 
       _self.renderColumnSelect();
@@ -256,11 +256,11 @@
       if (_self.options.fixedHeader.enabled) {
         var datatable = _self.$table.DataTable();
         // if (settings.fnRecordsTotal() > 0) {
-          reCalColumnWidth(datatable);
+        reCalColumnWidth(datatable);
         // }
         $(datatable.table().header()).parent("table").css('height', '');
 
-        _self.$table.on("change-scrollY", function(event, $body, fixedHeader) {
+        _self.$table.on("change-scrollY", function (event, $body, fixedHeader) {
           _self.changeTableScrollY($body, {enabled: fixedHeader});
         });
 
@@ -268,13 +268,13 @@
         resizable = true;
 
         //窗口变化时，重新计算表格宽度
-        $(window).resize(_.throttle(function() {
+        $(window).resize(_.throttle(function () {
           var $thead = $(datatable.table().header());
           var $hide_head = $(datatable.table().body()).parent("table").find("thead");
 
           $.each($thead.find("th"), function () {
             var index = parseInt($(this).attr("data-column-index"));
-            $hide_head.find("th:eq("+index+")").css('width', this.style.width);
+            $hide_head.find("th:eq(" + index + ")").css('width', this.style.width);
           });
 
           var width = $thead.parent("table")[0].style.width;
@@ -287,13 +287,13 @@
     }
   }
 
-  SemiAutoTable.prototype.changeTableScrollY = function($scrollBody, option) {
+  SemiAutoTable.prototype.changeTableScrollY = function ($scrollBody, option) {
     this.options.fixedHeader = $.extend({}, this.options.fixedHeader, option);
     if (!this.options.fixedHeader.enabled) {
       return false;
     }
     if ((toolbarHeight && toolbarHeight == $('.semi-auto-table-toolbar').outerHeight()) &&
-      (tableHeaderHeight && tableHeaderHeight == $(".dataTables_scrollHead").outerHeight())) {
+     (tableHeaderHeight && tableHeaderHeight == $(".dataTables_scrollHead").outerHeight())) {
       return false;
     }
 
@@ -304,7 +304,7 @@
     $scrollBody.height(maxHeight);
   }
 
-  SemiAutoTable.prototype.renderColumnSelect = function() {
+  SemiAutoTable.prototype.renderColumnSelect = function () {
     var dataTable = this.$table.DataTable();
     var _self = this;
     var originOrder = [];
@@ -337,22 +337,22 @@
 
     if (this.options.colResizable) {
       resizableTable = this.$table.colResizable({
-        liveDrag:true,
+        liveDrag: true,
         postbackSafe: {
           enabled: _self.options.saveStatus.enabled,
           key: _self.options.saveStatus.key + storageKeySuffix
         },
-        gripInnerHtml:"<div class='grip'></div>",
-        draggingClass:"dragging",
+        gripInnerHtml: "<div class='grip'></div>",
+        draggingClass: "dragging",
         partialRefresh: false,
         resizeMode: 'overflow',
         onDrag: _self.freshHeaderWidth(),
-        onResize:_self.triggerSaveStatus.bind(_self)
+        onResize: _self.triggerSaveStatus.bind(_self)
       });
     }
 
 
-    dataTable.on( 'column-reorder', function ( e, settings, details ) {
+    dataTable.on('column-reorder', function (e, settings, details) {
 
       var order = dataTable.colReorder.order();
 
@@ -371,10 +371,10 @@
 
 
     var hiddenColumns = {};
-    $.each(this.options.columnOption.hideColumns, function() {
+    $.each(this.options.columnOption.hideColumns, function () {
       hiddenColumns[this] = _self.getSavedStatus()['hidden-columns'][this] ? _self.getSavedStatus()['hidden-columns'][this] : 125;
     });
-    this.$table.on('showOrHideCol', function(event, clickEvent, isDisabled, index, $fixed_th_hide, $td_hide) {
+    this.$table.on('showOrHideCol', function (event, clickEvent, isDisabled, index, $fixed_th_hide, $td_hide) {
       if (isDisabled) {
         return false;
       }
@@ -410,16 +410,16 @@
       }
 
       if (!$th_hide.length) {
-        $fixed_th_hide = $(_self.$table.DataTable().table().header()).find("th:eq("+index+")");
+        $fixed_th_hide = $(_self.$table.DataTable().table().header()).find("th:eq(" + index + ")");
         if (!$td_hide.length) {
-          $td_hide = _self.$table.find("tbody>tr").find("td:eq("+index+")")
+          $td_hide = _self.$table.find("tbody>tr").find("td:eq(" + index + ")")
         }
       }
 
       if (show) {
         if (current_savedStatus && hiddenColumns[i]) {
           var width = hiddenColumns[i];
-          $th_hide.css('width', width+'px');
+          $th_hide.css('width', width + 'px');
           $th_hide.outerWidth(width);
         }
         $th_hide.show();
@@ -429,7 +429,7 @@
         delete hiddenColumns[i];
       } else {
         var originWidth = 0;
-        $.each($fixed_th_hide.parent('tr').find("th:visible"), function() {
+        $.each($fixed_th_hide.parent('tr').find("th:visible"), function () {
           originWidth += $(this).outerWidth();
         });
 
@@ -457,7 +457,7 @@
 
   }
 
-  SemiAutoTable.prototype.freshHeaderWidth = function() {
+  SemiAutoTable.prototype.freshHeaderWidth = function () {
     if (!this.options.fixedHeader.enabled) {
       return false;
     }
@@ -478,7 +478,7 @@
       disable: true
     });
     this.$table.colResizable({
-      liveDrag:true,
+      liveDrag: true,
       postbackSafe: {
         enabled: _self.options.saveStatus.enabled,
         key: _self.options.saveStatus.key + storageKeySuffix,
@@ -489,11 +489,11 @@
       partialRefresh: true,
       resizeMode: 'overflow',
       onDrag: _self.freshHeaderWidth(),
-      onResize:_self.triggerSaveStatus.bind(_self)
+      onResize: _self.triggerSaveStatus.bind(_self)
     });
   }
 
-  SemiAutoTable.prototype.getTableJson = function() {
+  SemiAutoTable.prototype.getTableJson = function () {
     return this.$table.DataTable().ajax.json();
   }
 
@@ -593,7 +593,7 @@
           title: $.fn.semiAutoTable.locales[this.options.locale].select_all,
 
           callback: function () {
-            $.each(self.$rowIdInputList.not(':hidden'), function() {
+            $.each(self.$rowIdInputList.not(':hidden'), function () {
               if ($(this).prop('checked') == allChecked) {
                 $(this).prop('checked', !allChecked).trigger('change');
 
@@ -642,9 +642,7 @@
 
       this.bindRowClick(this.options.rowOption);
 
-    }
-
-    else if (type == 'radio') {
+    } else if (type == 'radio') {
 
       this.bindRowClick(this.options.rowOption);
 
@@ -704,9 +702,9 @@
     var $tr = this.$table.find("tr");
     if (showColumnSelect) {
       $th.each(function (index, th) {
-        var $th_hide = $tr.find('th:eq('+index+')');
-        var $td_hide = $tr.find('td:eq('+index+')');
-        var $fixed_th_hide = $(self.$table.DataTable().table().header()).find("th:eq("+index+")");
+        var $th_hide = $tr.find('th:eq(' + index + ')');
+        var $td_hide = $tr.find('td:eq(' + index + ')');
+        var $fixed_th_hide = $(self.$table.DataTable().table().header()).find("th:eq(" + index + ")");
 
         var $table = self.$table;
         var checked = true;
@@ -726,7 +724,7 @@
         }
         if ($(th).text() && $(th).text().length != 0) {
           var dropdown_title = '<label class="checkbox-inline columns-title">' +
-            '<input type="checkbox" value="' + (order ? order[index] : index);
+           '<input type="checkbox" value="' + (order ? order[index] : index);
           if (checked) {
             dropdown_title += '" checked="' + checked;
           }
@@ -764,9 +762,9 @@
    */
   SemiAutoTable.prototype.reOrderColumnSelect = function (order, details) {
     if (details.from < details.to) {
-      $(".columns-title input[value="+order[details.to-1]+"]").parents('li').after($(".columns-title input[value="+order[details.to]+"]").parents('li'))
+      $(".columns-title input[value=" + order[details.to - 1] + "]").parents('li').after($(".columns-title input[value=" + order[details.to] + "]").parents('li'))
     } else {
-      $(".columns-title input[value="+order[details.to+1]+"]").parents('li').before($(".columns-title input[value="+order[details.to]+"]").parents('li'))
+      $(".columns-title input[value=" + order[details.to + 1] + "]").parents('li').before($(".columns-title input[value=" + order[details.to] + "]").parents('li'))
     }
   }
 
@@ -829,10 +827,10 @@
    * 添加标记
    * @param menuItemDefinition
    */
-  SemiAutoTable.prototype.renderButtonTag = function(menus) {
+  SemiAutoTable.prototype.renderButtonTag = function (menus) {
 
     var _self = this;
-    $.each(menus, function(index, menuItemDefinition) {
+    $.each(menus, function (index, menuItemDefinition) {
       var menuItems;
       if (menuItemDefinition instanceof Array) {
         menuItems = menuItemDefinition;
@@ -848,7 +846,7 @@
         }
         var btnGroup = _self.$menuBar.find('[data-id=' + menu.id + ']');
         btnGroup.append('<div class="btn-group-tag" data-tag="' + menu.tag + '">'
-          + menu.tag.substring(0,2) + '</div>');
+         + menu.tag.substring(0, 2) + '</div>');
       });
 
     });
@@ -1076,7 +1074,6 @@
   }
 
 
-
   SemiAutoTable.prototype.appendDropdownItem = function ($dropdown, option, dropdownLen) {
 
     var self = this;
@@ -1222,8 +1219,8 @@
     this.$sortItems.each(function (index, ele) {
 
       var $anchor = $(ele),
-        by = $anchor.data('sort-by'),
-        dir = sortObject[by] ? sortObject[by] : 'none';
+       by = $anchor.data('sort-by'),
+       dir = sortObject[by] ? sortObject[by] : 'none';
       ;
 
       $anchor.data('sort', dir);
@@ -1310,7 +1307,7 @@
     this.initPages(pageOption);
     this.initPageJumper(pageOption);
     this.initConfig(pageOption);
-  }
+  };
 
   /**
    * 初始化分页信息
@@ -1358,7 +1355,7 @@
       container: 'body'
     });
 
-  }
+  };
 
   /**
    * 初始化页长
@@ -1411,14 +1408,14 @@
       self.pageObject.currentPage = currentPage;
       self.$table.triggerHandler('pageSizeChange');
 
-    })
+    });
 
     $pageSize.appendTo(this.$paginator);
 
     $pageSize.selectpicker();
     $pageSize.selectpicker('hide');
 
-  }
+  };
 
   /**
    * 初始化翻页
@@ -1471,8 +1468,8 @@
         tooltip: hasTooltip ? format($.fn.semiAutoTable.locales[this.options.locale].next_page, currentPage + 1) : "",
         callback: function () {
           self.triggerPageChangeEvent({
-              currentPage: self.pageObject.currentPage + 1
-            }
+             currentPage: self.pageObject.currentPage + 1
+           }
           );
         }
       });
@@ -1492,7 +1489,7 @@
       container: 'body'
     });
 
-  }
+  };
 
   /**
    * 初始化跳页
@@ -1574,12 +1571,13 @@
       callback: function () {
         self.triggerPageChangeEvent({});
       }
-    })
+    });
     $pageGo.hide();
 
     this.$pageGo = $pageGo;
     this.$pageJumper = $pageJumper;
-  }
+  };
+
   SemiAutoTable.prototype.initConfig = function (pageOption) {
     if (this.$config) {
       this.$config.off("click");
@@ -1588,10 +1586,28 @@
     }
 
     var self = this;
+    var number_rows = '';
+    var display_mode = '';
+    var displayL = '';
+    var displayM = '';
+    var displayS = '';
+    if (window.locale === "zh") {
+      number_rows = '每页显示行数';
+      display_mode = '显示模式';
+      displayL = '宽松';
+      displayM = '适中';
+      displayS = '紧凑';
+    } else {
+      number_rows = 'Rows per page';
+      display_mode = 'display mode';
+      displayL = 'Loose';
+      displayM = 'Standard';
+      displayS = 'Compact';
+    }
     var configOptions = [
       {
         name: 'rowsPerPage',
-        title: '每页显示行数',
+        title: number_rows,
         init: function () {
           var _self = this;
           if (this.$pageSize) {
@@ -1603,17 +1619,17 @@
           var $li = Array.prototype.slice.call(arguments)[0];
           this.$pageSize = $li;
           var rowsPerPageOptions = pageOption._rowsPerPageOptions;
-          $.each(rowsPerPageOptions,function (index,num) {
+          $.each(rowsPerPageOptions, function (index, num) {
             var $a = $("<a class='btn btn-default' role='button'></a>");
             $a.text(num);
-            if(_self.pageObject.rowsPerPage == num){
+            if (_self.pageObject.rowsPerPage == num) {
               $a.addClass("active");
             }
-            $a.attr("value",num);
+            $a.attr("value", num);
             $li.find(".btn-group").append($a);
           });
 
-          $li.on('click',function (e) {
+          $li.on('click', function (e) {
             if (e.target.nodeName === 'A') {
               var $a = $(e.target);
               var val = $a.attr('value');
@@ -1622,7 +1638,7 @@
               var currentPage = self.pageObject.currentPage > totalPages ? totalPages : self.pageObject.currentPage;
               _self.pageObject.rowsPerPage = rowsPerPage;
               _self.pageObject.totalPages = totalPages;
-              _self.pageObject.currentPage = Math.max(currentPage,1);
+              _self.pageObject.currentPage = Math.max(currentPage, 1);
               self.triggerPageChangeEvent({});
               self.triggerSaveStatus()
             }
@@ -1630,31 +1646,31 @@
         }
       },
       {
-        name:'displayMode',
-        title:'显示模式',
-        init:function () {
+        name: 'displayMode',
+        title: display_mode,
+        init: function () {
           var _self = this;
           var $li = Array.prototype.slice.call(arguments)[0];
-          var displayModeOptions = {'dml':'宽松','dmm':'适中','dms':'紧凑'};
-          $.each(Object.keys(displayModeOptions),function (index,item) {
+          var displayModeOptions = {'dml': displayL, 'dmm': displayM, 'dms': displayS};
+          $.each(Object.keys(displayModeOptions), function (index, item) {
             var $a = $("<a class='btn btn-default' role='button' ></a>");
-            $a.attr("value",item).text(displayModeOptions[item]);
-            if(localStorage.getItem('_page_displayMode') == item){
+            $a.attr("value", item).text(displayModeOptions[item]);
+            if (localStorage.getItem('_page_displayMode') == item) {
               $a.addClass("active");
               _self.$table.addClass(item);
             }
             $a.appendTo($li.find(".btn-group"));
           });
 
-          $li.on("click",function (e) {
-            if(e.target.nodeName === "A"){
+          $li.on("click", function (e) {
+            if (e.target.nodeName === "A") {
               var $a = $(e.target);
               var val = $a.attr("value");
               _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
               $a.siblings().removeClass("active");
               $a.addClass("active");
               _self.pageObject.displayMode = val;
-              localStorage.setItem('_page_displayMode',val);
+              localStorage.setItem('_page_displayMode', val);
             }
           })
         }
@@ -1665,19 +1681,19 @@
 
 
     var $config = $('<div class="dropdown">' +
-        '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
-        '   <i class="fa fa-cog"></i>' +
-        '  </button>' +
-        '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
-        '  </ul>' +
-        '</div>');
+     '  <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+     '   <i class="fa fa-cog"></i>' +
+     '  </button>' +
+     '  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+     '  </ul>' +
+     '</div>');
     this.$config = $config;
 
     $config.addClass('page-config');
     $config.addClass(this.options.btnGroupSize);
     $.each(configOptions, function (index, item) {
-      var $li = $("<li><span>"+item.title+"</span><div class='btn-group btn-group-justified' role='group'></div></li>");
-      item.init.apply(self,[$li]);
+      var $li = $("<li><span>" + item.title + "</span><div class='btn-group btn-group-justified' role='group'></div></li>");
+      item.init.apply(self, [$li]);
       $li.appendTo($config.find("ul.dropdown-menu"));
     });
 
@@ -1715,12 +1731,19 @@
   /**
    * 获取选中条数并显示
    */
-  SemiAutoTable.prototype.selectedRowCount = function() {
-    if (this.options.selectedNum && this.$paginator.find(".selected-items-num").length == 0) {
-      this.$paginator.prepend('<div class="pull-left text-primary selected-items">已选<span class="selected-items-num">0</span>条</div>');
+  SemiAutoTable.prototype.selectedRowCount = function () {
+    if(window.LOCALE === 'zh') {
+      if (this.options.selectedNum && this.$paginator.find(".selected-items-num").length == 0) {
+        this.$paginator.prepend('<div class="pull-left text-primary selected-items">已选<span class="selected-items-num">0</span>条</div>');
+      }
+    } else {
+      if (this.options.selectedNum && this.$paginator.find(".selected-items-num").length == 0) {
+        this.$paginator.prepend('<div class="pull-left text-primary selected-items">Selected: <span class="selected-items-num">0</span></div>');
+      }
     }
     this.$paginator.find(".selected-items-num").text(this.getSelectedRows().length);
-  }
+    this.$paginator.find(".selected-items-num").text(this.getSelectedRows().length);
+  };
 
   /**
    * 触发分页变动事件
@@ -1729,7 +1752,7 @@
 
     this.$table.triggerHandler('pageChange', $.extend({}, this.pageObject, pageObject));
 
-  }
+  };
 
   /**
    * 触发排序变动事件
@@ -1738,7 +1761,7 @@
 
     this.$table.triggerHandler('sortChange', sortObject);
 
-  }
+  };
 
   /**
    * 触发数据持久化事件
@@ -1749,7 +1772,7 @@
     setTimeout(function () {
       var args = [_self.itemKey, JSON.stringify(_self.getSavedStatus())];
       _self.$table.triggerHandler('saveStatus', args);
-    },1000);
+    }, 1000);
   };
 
   /**
@@ -1758,7 +1781,7 @@
    */
   SemiAutoTable.prototype.get = function () {
     return this;
-  }
+  };
 
   /**
    * destroy semiAutoTable
@@ -1779,7 +1802,7 @@
     this.$container.after(this.$table);
     this.$container.remove();
 
-  }
+  };
   /**
    * 增加一行,
    * 使用dataTable的情况下，传入的参数是对象Object，属性和原有的相同
@@ -1789,10 +1812,10 @@
    * @param dataObj
    */
   SemiAutoTable.prototype.addRow = function (dataObj) {
-    if(this.options.useDataTable){
+    if (this.options.useDataTable) {
       var dataTable = this.$table.DataTable();
       dataTable.row.add(dataObj).draw();
-    }else{
+    } else {
       var originTdLength = this.$table.find('tbody tr').eq(0).find('td').length;
       var $tr = $('<tr role="row"></tr>');
 
@@ -1805,7 +1828,7 @@
       this.bindRowsAndAddRowClick(this.options.rowOption, $addTr);
     }
 
-  }
+  };
 
   SemiAutoTable.prototype.bindRowsAndAddRowClick = function (option, $rows) {
 
@@ -1900,7 +1923,7 @@
 
       });
     }
-  }
+  };
   // SemiAutoTable PLUGIN DEFINITION
   // =======================
 
@@ -1930,7 +1953,7 @@
           }
         }
       }
-    })
+    });
 
     if (typeof ret != 'undefined') {
       return ret;
@@ -1999,7 +2022,7 @@
 
     // 设置选中行的背景颜色，仅支持Bootstrap定义的五种颜色 success、info、active、warning、danger
     // 默认为info
-    selectColor:'info',
+    selectColor: 'info',
 
 
     //是否使用dataTable, 如果为false, 下面的colResizable, colOrderArrangable等配置均无效
@@ -2027,10 +2050,12 @@
     ajax: null,
 
     //画完table需要调用的函数，用户自定义
-    completeTableCallback: function() {},
+    completeTableCallback: function () {
+    },
 
     //重新渲染表格的回调函数
-    reDrawCallback: function(){},
+    reDrawCallback: function () {
+    },
 
     //表头是否固定
     fixedHeader: {
@@ -2041,9 +2066,9 @@
     //表格是否可以横纵向拉伸
     overflow: true
 
-  }
+  };
 
-  $.fn.semiAutoTable.locales = {}
+  $.fn.semiAutoTable.locales = {};
 
   // SemiAutoTable NO CONFLICT
   // =================
