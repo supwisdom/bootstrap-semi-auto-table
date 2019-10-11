@@ -1591,7 +1591,7 @@
     var displayL = '';
     var displayM = '';
     var displayS = '';
-    if (window.locale === "zh") {
+    if (window.LOCALE === "zh") {
       number_rows = '每页显示行数';
       display_mode = '显示模式';
       displayL = '宽松';
