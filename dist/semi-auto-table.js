@@ -1658,6 +1658,8 @@
             if (localStorage.getItem('_page_displayMode') == item) {
               $a.addClass("active");
               _self.$table.addClass(item);
+              _self.$table.closest(".dataTables_scrollBody").siblings(".dataTables_scrollHead").find("table").addClass(item);
+              _self.pageObject.displayMode = item;
             }
             $a.appendTo($li.find(".btn-group"));
           });
@@ -1667,6 +1669,7 @@
               var $a = $(e.target);
               var val = $a.attr("value");
               _self.$table.removeClass(_self.pageObject.displayMode).addClass(val);
+              _self.$table.closest(".dataTables_scrollBody").siblings(".dataTables_scrollHead").find("table").removeClass(_self.pageObject.displayMode).addClass(val);
               $a.siblings().removeClass("active");
               $a.addClass("active");
               _self.pageObject.displayMode = val;
